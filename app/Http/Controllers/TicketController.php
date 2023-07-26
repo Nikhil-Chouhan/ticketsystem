@@ -4,9 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tickets;
+use App\Models\Tickets_Admin;
 use App\Models\Image;
+use App\Models\Status;
+use App\Models\User;
+use App\Models\Progress;
+use App\Models\Companymaster;
+use App\Models\Productmaster;
+use App\Models\Servicemaster;
+use App\Models\Branchmaster;
 use Public\Documents;
 use Public\images;
+use Mail;
+use DataTables;
+use DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {

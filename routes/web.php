@@ -5,6 +5,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\ManageTicketsController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\BranchController;
 
 /*
 |--------------------------------------------------------------------------
