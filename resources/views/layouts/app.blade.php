@@ -193,6 +193,7 @@ dir="ltr">
             <li><a href="{{route('myopentickets')}}">Open Tickets</a></li>
             <li><a href="{{route('myinprogresstickets')}}">Work In Progress</a></li>
             <li><a href="{{route('myQnAtickets')}}">In QnA</a></li>
+            <li><a href="{{route('myFailedQnAtickets')}}">Failed QnA</a></li>
           </ul>
         </li>
 

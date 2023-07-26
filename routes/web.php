@@ -194,5 +194,7 @@ Route::get('get-userdetails', [UserController::class,'getUser'])->name('get-user
 
 Route::get('QnATickets', [AdminController::class,'getAssignedQnATickets'])->name('QnATickets');
 
+Route::get('myFailedQnAtickets', [AdminController::class,'getFailedQna'])->name('myFailedQnAtickets');
+
 
 
