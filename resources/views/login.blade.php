@@ -140,7 +140,7 @@ button {
 </header>
 <body>
   @if (session()->has('success'))
-    <div class="toast-body">
+    <div class="toast-bodygit">
     {!! session('success') !!}
     </div>
   @endif

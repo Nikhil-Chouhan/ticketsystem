@@ -111,6 +111,7 @@
                             dropdown += '<select class="btn btn-warning dropdown-toggle">';
                             dropdown += '<option value="'+data+'">'+data+'</option>';
                             dropdown += '<option value="Close">Close</option>';
+                            dropdown += '<option value="QnA">QnA</option>';
                             dropdown += '</select>';
                         }
                         else {

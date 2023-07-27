@@ -91,20 +91,16 @@
                             <div class="fw-bold">Target Closer Date : </div>
                             <div class="px-1">18-Jun-2023</div>
                         </div> --}}
-                        <div class="d-flex shadow p-3 mb-3 rounded">
+                        {{-- <div class="d-flex shadow p-3 mb-3 rounded">
                             <div class="fw-bold">Priority : </div>
                             <div class="px-1">Low</div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="col-md-4">
                         
                         <div class="d-flex shadow p-3 mb-3 rounded">
                             <div class="fw-bold">Company Name : </div>
                             <div class="px-1">{{$getTicketDetails->company_id}}</div>
-                        </div>
-                        <div class="d-flex shadow p-3 mb-3 rounded">
-                            <div class="fw-bold">Branch Name : </div>
-                            <div class="px-1">{{$getTicketDetails->branch_id}}</div>
                         </div>
                         
                         {{-- <div class="d-flex shadow p-3 mb-3 rounded">
@@ -118,6 +114,7 @@
                                 </select>
                             </div>
                         </div> --}}
+                        
                         {{-- <div class="d-flex shadow p-3 mb-3 rounded">
                             <div class="fw-bold">Assign To : </div>
                             <div class="px-1">Dipak</div>
@@ -131,7 +128,12 @@
                             </div>
                         </div> --}}
                     </div>
-                    
+                    <div class="col-md-4 " >
+                        <div class="d-flex shadow p-3 mb-3 rounded">
+                            <div class="fw-bold">Branch Name : </div>
+                            <div class="px-1">{{$getTicketDetails->branch_id}}</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="shadow p-3 mb-5 rounded">
                     <div class="fw-bold fs-5 mt-4">
@@ -145,15 +147,7 @@
                     </div>
                     <div class="row">
 
-                        <div class="col-md-8 col-12"> when the size of bracelet is changed, the price is not changed
-                            based on increase in the weight of gold. The prices to be changed depending upon the size of
-                            bracelet., a field to be added in the admin panel for adding the prices. when the size of
-                            bracelet is changed, the price is not changed based on increase in the weight of gold. The
-                            prices to be changed depending upon the size of bracelet., a field to be added in the admin
-                            panel for adding the prices. when the size of bracelet is changed, the price is not changed
-                            based on increase in the weight of gold. The prices to be changed depending upon the size of
-                            bracelet., a field to be added in the admin panel for adding the prices.
-                        </div>
+                        <div class="col-md-8 col-12">{{$getTicketDetails->ticket_description}}</div>
                         <div class="col-md-4 col-12">
                             {{-- <img style="height:250px; width:250px;"src="{{@asset($getTicketDetails->file)}}" /> --}}
                             @foreach($imageFile as $image)
