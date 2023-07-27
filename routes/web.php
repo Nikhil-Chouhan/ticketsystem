@@ -112,7 +112,7 @@ Route::group(['middleware' => 'can:management_bucket'], function(){
 
 Route::group(['middleware' => 'can:manage_activetickets'], function(){
     //Live Tickets
-    Route::get('livetickets', [AdminController::class,'liveTickets'])->name('livetickets');
+    Route::get('livetickets', [ManageTicketsController::class,'liveTickets'])->name('livetickets');
     //Get Live Tickets  
     Route::get('getlivetickets', [AdminController::class,'getLiveTickets'])->name('getlivetickets');
 

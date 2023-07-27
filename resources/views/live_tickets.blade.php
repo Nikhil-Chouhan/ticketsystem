@@ -155,28 +155,8 @@
                 {data: 'exec_email', name: 'exec_email',class:"exec_email"},
                 {data: 'exec_number', name: 'exec_number',class:"exec_number"},
                 {data: 'created_at', name: 'created_at',class:"ticket_raised"},
-
-                {   
-                    defaultContent: "",
-                    data: "ticket_lead",
-                    class:"ticket_lead",
-                    id:"ticket_lead",
-                    render: function (data, type, row, meta) {
-                        var dropdown = '';
-                        if (row != null) {
-                            dropdown += '<select class="ticket_lead btn btn-secondary dropdown-toggle" >';
-                            dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Prachi">Prachi</option>';
-                            dropdown += '<option value="Asmita">Asmita</option>';
-                            dropdown += '<option value="Akhila">Akhila</option>';
-                            dropdown += '</select>';
-                        }
-                        else {
-                            dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
-                        }
-                        return dropdown;
-                    }
-                },
+                {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
+                
                 {data: 'assign_to', name: 'assign_to',class:"assign_to"},
                 {       
                     defaultContent: "",
@@ -223,239 +203,239 @@
         });
 
         
-        table2 = $('.data-table2').DataTable({
-            processing: true,
-            serverSide: true,
-            bDestroy: true,
-            ajax: {
-                url: "{{ url('getlivetickets') }}"
-               // data: { assign_to: assign_to, ticket_lead: ticket_lead },
-                },  
-            columns: [
-                {data: 'ticket_id', name: 'ticket_id1',class:"ticket_id1"},
+    //     table2 = $('.data-table2').DataTable({
+    //         processing: true,
+    //         serverSide: true,
+    //         bDestroy: true,
+    //         ajax: {
+    //             url: "{{ url('getlivetickets') }}"
+    //            // data: { assign_to: assign_to, ticket_lead: ticket_lead },
+    //             },  
+    //         columns: [
+    //             {data: 'ticket_id', name: 'ticket_id1',class:"ticket_id1"},
                 
-                {data: 'company_id', name: 'company_id1', class:"company_id1"},
-                {data: 'branch_id', name: 'branch_id1', class:"branch_id1"},
-                {data: 'branch_code', name: 'branch_code1', class:"branch_code1"},
-                {data: 'company_name', name: 'company_name1',class:"company_name1"},
-                {data: 'branch_name', name: 'branch_name1',class:"branch_name1"},
-                {data: 'support_type', name: 'support_type1',class:"support_type1"},
-                {data: 'product', name: 'product1',class:"product1"},
-                {data: 'service', name: 'service1',class:"service1"},
-                {data: 'exec_name', name: 'exec_name1',class:"exec_name1"},
-                {data: 'exec_email', name: 'exec_email1',class:"exec_email1"},
-                {data: 'exec_number', name: 'exec_number1',class:"exec_number1"},
-                {data: 'created_at1', name: 'created_at1',class:"ticket_raised1"},
+    //             {data: 'company_id', name: 'company_id1', class:"company_id1"},
+    //             {data: 'branch_id', name: 'branch_id1', class:"branch_id1"},
+    //             {data: 'branch_code', name: 'branch_code1', class:"branch_code1"},
+    //             {data: 'company_name', name: 'company_name1',class:"company_name1"},
+    //             {data: 'branch_name', name: 'branch_name1',class:"branch_name1"},
+    //             {data: 'support_type', name: 'support_type1',class:"support_type1"},
+    //             {data: 'product', name: 'product1',class:"product1"},
+    //             {data: 'service', name: 'service1',class:"service1"},
+    //             {data: 'exec_name', name: 'exec_name1',class:"exec_name1"},
+    //             {data: 'exec_email', name: 'exec_email1',class:"exec_email1"},
+    //             {data: 'exec_number', name: 'exec_number1',class:"exec_number1"},
+    //             {data: 'created_at1', name: 'created_at1',class:"ticket_raised1"},
             
-                {   
-                    defaultContent: "",
-                    data: "ticket_lead",
-                    class:"ticket_lead1",
-                    id:"ticket_lead1",
-                    render: function (data, type, row, meta) {
-                        var dropdown = '';
-                        if (row != null) {
-                            dropdown += '<select class="btn btn-secondary dropdown-toggle" >';
-                            dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Prachi">Prachi</option>';
-                            dropdown += '<option value="Asmita">Asmita</option>';
-                            dropdown += '<option value="Akhila">Akhila</option>';
-                            dropdown += '</select>';
-                        }
-                        else {
-                            dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
-                        }
-                        return dropdown;
-                    }
-                },
-                // {data: 'assign_to', name: 'assign_to',class:"assign_to"},
-                {   
-                    defaultContent: "",
-                    data: "assign_to",
-                    class:"assign_to1",
-                    render: function (data, type, row, meta) {
-                        var dropdown = '';
-                        if (row != null) {
-                            dropdown += '<select class="btn btn-info dropdown-toggle">';
-                            dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Dipak">Dipak</option>';
-                            dropdown += '<option value="Prasad">Prasad</option>';
-                            dropdown += '<option value="Lokesh">Lokesh</option>';
-                            dropdown += '</select>';
-                        }
-                        else {
-                            dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">Assign to</option></select>';
-                        }
-                        return dropdown;
-                    }
-                },
-                {       
-                    defaultContent: "",
-                    data: "status",
-                    class:"status1",
-                    render: function (data, type, row, meta) {
-                        var dropdown = '';
-                        if (row != null) {
-                            dropdown += '<select class="btn btn-warning dropdown-toggle">';
-                            dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Open">Open</option>';
-                            dropdown += '<option value="Close">Close</option>';
-                            dropdown += '<option value="WorkinProgress">Work in Progress</option>';
-                            dropdown += '</select>';
-                        }
-                        else {
-                            dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="0">Status</option></select>';
-                        }
-                        return dropdown;
-                    }
-                },
-                {       
-                    defaultContent: "",
-                    data: "priority",
-                    class:"priority1",
-                    render: function (data, type, row, meta) {
-                        var dropdown = '';
-                        if (row != null) {
-                            dropdown += '<select class="btn btn-primary dropdown-toggle">';
-                            dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Open">High</option>';
-                            dropdown += '<option value="Close">Low</option>';
-                            dropdown += '<option value="Medium">Medium</option>';
-                            dropdown += '</select>';
-                        }
-                        else {
-                            dropdown = '<select class="btn btn-primary dropdown-toggle"><option value="0">Priority</option></select>';
-                        }
-                        return dropdown;
-                    }
-                },
-                {data: 'update1', name: 'update1'},
-            ]
-        });
+    //             {   
+    //                 defaultContent: "",
+    //                 data: "ticket_lead",
+    //                 class:"ticket_lead1",
+    //                 id:"ticket_lead1",
+    //                 render: function (data, type, row, meta) {
+    //                     var dropdown = '';
+    //                     if (row != null) {
+    //                         dropdown += '<select class="btn btn-secondary dropdown-toggle" >';
+    //                         dropdown += '<option value="'+data+'">'+data+'</option>';
+    //                         dropdown += '<option value="Prachi">Prachi</option>';
+    //                         dropdown += '<option value="Asmita">Asmita</option>';
+    //                         dropdown += '<option value="Akhila">Akhila</option>';
+    //                         dropdown += '</select>';
+    //                     }
+    //                     else {
+    //                         dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
+    //                     }
+    //                     return dropdown;
+    //                 }
+    //             },
+    //             // {data: 'assign_to', name: 'assign_to',class:"assign_to"},
+    //             {   
+    //                 defaultContent: "",
+    //                 data: "assign_to",
+    //                 class:"assign_to1",
+    //                 render: function (data, type, row, meta) {
+    //                     var dropdown = '';
+    //                     if (row != null) {
+    //                         dropdown += '<select class="btn btn-info dropdown-toggle">';
+    //                         dropdown += '<option value="'+data+'">'+data+'</option>';
+    //                         dropdown += '<option value="Dipak">Dipak</option>';
+    //                         dropdown += '<option value="Prasad">Prasad</option>';
+    //                         dropdown += '<option value="Lokesh">Lokesh</option>';
+    //                         dropdown += '</select>';
+    //                     }
+    //                     else {
+    //                         dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">Assign to</option></select>';
+    //                     }
+    //                     return dropdown;
+    //                 }
+    //             },
+    //             {       
+    //                 defaultContent: "",
+    //                 data: "status",
+    //                 class:"status1",
+    //                 render: function (data, type, row, meta) {
+    //                     var dropdown = '';
+    //                     if (row != null) {
+    //                         dropdown += '<select class="btn btn-warning dropdown-toggle">';
+    //                         dropdown += '<option value="'+data+'">'+data+'</option>';
+    //                         dropdown += '<option value="Open">Open</option>';
+    //                         dropdown += '<option value="Close">Close</option>';
+    //                         dropdown += '<option value="WorkinProgress">Work in Progress</option>';
+    //                         dropdown += '</select>';
+    //                     }
+    //                     else {
+    //                         dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="0">Status</option></select>';
+    //                     }
+    //                     return dropdown;
+    //                 }
+    //             },
+    //             {       
+    //                 defaultContent: "",
+    //                 data: "priority",
+    //                 class:"priority1",
+    //                 render: function (data, type, row, meta) {
+    //                     var dropdown = '';
+    //                     if (row != null) {
+    //                         dropdown += '<select class="btn btn-primary dropdown-toggle">';
+    //                         dropdown += '<option value="'+data+'">'+data+'</option>';
+    //                         dropdown += '<option value="Open">High</option>';
+    //                         dropdown += '<option value="Close">Low</option>';
+    //                         dropdown += '<option value="Medium">Medium</option>';
+    //                         dropdown += '</select>';
+    //                     }
+    //                     else {
+    //                         dropdown = '<select class="btn btn-primary dropdown-toggle"><option value="0">Priority</option></select>';
+    //                     }
+    //                     return dropdown;
+    //                 }
+    //             },
+    //             {data: 'update1', name: 'update1'},
+    //         ]
+    //     });
 
-        table2.destroy();
+    //     table2.destroy();
     });
  
-$('#btnsubmit').click(function () {
-    $('.table2').show();
-    $('.data-table2').show();
+// $('#btnsubmit').click(function () {
+//     $('.table2').show();
+//     $('.data-table2').show();
 
-    var assign_to= $("#assignee").val()==""?null:$("#assignee").val();
-    var ticket_lead= $("#ticketlead").val()==""?null:$("#ticketlead").val();
+//     var assign_to= $("#assignee").val()==""?null:$("#assignee").val();
+//     var ticket_lead= $("#ticketlead").val()==""?null:$("#ticketlead").val();
     
-    //table2.destroy();
+//     //table2.destroy();
 
-    table2 = $('.data-table2').DataTable({
-        processing: true,
-        serverSide: true,
-        bDestroy: true,
-        ajax: {
-            url: "{{ url('getlivetickets') }}",
-            data: { assign_to: assign_to, ticket_lead: ticket_lead },
-            },  
-        columns: [
-            {data: 'ticket_id', name: 'ticket_id1',class:"ticket_id1"},
+//     table2 = $('.data-table2').DataTable({
+//         processing: true,
+//         serverSide: true,
+//         bDestroy: true,
+//         ajax: {
+//             url: "{{ url('getlivetickets') }}",
+//             data: { assign_to: assign_to, ticket_lead: ticket_lead },
+//             },  
+//         columns: [
+//             {data: 'ticket_id', name: 'ticket_id1',class:"ticket_id1"},
                 
-            {data: 'company_id', name: 'company_id1', class:"company_id1"},
-            {data: 'branch_id', name: 'branch_id1', class:"branch_id1"},
-            {data: 'branch_code', name: 'branch_code1', class:"branch_code1"},
-            {data: 'company_name', name: 'company_name1',class:"company_name1"},
-            {data: 'branch_name', name: 'branch_name1',class:"branch_name1"},
-            {data: 'support_type', name: 'support_type1',class:"support_type1"},
-            {data: 'product', name: 'product1',class:"product1"},
-            {data: 'service', name: 'service1',class:"service1"},
-            {data: 'exec_name', name: 'exec_name1',class:"exec_name1"},
-            {data: 'exec_email', name: 'exec_email1',class:"exec_email1"},
-            {data: 'exec_number', name: 'exec_number1',class:"exec_number1"},
-            {data: 'created_at1', name: 'created_at1',class:"ticket_raised1"},
+//             {data: 'company_id', name: 'company_id1', class:"company_id1"},
+//             {data: 'branch_id', name: 'branch_id1', class:"branch_id1"},
+//             {data: 'branch_code', name: 'branch_code1', class:"branch_code1"},
+//             {data: 'company_name', name: 'company_name1',class:"company_name1"},
+//             {data: 'branch_name', name: 'branch_name1',class:"branch_name1"},
+//             {data: 'support_type', name: 'support_type1',class:"support_type1"},
+//             {data: 'product', name: 'product1',class:"product1"},
+//             {data: 'service', name: 'service1',class:"service1"},
+//             {data: 'exec_name', name: 'exec_name1',class:"exec_name1"},
+//             {data: 'exec_email', name: 'exec_email1',class:"exec_email1"},
+//             {data: 'exec_number', name: 'exec_number1',class:"exec_number1"},
+//             {data: 'created_at1', name: 'created_at1',class:"ticket_raised1"},
     
-            {   
-                defaultContent: "",
-                data: "ticket_lead",
-                class:"ticket_lead1",
-                id:"ticket_lead1",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="btn btn-secondary dropdown-toggle" >';
-                        dropdown += '<option value="'+data+'">'+data+'</option>';
-                        dropdown += '<option value="Prachi">Prachi</option>';
-                        dropdown += '<option value="Asmita">Asmita</option>';
-                        dropdown += '<option value="Akhila">Akhila</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
+//             {   
+//                 defaultContent: "",
+//                 data: "ticket_lead",
+//                 class:"ticket_lead1",
+//                 id:"ticket_lead1",
+//                 render: function (data, type, row, meta) {
+//                     var dropdown = '';
+//                     if (row != null) {
+//                         dropdown += '<select class="btn btn-secondary dropdown-toggle" >';
+//                         dropdown += '<option value="'+data+'">'+data+'</option>';
+//                         dropdown += '<option value="Prachi">Prachi</option>';
+//                         dropdown += '<option value="Asmita">Asmita</option>';
+//                         dropdown += '<option value="Akhila">Akhila</option>';
+//                         dropdown += '</select>';
+//                     }
+//                     else {
+//                         dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
+//                     }
+//                     return dropdown;
+//                 }
+//             },
 
-            {   
-                defaultContent: "",
-                data: "assign_to",
-                class:"assign_to1",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="btn btn-info dropdown-toggle">';
-                        dropdown += '<option value="'+data+'">'+data+'</option>';
-                        dropdown += '<option value="Dipak">Dipak</option>';
-                        dropdown += '<option value="Prasad">Prasad</option>';
-                        dropdown += '<option value="Lokesh">Lokesh</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">Assign to</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
-            {       
-                defaultContent: "",
-                data: "status",
-                class:"status1",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="btn btn-warning dropdown-toggle">';
-                        dropdown += '<option value="'+data+'">'+data+'</option>';
-                        dropdown += '<option value="Open">Open</option>';
-                        dropdown += '<option value="Close">Close</option>';
-                        dropdown += '<option value="WorkinProgress">Work in Progress</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="0">Status</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
-            {       
-                defaultContent: "",
-                data: "priority",
-                class:"priority1",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="btn btn-primary dropdown-toggle">';
-                        dropdown += '<option value="'+data+'">'+data+'</option>';
-                        dropdown += '<option value="Open">High</option>';
-                        dropdown += '<option value="Close">Low</option>';
-                        dropdown += '<option value="Medium">Medium</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-primary dropdown-toggle"><option value="0">Priority</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
-            {data: 'update1', name: 'update1'},
-        ]
-    });
+//             {   
+//                 defaultContent: "",
+//                 data: "assign_to",
+//                 class:"assign_to1",
+//                 render: function (data, type, row, meta) {
+//                     var dropdown = '';
+//                     if (row != null) {
+//                         dropdown += '<select class="btn btn-info dropdown-toggle">';
+//                         dropdown += '<option value="'+data+'">'+data+'</option>';
+//                         dropdown += '<option value="Dipak">Dipak</option>';
+//                         dropdown += '<option value="Prasad">Prasad</option>';
+//                         dropdown += '<option value="Lokesh">Lokesh</option>';
+//                         dropdown += '</select>';
+//                     }
+//                     else {
+//                         dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">Assign to</option></select>';
+//                     }
+//                     return dropdown;
+//                 }
+//             },
+//             {       
+//                 defaultContent: "",
+//                 data: "status",
+//                 class:"status1",
+//                 render: function (data, type, row, meta) {
+//                     var dropdown = '';
+//                     if (row != null) {
+//                         dropdown += '<select class="btn btn-warning dropdown-toggle">';
+//                         dropdown += '<option value="'+data+'">'+data+'</option>';
+//                         dropdown += '<option value="Open">Open</option>';
+//                         dropdown += '<option value="Close">Close</option>';
+//                         dropdown += '<option value="WorkinProgress">Work in Progress</option>';
+//                         dropdown += '</select>';
+//                     }
+//                     else {
+//                         dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="0">Status</option></select>';
+//                     }
+//                     return dropdown;
+//                 }
+//             },
+//             {       
+//                 defaultContent: "",
+//                 data: "priority",
+//                 class:"priority1",
+//                 render: function (data, type, row, meta) {
+//                     var dropdown = '';
+//                     if (row != null) {
+//                         dropdown += '<select class="btn btn-primary dropdown-toggle">';
+//                         dropdown += '<option value="'+data+'">'+data+'</option>';
+//                         dropdown += '<option value="Open">High</option>';
+//                         dropdown += '<option value="Close">Low</option>';
+//                         dropdown += '<option value="Medium">Medium</option>';
+//                         dropdown += '</select>';
+//                     }
+//                     else {
+//                         dropdown = '<select class="btn btn-primary dropdown-toggle"><option value="0">Priority</option></select>';
+//                     }
+//                     return dropdown;
+//                 }
+//             },
+//             {data: 'update1', name: 'update1'},
+//         ]
+//     });
    
-});
+// });
 
 </script>
 

@@ -30,67 +30,6 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    //Display Live Tickets
-    public function liveTickets(Request $request){
-        $ticket_data = Tickets_Admin::get();
-        
-        $users=Role::where('name', 'Developer')->first()->users;
-
-        foreach($ticket_data as $data){
-            $productDetails=$data['product'];
-            $serviceDetails=$data['service'];
-            $companyId=$data['company_id'];
-            $branchId=$data['branch_id'];
-            $assign_id=$data['assign_to'];
-
-            $productId=explode(',',$productDetails);
-            $serviceId=explode(',',$serviceDetails);
-            
-            $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
-            $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
-            $company_details=Companymaster::where('id',$companyId)->firstorFail();
-            $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
-            $assign_to=User::where('id',$assign_id)->firstorFail();
-
-            $product_name=$product_name->implode('product_name',',');
-            $service_name=$service_name->implode('service_name',',');
-            
-            $data['product']=$product_name;
-            $data['service']=$service_name;
-            $data['company_name']=$company_details->company_name;
-            $data['branch_name']=$branch_details->branch_name;
-
-            $data['assign_to_id']=$assign_to->id;
-            $data['assign_to_name']=$assign_to->name;
-        }
-        if ($request->ajax()) {
-            return Datatables::of($ticket_data)->addIndexColumn()
-                ->addColumn('ticket_id', function ($ticket_data) {
-                    return '<a href="ticketdetail/'.$ticket_data->ticket_id.'">'.$ticket_data->ticket_id.'</a>';
-                    
-                })
-                ->addColumn('update', function(){
-                    return  '<button id="update" class="update btn btn-outline-success btn-sm">UPDATE</button>';
-                })
-                ->addColumn('assign_to', function($ticket_data) use($users) {
-                    $dropdown='<select class="btn btn-info dropdown-toggle" name="support_type">';
-                    $dropdown .='<option value="'.$ticket_data->assign_to_id.'">'.$ticket_data->assign_to_name.'</option>';
-                    
-                        foreach($users as $user){
-                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
-                        }
-                        $dropdown .='</select>';
-                    return $dropdown;
-                })
-                ->rawColumns(['ticket_id','update','assign_to'])                   
-                ->editColumn('created_at',function($ticket_data){
-                    return date('d-M-y', strtotime($ticket_data->created_at));
-                })
-                ->make(true);
-        }
-        return view('live_tickets');
-    }
-
     //Get Requested Live Tickets
     public function getLiveTickets(Request $request){
         if ($request->ajax()) {

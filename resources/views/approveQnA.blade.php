@@ -128,9 +128,9 @@
                         if (row != null) {
                             dropdown += '<select class="btn btn-primary dropdown-toggle">';
                             dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Open">High</option>';
                             dropdown += '<option value="Close">Low</option>';
                             dropdown += '<option value="Medium">Medium</option>';
+                            dropdown += '<option value="Open">High</option>';
                             dropdown += '</select>';
                         }
                         else {

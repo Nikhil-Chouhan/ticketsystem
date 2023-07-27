@@ -73,7 +73,19 @@ class UserController extends Controller
     public function getUser()
     {
         // $user = auth()->user();
-        $user = Auth::user();
-        dd($user);
+        // $user = Auth::user();
+        // dd($user);
+        
+        // $ticket_data = Tickets_Admin::get();
+        // foreach($ticket_data as $data){
+        //     $ticket_lead_id=$data['ticket_lead'];
+        //     $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
+        //     $data['ticket_lead']=$ticket_lead->id;
+        //     $data['ticket_lead_name']=$ticket_lead->name;
+           
+        // }
+        $ticket_lead=User::where('id',20)->firstorFail();
+        dd($ticket_lead->id);
+            
     }
 }
