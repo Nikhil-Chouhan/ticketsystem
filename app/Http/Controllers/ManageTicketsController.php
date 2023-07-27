@@ -363,10 +363,10 @@ class ManageTicketsController extends Controller
                         $badge='<span class="badge badge-danger m-1">'.$ticketdata->assigned_tester_name.'</span>';
                         return $badge;
                     })
-                    // ->addColumn('update', function(){
-                    //     return  '<button id="reopen" class="update btn btn-outline-success btn-sm">ReOpen</button>';
-                    // })
-                    ->rawColumns(['ticket_id','ticket_lead','assign_to','assigned_tester'])                   
+                    ->addColumn('update', function(){
+                        return  '<button id="reopen" class="update btn btn-outline-success btn-sm">ReOpen</button>';
+                    })
+                    ->rawColumns(['ticket_id','ticket_lead','assign_to','assigned_tester','update'])                   
                     ->editColumn('created_at',function($ticketdata){
                         return date('d-M-y', strtotime($ticketdata->created_at));
                     })
