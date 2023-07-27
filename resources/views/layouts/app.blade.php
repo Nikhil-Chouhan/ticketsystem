@@ -154,8 +154,10 @@ dir="ltr">
             <ul class="sub-menu">
               <li><a class="link_name" href="#">Active Tickets</a></li>
               <li><a href="{{url('livetickets')}}">Live Tickets</a></li>
-              <li><a href="{{url('openticket')}}">Open Tickets</a></li>
-              <li><a href="{{url('workinprogress')}}">Work in Progress</a></li>
+              {{-- <li><a href="{{url('openticket')}}">Open Tickets</a></li>
+              <li><a href="{{url('workinprogress')}}">Work in Progress</a></li> --}}
+              <li><a href="{{url('inQnA')}}">In QnA</a></li>
+              <li><a href="{{url('failedQnA')}}">Failed QnA</a></li>
               <li><a href="{{url('approveQnA')}}">Approve QnA</a></li>
               <li><a href="{{url('CloseTicket')}}">Closed Tickets</a></li>
             </ul>
@@ -210,6 +212,7 @@ dir="ltr">
             <li><a class="link_name">My QnA</a></li>
             <li><a href="{{route('QnATickets')}}">QnA Tickets</a></li>
             <li><a href="{{route('QnAPassTickets')}}">QnA Pass</a></li>
+            <li><a href="{{route('QnAfailTickets')}}">QnA Fail</a></li>
           </ul>
         </li>
 

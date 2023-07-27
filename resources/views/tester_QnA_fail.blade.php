@@ -16,7 +16,7 @@
                 <div class="card-main main-content">
                 <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-5">
                     <section class="main-header grid ">
-                        <h1>QnA Pass Tickets</h1>
+                        <h1>QnA Fail Tickets</h1>
                         <!-- <button-main class="button-main">
                           <i class="fa-solid fa-plus"></i>
                           <span>Add new user</span>
@@ -97,7 +97,7 @@
           }
         },
         serverSide: true,
-        ajax: "{{ url('QnAPassTickets') }}",
+        ajax: "{{ url('QnAfailTickets') }}",
         columns: [
             {data: 'ticket_id', name: 'ticket_id',class:"ticket_id"},
             {data: 'company_id', name: 'company_id', class:"company_id"},

@@ -363,4 +363,185 @@ class ManageTicketsController extends Controller
         }
         return view('close_ticket');
     }
+
+    public function inQnA(Request $request){
+        $ticket_data = Tickets_Admin::where('status','QnA')->get();
+        $users=Role::where('name', 'Developer')->first()->users;
+        $testers=Role::where('name', 'Tester')->first()->users;
+        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+        foreach($ticket_data as $data){
+            $productDetails=$data['product'];
+            $serviceDetails=$data['service'];
+            $companyId=$data['company_id'];
+            $branchId=$data['branch_id'];
+            $assign_id=$data['assign_to'];
+            $ticket_lead_id=$data['ticket_lead'];
+            $tester_id=$data['assigned_tester'];
+
+            $productId=explode(',',$productDetails);
+            $serviceId=explode(',',$serviceDetails);
+            
+            $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
+            $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
+            $company_details=Companymaster::where('id',$companyId)->firstorFail();
+            $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
+            $assign_to=User::where('id',$assign_id)->firstorFail();
+            $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
+            $tester=User::where('id',$tester_id)->firstorFail();
+
+            $product_name=$product_name->implode('product_name',',');
+            $service_name=$service_name->implode('service_name',',');
+            
+            $data['product']=$product_name;
+            $data['service']=$service_name;
+            $data['company_name']=$company_details->company_name;
+            $data['branch_name']=$branch_details->branch_name;
+
+            $data['ticket_lead_id']=$ticket_lead->id;
+            $data['ticket_lead']=$ticket_lead->name;
+            
+            $data['assign_to_id']=$assign_to->id;
+            $data['assign_to_name']=$assign_to->name;
+            
+            $data['assigned_tester']=$tester->id;
+            $data['assigned_tester_name']=$tester->name;
+        }
+        if ($request->ajax()) {
+            return Datatables::of($ticket_data)->addIndexColumn()
+                ->addColumn('ticket_id', function ($ticket_data) {
+                    return '<a href="ticketdetail/'.$ticket_data->ticket_id.'">'.$ticket_data->ticket_id.'</a>';
+                    
+                })
+                ->addColumn('update', function(){
+                    return  '<button id="update" class="update btn btn-outline-success btn-sm">UPDATE</button>';
+                })
+                ->addColumn('assign_to', function($ticket_data) use($users) {
+                    $dropdown='<select class="btn btn-info dropdown-toggle">';
+                    $dropdown .='<option value="'.$ticket_data->assign_to_id.'">'.$ticket_data->assign_to_name.'</option>';
+                    
+                        foreach($users as $user){
+                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->addColumn('assigned_tester', function($ticket_data) use($testers) {
+                    $dropdown='<select class="btn btn-danger dropdown-toggle">';
+                    $dropdown .='<option value="'.$ticket_data->assigned_tester.'">'.$ticket_data->assigned_tester_name.'</option>';
+                    
+                        foreach($testers as $tester){
+                            $dropdown .= '<option value="'.$tester->id.'">'.$tester->name.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->addColumn('ticket_lead', function($ticket_data) use($ticketlead) {
+                    $dropdown='<select class="btn btn-secondary dropdown-toggle">';
+                    $dropdown .='<option value="'.$ticket_data->ticket_lead_id.'">'.$ticket_data->ticket_lead.'</option>';
+                    
+                        foreach($ticketlead as $lead){
+                            $dropdown .= '<option value="'.$lead->id.'">'.$lead->name.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->rawColumns(['ticket_id','update','assign_to','ticket_lead','assigned_tester'])                   
+                ->editColumn('created_at',function($ticket_data){
+                    return date('d-M-y', strtotime($ticket_data->created_at));
+                })
+                ->make(true);
+        }
+        return view('inQnA');
+    }
+
+    public function failedQnA(Request $request){
+        $ticket_data = Tickets_Admin::where('status','QnA Fail')->get();
+        $users=Role::where('name', 'Developer')->first()->users;
+        $testers=Role::where('name', 'Tester')->first()->users;
+        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+        foreach($ticket_data as $data){
+            $productDetails=$data['product'];
+            $serviceDetails=$data['service'];
+            $companyId=$data['company_id'];
+            $branchId=$data['branch_id'];
+            $assign_id=$data['assign_to'];
+            $ticket_lead_id=$data['ticket_lead'];
+            $tester_id=$data['assigned_tester'];
+
+            $productId=explode(',',$productDetails);
+            $serviceId=explode(',',$serviceDetails);
+            
+            $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
+            $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
+            $company_details=Companymaster::where('id',$companyId)->firstorFail();
+            $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
+            $assign_to=User::where('id',$assign_id)->firstorFail();
+            $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
+            $tester=User::where('id',$tester_id)->firstorFail();
+
+            $product_name=$product_name->implode('product_name',',');
+            $service_name=$service_name->implode('service_name',',');
+            
+            $data['product']=$product_name;
+            $data['service']=$service_name;
+            $data['company_name']=$company_details->company_name;
+            $data['branch_name']=$branch_details->branch_name;
+
+            $data['ticket_lead_id']=$ticket_lead->id;
+            $data['ticket_lead']=$ticket_lead->name;
+            
+            $data['assign_to_id']=$assign_to->id;
+            $data['assign_to_name']=$assign_to->name;
+            
+            $data['assigned_tester']=$tester->id;
+            $data['assigned_tester_name']=$tester->name;
+        }
+        if ($request->ajax()) {
+            return Datatables::of($ticket_data)->addIndexColumn()
+                ->addColumn('ticket_id', function ($ticket_data) {
+                    return '<a href="ticketdetail/'.$ticket_data->ticket_id.'">'.$ticket_data->ticket_id.'</a>';
+                    
+                })
+                ->addColumn('update', function(){
+                    return  '<button id="update" class="update btn btn-outline-success btn-sm">UPDATE</button>';
+                })
+                ->addColumn('assign_to', function($ticket_data) use($users) {
+                    $dropdown='<select class="btn btn-info dropdown-toggle">';
+                    $dropdown .='<option value="'.$ticket_data->assign_to_id.'">'.$ticket_data->assign_to_name.'</option>';
+                    
+                        foreach($users as $user){
+                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->addColumn('assigned_tester', function($ticket_data) use($testers) {
+                    $dropdown='<select class="btn btn-danger dropdown-toggle">';
+                    $dropdown .='<option value="'.$ticket_data->assigned_tester.'">'.$ticket_data->assigned_tester_name.'</option>';
+                    
+                        foreach($testers as $tester){
+                            $dropdown .= '<option value="'.$tester->id.'">'.$tester->name.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->addColumn('ticket_lead', function($ticket_data) use($ticketlead) {
+                    $dropdown='<select class="btn btn-secondary dropdown-toggle">';
+                    $dropdown .='<option value="'.$ticket_data->ticket_lead_id.'">'.$ticket_data->ticket_lead.'</option>';
+                    
+                        foreach($ticketlead as $lead){
+                            $dropdown .= '<option value="'.$lead->id.'">'.$lead->name.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->rawColumns(['ticket_id','update','assign_to','ticket_lead','assigned_tester'])                   
+                ->editColumn('created_at',function($ticket_data){
+                    return date('d-M-y', strtotime($ticket_data->created_at));
+                })
+                ->make(true);
+        }
+        return view('failQnA');
+    }
+    
 }

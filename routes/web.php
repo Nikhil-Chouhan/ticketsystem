@@ -14,6 +14,8 @@ use App\Http\Controllers\ManageTicketsController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BucketController;
+use App\Http\Controllers\MyTicketsController;
+use App\Http\Controllers\TesterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -126,6 +128,11 @@ Route::group(['middleware' => 'can:manage_activetickets'], function(){
     //Approve QnA Tickets Tab
     Route::get('approveQnA', [ManageTicketsController::class,'approveQnA'])->name('approveQnA');
 
+    //QnA Tickets Tab
+    Route::get('inQnA', [ManageTicketsController::class,'inQnA'])->name('inQnA');
+    //Failed QnA Tickets Tab
+    Route::get('failedQnA', [ManageTicketsController::class,'failedQnA'])->name('failedQnA');
+    
     Route::post('ticket/update', [ManageTicketsController::class,'updateTicket'])->name('ticket/update');
     
     //CloseTickets Tab
@@ -193,23 +200,23 @@ Route::get('ticketform', function () {
 Route::post('TicketSubmit', [AdminController::class,'ticketSubmit'])->name('TicketSubmit');
 
 //My QnA Tickets
-Route::get('myopentickets', [AdminController::class,'getUserOpenTickets'])->name('myopentickets');
+Route::get('myopentickets', [MyTicketsController::class,'getUserOpenTickets'])->name('myopentickets');
 
 Route::post('myticket/update', [AdminController::class,'updateMyTicket'])->name('myticket/update');
 
-Route::get('myinprogresstickets', [AdminController::class,'getUserInProgressTickets'])->name('myinprogresstickets');
+Route::get('myinprogresstickets', [MyTicketsController::class,'getUserInProgressTickets'])->name('myinprogresstickets');
 
 Route::post('myticket/PushQnA', [AdminController::class,'pushQnA'])->name('myticket/PushQnA');
 
-Route::get('myQnAtickets', [AdminController::class,'getUserQnATickets'])->name('myQnAtickets');
+Route::get('myQnAtickets', [MyTicketsController::class,'getUserQnATickets'])->name('myQnAtickets');
+
+Route::get('myFailedQnAtickets', [MyTicketsController::class,'getFailedQna'])->name('myFailedQnAtickets');
 
 //Get User Details
 Route::get('get-userdetails', [UserController::class,'getUser'])->name('get-userdetails');
 
-Route::get('QnATickets', [AdminController::class,'getAssignedQnATickets'])->name('QnATickets');
+Route::get('QnATickets', [TesterController::class,'getAssignedQnATickets'])->name('QnATickets');
 
-Route::get('myFailedQnAtickets', [AdminController::class,'getFailedQna'])->name('myFailedQnAtickets');
+Route::get('QnAPassTickets', [TesterController::class,'getPassQnATickets'])->name('QnAPassTickets');
 
-Route::get('QnAPassTickets', [AdminController::class,'getPassQnATickets'])->name('QnAPassTickets');
-
-
+Route::get('QnAfailTickets', [TesterController::class,'getTesterFailQnA'])->name('QnAfailTickets');
