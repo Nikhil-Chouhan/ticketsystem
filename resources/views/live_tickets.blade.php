@@ -9,18 +9,6 @@
         display: inline-block;
     }
 </style>
-
-<style>
-    /* sidebar css start here */
-    #sidebarMenu .nav-item{
-        background-color: #a48a29 !important;
-    }
-    #sidebarMenu .nav-item:hover{
-        background-color: #174368 !important;
-    }
-    /* sidebar css end here */    
-</style>
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -190,26 +178,6 @@
                     }
                 },
                 {data: 'assign_to', name: 'assign_to',class:"assign_to"},
-                // {   
-                //     defaultContent: "",
-                //     data: "assign_to",
-                //     class:"assign_to",
-                //     render: function (data, type, row, meta) {
-                //         var dropdown = '';
-                //         if (row != null) {
-                //             dropdown += '<select class="btn btn-info dropdown-toggle">';
-                //             dropdown += '<option value="'+data+'">'+data+'</option>';
-                //             dropdown += '<option value="Dipak">Dipak</option>';
-                //             dropdown += '<option value="Prasad">Prasad</option>';
-                //             dropdown += '<option value="Lokesh">Lokesh</option>';
-                //             dropdown += '</select>';
-                //         }
-                //         else {
-                //             dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">Assign to</option></select>';
-                //         }
-                //         return dropdown;
-                //     }
-                // },
                 {       
                     defaultContent: "",
                     data: "status",

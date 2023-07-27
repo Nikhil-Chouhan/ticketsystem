@@ -7,17 +7,6 @@
     }
 </style>
 
-<style>
-    /* sidebar css start here */
-    #sidebarMenu .nav-item{
-        background-color: #a48a29 !important;
-    }
-    #sidebarMenu .nav-item:hover{
-        background-color: #174368 !important;
-    }
-    /* sidebar css end here */    
-</style>
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -125,48 +114,8 @@
             
             {data: 'created_at', name: 'created_at',class:"ticket_raised"},
           
-            {   
-                defaultContent: "",
-                data: "ticket_lead",
-                class:"ticket_lead ",
-                id:"ticket_lead",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="ticket_lead btn btn-secondary dropdown-toggle" >';
-                        dropdown += '<option value="0">Ticket Lead</option>';
-                        dropdown += '<option value="Prachi">Prachi</option>';
-                        dropdown += '<option value="Asmita">Asmita</option>';
-                        dropdown += '<option value="Akhila">Akhila</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
-
-            {   
-                defaultContent: "",
-                data: "assign_to",
-                class:"assign_to",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="btn btn-info dropdown-toggle">';
-                        dropdown += '<option value="0">Assign to</option>';
-                        dropdown += '<option value="Dipak">Dipak</option>';
-                        dropdown += '<option value="Prasad">Prasad</option>';
-                        dropdown += '<option value="Lokesh">Lokesh</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">Assign to</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
+            {data: 'assign_to', name: 'assign_to',class:"assign_to"},
+            {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
             {       
                 defaultContent: "",
                 data: "status",
@@ -176,9 +125,7 @@
                     if (row != null) {
                         dropdown += '<select class="btn btn-warning dropdown-toggle">';
                         dropdown += '<option value="">Status</option>';
-                       // foreach($status as $stat)
                         dropdown += '<option value="Open">Open</option>';
-                      //  endforeach
                         dropdown += '</select>';
                     }
                     else {

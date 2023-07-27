@@ -40,7 +40,6 @@
                     </div>
                 </div>
 
-             
                 <div class="table-responsive">
                     <table class="table data-table">
                         <thead>
@@ -112,51 +111,10 @@
             {data: 'exec_name', name: 'exec_name',class:"exec_name"},
             {data: 'exec_email', name: 'exec_email',class:"exec_email"},
             {data: 'exec_number', name: 'exec_number',class:"exec_number"},
-            
             {data: 'created_at', name: 'created_at',class:"ticket_raised"},
           
-            {   
-                defaultContent: "",
-                data: "ticket_lead",
-                class:"ticket_lead ",
-                id:"ticket_lead",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="ticket_lead btn btn-secondary dropdown-toggle" >';
-                        dropdown += '<option value="0">Ticket Lead</option>';
-                        dropdown += '<option value="Prachi">Prachi</option>';
-                        dropdown += '<option value="Asmita">Asmita</option>';
-                        dropdown += '<option value="Akhila">Akhila</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
             {data: 'assign_to', name: 'assign_to',class:"assign_to"},
-            // {   
-            //     defaultContent: "",
-            //     data: "assign_to",
-            //     class:"assign_to",
-            //     render: function (data, type, row, meta) {
-            //         var dropdown = '';
-            //         if (row != null) {
-            //             dropdown += '<select class="btn btn-info dropdown-toggle">';
-            //             dropdown += '<option value="0">Assign to</option>';
-            //             dropdown += '<option value="Dipak">Dipak</option>';
-            //             dropdown += '<option value="Prasad">Prasad</option>';
-            //             dropdown += '<option value="Lokesh">Lokesh</option>';
-            //             dropdown += '</select>';
-            //         }
-            //         else {
-            //             dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">Assign to</option></select>';
-            //         }
-            //         return dropdown;
-            //     }
-            // },
+            {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
             {       
                 defaultContent: "",
                 data: "status",

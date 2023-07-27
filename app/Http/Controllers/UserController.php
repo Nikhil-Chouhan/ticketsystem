@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
      //Register User Form
-     public function indexUser(Request $request){
+    public function indexUser(){
         $roles=Role::all();
         return view('register_user',compact('roles'));
     } 

@@ -156,6 +156,7 @@ dir="ltr">
               <li><a href="{{url('livetickets')}}">Live Tickets</a></li>
               <li><a href="{{url('openticket')}}">Open Tickets</a></li>
               <li><a href="{{url('workinprogress')}}">Work in Progress</a></li>
+              <li><a href="{{url('approveQnA')}}">Approve QnA</a></li>
               <li><a href="{{url('CloseTicket')}}">Closed Tickets</a></li>
             </ul>
           </li>

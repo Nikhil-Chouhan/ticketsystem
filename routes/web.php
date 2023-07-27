@@ -13,7 +13,7 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\ManageTicketsController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BranchController;
-
+use App\Http\Controllers\BucketController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -98,16 +98,16 @@ Route::group(['middleware' => 'can:manage_masters'], function(){
 
 //Support Bucket Access
 Route::group(['middleware' => 'can:support_bucket'], function(){
-    Route::get('supportbucket', [AdminController::class,'supportBucket'])->name('supportbucket');
-    Route::post('ticketstore', [AdminController::class,'store']);
+    Route::get('supportbucket', [BucketController::class,'supportBucket'])->name('supportbucket');
+    Route::post('ticketstore', [BucketController::class,'ticketStore']);
 });
 //PM Bucket Access
 Route::group(['middleware' => 'can:pm_bucket'], function(){
-    Route::get('pmbucket', [AdminController::class,'pmBucket'])->name('pmbucket');
+    Route::get('pmbucket', [BucketController::class,'pmBucket'])->name('pmbucket');
 });
 //Support Management Access
 Route::group(['middleware' => 'can:management_bucket'], function(){
-    Route::get('managementbucket', [AdminController::class,'managementBucket'])->name('managementbucket');
+    Route::get('managementbucket', [BucketController::class,'managementBucket'])->name('managementbucket');
 });
 
 Route::group(['middleware' => 'can:manage_activetickets'], function(){
@@ -122,12 +122,17 @@ Route::group(['middleware' => 'can:manage_activetickets'], function(){
     //Work in Progress Tickets Tab
     Route::get('workinprogress', [AdminController::class,'workinprogress'])->name('workinprogress');
 
+    //Approve QnA Tickets Tab
+    Route::get('approveQnA', [ManageTicketsController::class,'approveQnA'])->name('approveQnA');
+
+    Route::post('closeticketAdmin', [ManageTicketsController::class,'closeticketAdmin'])->name('closeticketAdmin');
+    
     //CloseTickets Tab
-    Route::get('CloseTicket', [AdminController::class,'closeTicket'])->name('CloseTicket');
+    Route::get('CloseTicket', [ManageTicketsController::class,'closeTicket'])->name('CloseTicket');
 
 });
 
-Route::group(['middleware' => 'can:support_bucket|pm_bucket|management_bucket'], function(){
+Route::group(['middleware' => 'can:support_bucket','pm_bucket','management_bucket'], function(){
     //Store Ticket in Admin database.
     
 });

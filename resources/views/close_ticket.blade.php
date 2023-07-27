@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
+<style>
+    .hiddenField{
+        display:none;
+    }
+</style>
 <div class="container-fluid">
     <div class="row">
         <main class="col-md-12 px-md-4">
@@ -30,16 +34,23 @@
                     <thead>
                         <tr>
                             <th scope="col">TICKET ID</th>
-                            <th scope="col">PROJECT NAME</th>
-                            <th scope="col">CLIENT NAME</th>
+                            <th class="hiddenField" scope="col">COMPANY ID</th>
+                            <th class="hiddenField"scope="col">BRANCH ID</th>
+                            <th scope="col">BRANCH CODE</th>
+                            <th scope="col">COMPANY NAME</th>
+                            <th scope="col">BRANCH NAME</th>
+                            <th scope="col">SUPPORT TYPE</th>
+                            <th scope="col">PRODUCT</th>
+                            <th scope="col">SERVICE</th>
                             <th scope="col">EXEC NAME</th>
                             <th scope="col">EXEC EMAIL</th>
                             <th scope="col">EXEC NUMBER</th>
-                            <th scope="col">ISSUE TYPE</th>
+                            {{-- <th scope="col">ISSUE TYPE</th> --}}
                             <th scope="col">ISSUE RAISED </th>
                             <th scope="col">TICKET CREATED</th>
                             <th scope="col">TICKET LEAD</th>
                             <th scope="col">ASSIGNED TO</th>
+                            <th scope="col">ASSIGNED TESTER</th>
                             <th scope="col">CURRENT STATUS</th>
                             <th scope="col">PRIORITY</th> 
                             <th scope="col">TICKET ACTION</th> 
@@ -69,55 +80,23 @@ $(document).ready(function () {
     ajax: "{{ url('CloseTicket') }}",
     columns: [
         {data: 'ticket_id', name: 'ticket_id',class:"ticket_id"},
-        {data: 'project_name', name: 'project_name',class:"project_name",},
-        {data: 'client_name', name: 'client_name',class:"client_name",},
+        {data: 'company_id', name: 'company_id', class:"hiddenField company_id"},
+        {data: 'branch_id', name: 'branch_id', class:"hiddenField branch_id"},
+        {data: 'branch_code', name: 'branch_code', class:"branch_code"},
+        {data: 'company_name', name: 'company_name',class:"company_name"},
+        {data: 'branch_name', name: 'branch_name',class:"branch_name"},
+        {data: 'support_type', name: 'support_type',class:"support_type"},
+        {data: 'product', name: 'product',class:"product"},
+        {data: 'service', name: 'service',class:"service"},
         {data: 'exec_name', name: 'exec_name',class:"exec_name"},
         {data: 'exec_email', name: 'exec_email',class:"exec_email"},
         {data: 'exec_number', name: 'exec_number',class:"exec_number"},
-        {data: 'issue_type', name: 'issue_type',class:"issue_type"},
+        // {data: 'issue_type', name: 'issue_type',class:"issue_type"},
         {data: 'ticket_raised', name: 'ticket_raised',class:"ticket_raised",},
         {data: 'created_at', name: 'created_at',class:"ticket_created",},
-        {   
-            defaultContent: "",
-            data: "ticket_lead",
-            class:"ticket_lead",
-            render: function (data, type, row, meta) {
-                var dropdown = '';
-                if (row != null) {
-                    dropdown += '<select class="btn btn-secondary dropdown-toggle">';
-                    dropdown += '<option value="'+data+'">'+data+'</option>';
-                    dropdown += '<option value="Prachi">Prachi</option>';
-                    dropdown += '<option value="Asmita">Asmita</option>';
-                    dropdown += '<option value="Akhila">Akhila</option>';
-                    dropdown += '</select>';
-                }
-                else {
-                    dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="data">'+data+'</option></select>';
-                }
-                return dropdown;
-            }
-        },
-
-        {   
-            defaultContent: "",
-            data: "assign_to",
-            class:"assign_to",
-            render: function (data, type, row, meta) {
-                var dropdown = '';
-                if (row != null) {
-                    dropdown += '<select class="btn btn-info dropdown-toggle">';
-                    dropdown += '<option value="'+data+'">'+data+'</option>';
-                    dropdown += '<option value="Dipak">Dipak</option>';
-                    dropdown += '<option value="Prasad">Prasad</option>';
-                    dropdown += '<option value="Lokesh">Lokesh</option>';
-                    dropdown += '</select>';
-                }
-                else {
-                    dropdown = '<select class="btn btn-info dropdown-toggle"><option value="0">'+data+'</option></select>';
-                }
-                return dropdown;
-            }
-        },
+        {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
+        {data: 'assign_to', name: 'assign_to',class:"assign_to"},
+        {data: 'assigned_tester', name: 'assigned_tester',class:"assigned_tester"},
         {       
             defaultContent: "",
             data: "status",
@@ -127,9 +106,8 @@ $(document).ready(function () {
                 if (row != null) {
                     dropdown += '<select class="btn btn-warning dropdown-toggle">';
                     dropdown += '<option value="'+data+'">'+data+'</option>';
-                    dropdown += '<option value="Open">Open</option>';
-                    dropdown += '<option value="Close">Close</option>';
-                    dropdown += '<option value="WorkinProgress">Work in Progress</option>';
+                    dropdown += '<option value="Open">Re-Open</option>';
+
                     dropdown += '</select>';
                 }
                 else {
@@ -147,8 +125,8 @@ $(document).ready(function () {
                 if (row != null) {
                     dropdown += '<select class="btn btn-primary dropdown-toggle">';
                     dropdown += '<option value="'+data+'">'+data+'</option>';
-                    dropdown += '<option value="Open">High</option>';
-                    dropdown += '<option value="Close">Low</option>';
+                    dropdown += '<option value="High">High</option>';
+                    dropdown += '<option value="Low">Low</option>';
                     dropdown += '<option value="Medium">Medium</option>';
                     dropdown += '</select>';
                 }
