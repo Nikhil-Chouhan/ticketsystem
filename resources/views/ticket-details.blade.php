@@ -60,16 +60,6 @@
         color: #ff0000 !important;
     }
     </style>
-    <style>
-        /* sidebar css start here */
-        #sidebarMenu .nav-item{
-            background-color: #a48a29 !important;
-        }
-        #sidebarMenu .nav-item:hover{
-            background-color: #174368 !important;
-        }
-        /* sidebar css end here */    
-    </style>
 
     <div class="container-fluid">
         <div class="row">

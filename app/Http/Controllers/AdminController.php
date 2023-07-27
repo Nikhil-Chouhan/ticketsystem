@@ -30,7 +30,6 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-
     //ExplodeImage Function
     public function getImageAttribute($value)
     {
@@ -126,7 +125,6 @@ class AdminController extends Controller
         return ($openticket);
     }
 
-   
     public function workinprogress(Request $request){
         if ($request->ajax()) {
             $data = Tickets_Admin::where('status','Work in Progress')->get();

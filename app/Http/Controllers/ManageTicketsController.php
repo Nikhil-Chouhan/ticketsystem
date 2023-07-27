@@ -112,6 +112,17 @@ class ManageTicketsController extends Controller
                 ->where('status',$request->status)
                 ->get();
             }
+            elseif($request->ticket_lead!=null && $request->status!=null){
+                $ticket_data = Tickets_Admin::where('ticket_lead',$request->ticket_lead)
+                ->where('status',$request->status)->get(); 
+            }
+            elseif($request->assign_to!=null && $request->ticket_lead!=null){
+                $ticket_data = Tickets_Admin::where('assign_to',$request->assign_to)
+                ->where('ticket_lead',$request->ticket_lead)->get(); 
+            }elseif($request->assign_to!=null && $request->status!=null){
+                $ticket_data = Tickets_Admin::where('assign_to',$request->assign_to)
+                ->where('status',$request->status)->get(); 
+            }
             else{
 
                 $ticket_data = Tickets_Admin::where('assign_to',$request->assign_to)
