@@ -160,7 +160,7 @@
                     if (row != null) {
                         dropdown += '<select class="btn btn-warning dropdown-toggle">';
                         dropdown += '<option value="'+data+'">'+data+'</option>';
-                        dropdown += '<option value="Open">QnA</option>';
+                        dropdown += '<option value="QnA">QnA</option>';
                         dropdown += '</select>';
                     }
                     else {
@@ -194,7 +194,7 @@
             // ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").text(),
             // assign_to: $(this).closest("tr").find(".assign_to_id").find(":selected").val(),
             assigned_tester:$(this).closest("tr").find(".push_to").find(":selected").val(),
-            status: $(this).closest("tr").find(".status").find(":selected").text(),
+            status: $(this).closest("tr").find(".status").find(":selected").val(),
             // priority: $(this).closest("tr").find(".priority").find(":selected").text(),
         };
 

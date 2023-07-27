@@ -49,8 +49,11 @@
                             <th scope="col">ISSUE RAISED </th>
                             <th scope="col">TICKET CREATED</th>
                             <th scope="col">TICKET LEAD</th>
+                            <th class="hiddenField" scope="col">TICKET LEAD ID</th>
                             <th scope="col">ASSIGNED TO</th>
+                            <th class="hiddenField" scope="col">ASSIGNED TO ID</th>
                             <th scope="col">ASSIGNED TESTER</th>
+                            <th class="hiddenField" scope="col">ASSIGNED TESTER ID</th>
                             <th scope="col">CURRENT STATUS</th>
                             <th scope="col">PRIORITY</th> 
                             <th scope="col">TICKET ACTION</th> 
@@ -94,26 +97,29 @@ $(document).ready(function () {
         // {data: 'issue_type', name: 'issue_type',class:"issue_type"},
         {data: 'ticket_raised', name: 'ticket_raised',class:"ticket_raised",},
         {data: 'created_at', name: 'created_at',class:"ticket_created",},
+
         {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
+        {data: 'ticket_lead_id', name: 'ticket_lead_id',class:"hiddenField ticket_lead_id"},
+
         {data: 'assign_to', name: 'assign_to',class:"assign_to"},
+        {data: 'assign_to_id', name: 'assign_to_id',class:"hiddenField assign_to_id"},
+
         {data: 'assigned_tester', name: 'assigned_tester',class:"assigned_tester"},
+        {data: 'assigned_tester_id', name: 'assigned_tester_id',class:"hiddenField assigned_tester_id"},
+        
         {       
             defaultContent: "",
             data: "status",
             class:"status",
             render: function (data, type, row, meta) {
-                var dropdown = '';
+                var badge = '';
                 if (row != null) {
-                    dropdown += '<select class="btn btn-warning dropdown-toggle">';
-                    dropdown += '<option value="'+data+'">'+data+'</option>';
-                    dropdown += '<option value="Open">Re-Open</option>';
-
-                    dropdown += '</select>';
+                    badge='<span class="badge badge-warning m-1">'+data+'</span>';
                 }
                 else {
-                    dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="'+data+'">'+data+'</option></select>';
+                    badge='<span class="badge badge-warning m-1">'+data+'</span>';
                 }
-                return dropdown;
+                return badge;
             }
         },
         {       
@@ -125,9 +131,9 @@ $(document).ready(function () {
                 if (row != null) {
                     dropdown += '<select class="btn btn-primary dropdown-toggle">';
                     dropdown += '<option value="'+data+'">'+data+'</option>';
-                    dropdown += '<option value="High">High</option>';
                     dropdown += '<option value="Low">Low</option>';
                     dropdown += '<option value="Medium">Medium</option>';
+                    dropdown += '<option value="High">High</option>';
                     dropdown += '</select>';
                 }
                 else {
@@ -149,16 +155,16 @@ $('body').on('click', '.update', function (e) {
     e.preventDefault();
     var formData = {
         ticket_id: $(this).closest("tr").find(".ticket_id").text(),
-        ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").text(),
-        assign_to: $(this).closest("tr").find(".assign_to").find(":selected").text(),
-        status: $(this).closest("tr").find(".status").find(":selected").text(),
-        priority: $(this).closest("tr").find(".priority").find(":selected").text(),
-        
+        ticket_lead: $(this).closest("tr").find(".ticket_lead_id").text(),
+        assign_to: $(this).closest("tr").find(".assign_to_id").text(),
+        assigned_tester: $(this).closest("tr").find(".assigned_tester_id").text(),
+        priority: $(this).closest("tr").find(".priority").find(":selected").val(),
+        status:"Open",
     };
        
     $.ajax({
         type:'post',
-        url:"{{ url('UpdateTicket') }}",
+        url:"{{ url('ticket/update') }}",
         data:formData,
         dataType: 'json',
         success:function(data){

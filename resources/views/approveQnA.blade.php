@@ -158,7 +158,7 @@
 
         $.ajax({
             type:'post',
-            url:"{{ url('closeticketAdmin') }}",
+            url:"{{ url('ticket/update') }}",
             data:formData,
             dataType: 'json',
             success:function(data){

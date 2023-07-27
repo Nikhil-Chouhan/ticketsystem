@@ -159,7 +159,7 @@
                     if (row != null) {
                         dropdown += '<select class="btn btn-warning dropdown-toggle">';
                         dropdown += '<option value="'+data+'">'+data+'</option>';
-                        dropdown += '<option value="Open">Work In Progress</option>';
+                        dropdown += '<option value="WorkinProgress">Work In Progress</option>';
                         dropdown += '</select>';
                     }
                     else {
@@ -192,7 +192,7 @@
             // ticket_raised: $(this).closest("tr").find(".ticket_raised").text(),
             // ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").text(),
             // assign_to: $(this).closest("tr").find(".assign_to_id").find(":selected").text(),
-            status: $(this).closest("tr").find(".status").find(":selected").text(),
+            status: $(this).closest("tr").find(".status").find(":selected").val(),
             // priority: $(this).closest("tr").find(".priority").find(":selected").text(),
         };
 

@@ -209,6 +209,7 @@ dir="ltr">
           <ul class="sub-menu">
             <li><a class="link_name">My QnA</a></li>
             <li><a href="{{route('QnATickets')}}">QnA Tickets</a></li>
+            <li><a href="{{route('QnAPassTickets')}}">QnA Pass</a></li>
           </ul>
         </li>
 

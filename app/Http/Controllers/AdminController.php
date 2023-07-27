@@ -30,64 +30,6 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    //Get Requested Live Tickets
-    public function getLiveTickets(Request $request){
-        if ($request->ajax()) {
-            if($request->assign_to!=null && $request->ticket_lead!=null)
-            {
-                $ticket_data = Tickets_Admin::where('assign_to',$request->assign_to)
-                ->where('ticket_lead',$request->ticket_lead) 
-                ->get();
-            }
-            else{
-
-                $ticket_data = Tickets_Admin::where('assign_to',$request->assign_to)
-                ->orWhere('ticket_lead',$request->ticket_lead) 
-                ->get();
-            }
-            foreach($ticket_data as $data){
-                $productDetails=$data['product'];
-                $serviceDetails=$data['service'];
-                $companyId=$data['company_id'];
-                $branchId=$data['branch_id'];
-            
-    
-                $productId=explode(',',$productDetails);
-                $serviceId=explode(',',$serviceDetails);
-                
-                $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
-                $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
-                $company_details=Companymaster::where('id',$companyId)->firstorFail();
-                $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
-            
-                $product_name=$product_name->implode('product_name',',');
-                $service_name=$service_name->implode('service_name',',');
-                
-                $data['product']=$product_name;
-                $data['service']=$service_name;
-                $data['company_name']=$company_details->company_name;
-                $data['branch_name']=$branch_details->branch_name;
-                
-            }
-            return Datatables::of($ticket_data)->addIndexColumn()
-                ->addColumn('ticket_id1', function ($ticket_data) {
-                    return '<a href="ticketdetail/'.$ticket_data->ticket_id.'">'.$ticket_data->ticket_id.'</a>';
-                    
-                })
-                ->addColumn('update1', function(){
-                    return  '<button id="update" class="update1 btn btn-outline-warning btn-sm">Update</button>';
-                    //return $btn;
-                })
-                ->rawColumns(['ticket_id1','update1'])                   
-                ->editColumn('created_at1',function($ticket_data){
-                    return date('d-M-y', strtotime($ticket_data->created_at));
-                })
-                ->make(true);
-        }
-        
-    //   return view('live_tickets');
-      return($ticket_data);
-    }
 
     //ExplodeImage Function
     public function getImageAttribute($value)
@@ -598,4 +540,70 @@ class AdminController extends Controller
         }
         return view('my_FailedQnA_tickets');
     }   
+
+    public function getPassQnATickets(Request $request)
+    {
+        $user = Auth::user();
+        $myTickets=Tickets_Admin::where('assigned_tester','18')->where('status','QnA Fail')->get();
+        foreach($myTickets as $data){
+            $productDetails=$data['product'];
+            $serviceDetails=$data['service'];
+            $companyId=$data['company_id'];
+            $branchId=$data['branch_id'];
+            $assign_id=$data['assign_to'];
+            $assigned_tester_id=$data['assigned_tester'];
+            $ticket_lead_id=$data['ticket_lead'];
+
+            $productId=explode(',',$productDetails);
+            $serviceId=explode(',',$serviceDetails);
+            
+            $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
+            $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
+            $company_details=Companymaster::where('id',$companyId)->firstorFail();
+            $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
+            $assign_to=User::where('id',$assign_id)->firstorFail();
+            $assigned_tester=User::where('id',$assigned_tester_id)->firstorFail();
+            $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
+
+            $product_name=$product_name->implode('product_name',',');
+            $service_name=$service_name->implode('service_name',',');
+            
+            $data['product']=$product_name;
+            $data['service']=$service_name;
+            $data['company_name']=$company_details->company_name;
+            $data['branch_name']=$branch_details->branch_name;
+
+
+            $data['assign_to_id']=$assign_to->id;
+            $data['assign_to']=$assign_to->name;
+            $data['assigned_tester_id']=$assigned_tester->id;
+            $data['assigned_tester']=$assigned_tester->name;
+            
+            $data['ticket_lead']=$ticket_lead->name;
+        }
+        if ($request->ajax()) {
+            return Datatables::of($myTickets)->addIndexColumn()
+                ->addColumn('ticket_id', function ($myTickets) {
+                    return '<a href="ticketdetail/'.$myTickets->ticket_id.'">'.$myTickets->ticket_id.'</a>';
+                    
+                })
+                ->addColumn('update', function(){
+                    return  '<button id="update" class="update btn btn-outline-success btn-sm">UPDATE</button>';
+                })
+                ->addColumn('assign_to', function($myTickets){
+                    $badge='<span class="badge badge-info m-1">'.$myTickets->assign_to.'</span>';
+                    return $badge;
+                })
+                ->addColumn('assigned_tester', function($myTickets){
+                    $badge='<span class="badge badge-danger m-1">'.$myTickets->assigned_tester.'</span>';
+                    return $badge;
+                })
+                ->rawColumns(['ticket_id','update','assign_to','assigned_tester'])                   
+                ->editColumn('created_at',function($myTickets){
+                    return date('d-M-y', strtotime($myTickets->created_at));
+                })
+                ->make(true);
+        }
+        return view('tester_QnA_pass');
+    }
 }

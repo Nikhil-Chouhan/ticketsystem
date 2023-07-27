@@ -112,9 +112,10 @@ Route::group(['middleware' => 'can:management_bucket'], function(){
 
 Route::group(['middleware' => 'can:manage_activetickets'], function(){
     //Live Tickets
-    Route::get('livetickets', [ManageTicketsController::class,'liveTickets'])->name('livetickets');
+    Route::get('livetickets', [ManageTicketsController::class,'liveTicketsView'])->name('livetickets');
+    Route::get('liveticketstable', [ManageTicketsController::class,'liveTickets'])->name('liveticketstable');
     //Get Live Tickets  
-    Route::get('getlivetickets', [AdminController::class,'getLiveTickets'])->name('getlivetickets');
+    Route::get('getlivetickets', [ManageTicketsController::class,'getLiveTickets'])->name('getlivetickets');
 
     //OpenTickets Tab
     Route::get('openticket', [AdminController::class,'openTicket'])->name('openticket');
@@ -125,7 +126,7 @@ Route::group(['middleware' => 'can:manage_activetickets'], function(){
     //Approve QnA Tickets Tab
     Route::get('approveQnA', [ManageTicketsController::class,'approveQnA'])->name('approveQnA');
 
-    Route::post('closeticketAdmin', [ManageTicketsController::class,'closeticketAdmin'])->name('closeticketAdmin');
+    Route::post('ticket/update', [ManageTicketsController::class,'updateTicket'])->name('ticket/update');
     
     //CloseTickets Tab
     Route::get('CloseTicket', [ManageTicketsController::class,'closeTicket'])->name('CloseTicket');
@@ -209,5 +210,6 @@ Route::get('QnATickets', [AdminController::class,'getAssignedQnATickets'])->name
 
 Route::get('myFailedQnAtickets', [AdminController::class,'getFailedQna'])->name('myFailedQnAtickets');
 
+Route::get('QnAPassTickets', [AdminController::class,'getPassQnATickets'])->name('QnAPassTickets');
 
 

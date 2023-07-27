@@ -15,10 +15,15 @@ use DataTables;
 class ManageTicketsController extends Controller
 {
 
+    public function liveTicketsView(){
+        $users=Role::where('name', 'Developer')->first()->users;
+        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+        return view('live_tickets',compact('users','ticketlead'));
+    }
+
     //Display Live Tickets
     public function liveTickets(Request $request){
         $ticket_data = Tickets_Admin::get();
-        
         $users=Role::where('name', 'Developer')->first()->users;
         $ticketlead=Role::where('name', 'Project Manager')->first()->users;
 
@@ -92,6 +97,97 @@ class ManageTicketsController extends Controller
                 ->make(true);
         }
         return view('live_tickets');
+    }
+
+    //Get Requested Live Tickets
+    public function getLiveTickets(Request $request){
+        $users=Role::where('name', 'Developer')->first()->users;
+        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+
+        if ($request->ajax()) {
+            if($request->assign_to!=null && $request->ticket_lead!=null && $request->status!=null)
+            {
+                $ticket_data = Tickets_Admin::where('assign_to',$request->assign_to)
+                ->where('ticket_lead',$request->ticket_lead) 
+                ->where('status',$request->status)
+                ->get();
+            }
+            else{
+
+                $ticket_data = Tickets_Admin::where('assign_to',$request->assign_to)
+                ->orWhere('ticket_lead',$request->ticket_lead) 
+                ->orWhere('status',$request->status)
+                ->get();
+            }
+            foreach($ticket_data as $data){
+                $productDetails=$data['product'];
+                $serviceDetails=$data['service'];
+                $companyId=$data['company_id'];
+                $branchId=$data['branch_id'];
+                $assign_id=$data['assign_to'];
+                $ticket_lead_id=$data['ticket_lead'];
+    
+                $productId=explode(',',$productDetails);
+                $serviceId=explode(',',$serviceDetails);
+                
+                $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
+                $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
+                $company_details=Companymaster::where('id',$companyId)->firstorFail();
+                $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
+            
+                $assign_to=User::where('id',$assign_id)->firstorFail();
+                $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
+                $product_name=$product_name->implode('product_name',',');
+                $service_name=$service_name->implode('service_name',',');
+                
+                $data['product']=$product_name;
+                $data['service']=$service_name;
+                $data['company_name']=$company_details->company_name;
+                $data['branch_name']=$branch_details->branch_name;
+                
+                $data['assign_to_id']=$assign_to->id;
+                $data['assign_to_name']=$assign_to->name;
+
+                $data['ticket_lead']=$ticket_lead->id;
+                $data['ticket_lead_name']=$ticket_lead->name;
+            }
+            return Datatables::of($ticket_data)->addIndexColumn()
+                ->addColumn('ticket_id', function ($ticket_data) {
+                    return '<a href="ticketdetail/'.$ticket_data->ticket_id.'">'.$ticket_data->ticket_id.'</a>';
+                    
+                })
+                ->addColumn('assign_to', function($ticket_data) use($users) {
+                    $dropdown='<select class="btn btn-info dropdown-toggle" name="support_type">';
+                    $dropdown .='<option value="'.$ticket_data->assign_to_id.'">'.$ticket_data->assign_to_name.'</option>';
+                    
+                    foreach($users as $user){
+                        $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                    }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->addColumn('ticket_lead', function($ticket_data) use($ticketlead) {
+                    $dropdown='<select class="btn btn-secondary dropdown-toggle" name="support_type">';
+                    $dropdown .='<option value="'.$ticket_data->ticket_lead.'">'.$ticket_data->ticket_lead_name.'</option>';
+                    
+                    foreach($ticketlead as $lead){
+                        $dropdown .= '<option value="'.$lead->id.'">'.$lead->name.'</option>';
+                    }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->addColumn('update', function(){
+                    return  '<button id="update" class="update1 btn btn-outline-warning btn-sm">Update</button>';
+                    //return $btn;
+                })
+                ->rawColumns(['ticket_id','update','ticket_lead','assign_to'])                   
+                ->editColumn('created_at',function($ticket_data){
+                    return date('d-M-y', strtotime($ticket_data->created_at));
+                })
+                ->make(true);
+        }
+        
+        return($ticket_data);
     }
 
     public function approveQnA(Request $request){
@@ -184,7 +280,7 @@ class ManageTicketsController extends Controller
         return view('approveQnA');
     }
 
-    public function closeticketAdmin(Request $request){
+    public function updateTicket(Request $request){
         $ticket=Tickets_Admin::where('ticket_id',$request->ticket_id)
         ->update(["status" => $request->status,
                 "ticket_lead" => $request->ticket_lead,
@@ -235,7 +331,7 @@ class ManageTicketsController extends Controller
             $data['assign_to_id']=$assign_to->id;
             $data['assign_to_name']=$assign_to->name;
             
-            $data['assigned_tester']=$tester->id;
+            $data['assigned_tester_id']=$tester->id;
             $data['assigned_tester_name']=$tester->name;
         }
         if ($request->ajax()) {
@@ -256,11 +352,10 @@ class ManageTicketsController extends Controller
                         $badge='<span class="badge badge-danger m-1">'.$ticketdata->assigned_tester_name.'</span>';
                         return $badge;
                     })
-                    ->addColumn('update', function(){
-                        return  '<button id="update" class="update btn btn-outline-warning btn-sm">Update</button>
-                        <button id="delete" class="delete btn btn-outline-danger btn-sm">Delete</button>';
-                    })
-                    ->rawColumns(['ticket_id','update','ticket_lead','assign_to','assigned_tester'])                   
+                    // ->addColumn('update', function(){
+                    //     return  '<button id="reopen" class="update btn btn-outline-success btn-sm">ReOpen</button>';
+                    // })
+                    ->rawColumns(['ticket_id','ticket_lead','assign_to','assigned_tester'])                   
                     ->editColumn('created_at',function($ticketdata){
                         return date('d-M-y', strtotime($ticketdata->created_at));
                     })
