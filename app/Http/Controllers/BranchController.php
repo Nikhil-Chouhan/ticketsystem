@@ -38,6 +38,12 @@ class BranchController extends Controller
         return($companydetails); 
     }
 
+    //generating form link
+    public function getFormLink ($branch_code){
+        $branchCode=Branchmaster::where('branch_code',$branch_code)->firstorFail();
+        return view('ticketForm',compact('branch_code'));
+    }
+
     //Save Branch
     public function saveBranch(Request $request){
         

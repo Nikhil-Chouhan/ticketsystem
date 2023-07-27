@@ -174,7 +174,7 @@ dir="ltr">
             <ul class="sub-menu">
               <li><a class="link_name">Users</a></li>
               <li><a href="{{route('users')}}">Users</a></li>
-              <li><a href="{{route('regsiteruser')}}">Add User</a></li>
+              <li><a href="{{route('registeruser')}}">Add User</a></li>
               <li><a href="{{url('registerrole')}}">Add Role</a></li>
               <li><a href="{{url('registerpermission')}}">Add Permission</a></li>
             </ul>

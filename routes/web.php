@@ -32,6 +32,9 @@ Route::get('dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+    //TicketForm URL Generation
+    Route::get('GetFormLink/{id}',[BranchController::class,'getFormLink']);
+
 Route::group(['middleware' => ['guest']], function() {
 
     //Login Routes
@@ -71,9 +74,6 @@ Route::group(['middleware' => 'can:manage_registers'], function(){
         return view('service_register');
     });
     Route::post('serviceregister', [ServiceController::class,'saveService'])->name('serviceregister');
-
-    //TicketForm URL Generation
-    Route::get('GetFormLink/{id}',[AdminController::class,'getFormLink']);
 
 });
 
@@ -162,7 +162,7 @@ Route::group(['middleware' => 'can:manage_users'], function(){
 
 
     //User Registration Form
-    Route::get('regsiteruser', [UserController::class,'indexUser'])->name('regsiteruser');
+    Route::get('registeruser', [UserController::class,'indexUser'])->name('registeruser');
     //User Create
     Route::post('storeuser', [UserController::class,'createUser'])->name('storeuser');
     //Users Table

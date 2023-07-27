@@ -282,17 +282,6 @@ class AdminController extends Controller
         return view('progress',compact('progressdata'));
     }
 
-    //generating form link
-    public function getFormLink ($branch_code){
-        $branchCode=Branchmaster::where('branch_code',$branch_code)->firstorFail();
-
-        // if($branchCode==null)
-        // {
-        //     dd("not exists");
-        // } 
-        return view('ticketForm',compact('branch_code'));
-    }
-
     //Submit Ticket
     public function ticketSubmit(Request $request){
         $branch_details=Branchmaster::where('branch_code',$request->branch_code)->firstorFail();
