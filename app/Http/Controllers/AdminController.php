@@ -237,4 +237,17 @@ class AdminController extends Controller
         $ticket->save();
         return($ticket);
     }
+    
+    public function getdashboard(){
+    
+        $companydata = Companymaster::get();
+        $branchdata = Branchmaster::get();
+        $productdata = Productmaster::get();
+        $servicedata = Servicemaster::get();
+        $userdata = User::with('roles.permissions')->get();
+        $ticketdata = Tickets_Admin::get();
+
+        return view('dashboard',compact('companydata','branchdata','productdata','servicedata','userdata','ticketdata'));
+    }
+
 }

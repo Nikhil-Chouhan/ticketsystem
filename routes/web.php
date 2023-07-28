@@ -30,12 +30,18 @@ use App\Http\Controllers\TesterController;
 Route::get('/', function () {
     return view('login');
 })->name('/');
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+
+// Route::get('/', function () {
+//     return view('home');
+// })->name('/');
+
+
+// Route::get('login', function () {
+//     return view('login');
+// })->name('login');
 
     //TicketForm URL Generation
-    Route::get('GetFormLink/{id}',[BranchController::class,'getFormLink']);
+Route::get('GetFormLink/{id}',[BranchController::class,'getFormLink']);
 
 Route::group(['middleware' => ['guest']], function() {
 
@@ -46,6 +52,9 @@ Route::group(['middleware' => ['guest']], function() {
 });
 
 Route::group(['middleware' => ['auth']], function() {
+
+    Route::get('dashboard', [AdminController::class,'getdashboard'])->name('dashboard');
+
     // Logout Routes
     Route::get('logout', [LoginController::class,'logout'])->name('logout');
     

@@ -112,27 +112,28 @@
             
             {data: 'created_at', name: 'created_at',class:"ticket_raised"},
           
-            {   
-                defaultContent: "",
-                data: "ticket_lead",
-                class:"ticket_lead ",
-                id:"ticket_lead",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="ticket_lead btn btn-secondary dropdown-toggle" >';
-                        dropdown += '<option value="0">Ticket Lead</option>';
-                        dropdown += '<option value="Prachi">Prachi</option>';
-                        dropdown += '<option value="Asmita">Asmita</option>';
-                        dropdown += '<option value="Akhila">Akhila</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
+            // {   
+            //     defaultContent: "",
+            //     data: "ticket_lead",
+            //     class:"ticket_lead ",
+            //     id:"ticket_lead",
+            //     render: function (data, type, row, meta) {
+            //         var dropdown = '';
+            //         if (row != null) {
+            //             dropdown += '<select class="ticket_lead btn btn-secondary dropdown-toggle" >';
+            //             dropdown += '<option value="0">Ticket Lead</option>';
+            //             dropdown += '<option value="Prachi">Prachi</option>';
+            //             dropdown += '<option value="Asmita">Asmita</option>';
+            //             dropdown += '<option value="Akhila">Akhila</option>';
+            //             dropdown += '</select>';
+            //         }
+            //         else {
+            //             dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
+            //         }
+            //         return dropdown;
+            //     }
+            // },
+            {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
             {data: 'assign_to', name: 'assign_to',class:"assign_to"},
             {data: 'assign_to_id', name: 'assign_to_id',class:"hiddenField assign_to_id"},
             {       

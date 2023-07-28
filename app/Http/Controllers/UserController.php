@@ -21,7 +21,7 @@ use DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class UserController extends Controller
 {
@@ -84,8 +84,13 @@ class UserController extends Controller
         //     $data['ticket_lead_name']=$ticket_lead->name;
            
         // }
-        $ticket_lead=User::where('id',20)->firstorFail();
-        dd($ticket_lead->id);
-            
+        $user=Auth::user();
+        $mytickets=Tickets_Admin::where('assign_to',$user->id)->where('status','Open')->get();
+        $allroles = '';
+        foreach($user->roles as $role){
+            $allroles .= $role->name . ' | ';
+        }
+        return view('userdetails', compact('user','mytickets','allroles'));
+
     }
 }

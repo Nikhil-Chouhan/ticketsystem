@@ -52,6 +52,11 @@ dir="ltr">
 
     <script src="{{URL::asset ('js/bootstrap.bundle.min.js')}}" ></script> 
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/css/uikit.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit-icons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
 
 </head>
 {{-- New SideBar --}}
@@ -81,6 +86,16 @@ dir="ltr">
       </div>
     
       <ul class="nav-links">
+        <li>
+          <a href="{{url('dashboard')}}">
+            <i class='bx bx-list-check'></i>
+            <span class="link_name">Dashboard</span>
+          </a>
+          <ul class="sub-menu blank">
+            <li><a class="link_name" href="{{url('dashboard')}}">Dashboard</a></li>
+          </ul>
+        </li>
+
         @can('manage_masters')
           <li>
             <div class="icon-link openmenu">
@@ -142,6 +157,7 @@ dir="ltr">
           </ul>
         </li>
         @endcanany
+
         @can('manage_activetickets')
           <li>
             <div class="icon-link openmenu">
@@ -183,6 +199,7 @@ dir="ltr">
           </li>
         @endcan
 
+        @can('my_tickets')
         <li>
           <div class="icon-link openmenu">
             <a>
@@ -199,7 +216,9 @@ dir="ltr">
             <li><a href="{{route('myFailedQnAtickets')}}">Failed QnA</a></li>
           </ul>
         </li>
+        @endcan
 
+        @can('my_qna')
         <li>
           <div class="icon-link openmenu">
             <a>
@@ -215,6 +234,7 @@ dir="ltr">
             <li><a href="{{route('QnAfailTickets')}}">QnA Fail</a></li>
           </ul>
         </li>
+        @endcan
 
         <li>
           <a href="{{url('get-userdetails')}}">
@@ -267,6 +287,8 @@ dir="ltr">
     });
 
 </script>
+
+
 
 </body>
 </html>

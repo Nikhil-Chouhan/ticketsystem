@@ -55,16 +55,6 @@ class BucketController extends Controller
                     return '<a href="ticketdetail/'.$ticket_data->id.'">'.$ticket_data->id.'</a>';
                     
                 })
-                ->addColumn('assign_to', function($ticket_data) use($users) {
-                    $dropdown='<select class="btn btn-info dropdown-toggle assign_to">';
-                    $dropdown .='<option value="">Select Assignne</option>';
-                    
-                        foreach($users as $user){
-                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
-                        }
-                        $dropdown .='</select>';
-                    return $dropdown;
-                })
                 ->addColumn('ticket_lead', function($ticket_data) use($ticketlead ) {
                     $dropdown='<select class="ticket_lead btn btn-secondary dropdown-toggle">';
                     $dropdown .='<option value="">Ticket Lead</option>';
@@ -75,11 +65,21 @@ class BucketController extends Controller
                         $dropdown .='</select>';
                     return $dropdown;
                 })
+                ->addColumn('assign_to', function($ticket_data) use($users) {
+                    $dropdown='<select class="btn btn-info dropdown-toggle assign_to">';
+                    $dropdown .='<option value="">Select Assignne</option>';
+                    
+                        foreach($users as $user){
+                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                        }
+                        $dropdown .='</select>';
+                    return $dropdown;
+                })
                 ->addColumn('action', function(){
                     return  '<button id="btngo" class="btngo btn btn-outline-success">Submit</button>';
                     //return $btn;
                 })
-                ->rawColumns(['id','action','assign_to','ticket_lead'])                   
+                ->rawColumns(['id','action','ticket_lead','assign_to'])                   
                 ->editColumn('created_at',function($ticket_data){
                     return date('d-M-y', strtotime($ticket_data->created_at));
                 })

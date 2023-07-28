@@ -35,6 +35,7 @@ class MyTicketsController extends Controller
             $companyId=$data['company_id'];
             $branchId=$data['branch_id'];
             $assign_id=$data['assign_to'];
+            $ticket_lead_id=$data['ticket_lead'];
 
             $productId=explode(',',$productDetails);
             $serviceId=explode(',',$serviceDetails);
@@ -44,6 +45,8 @@ class MyTicketsController extends Controller
             $company_details=Companymaster::where('id',$companyId)->firstorFail();
             $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
             $assign_to=User::where('id',$assign_id)->firstorFail();
+            $assign_to=User::where('id',$assign_id)->firstorFail();
+            $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
 
             $product_name=$product_name->implode('product_name',',');
             $service_name=$service_name->implode('service_name',',');
@@ -55,12 +58,15 @@ class MyTicketsController extends Controller
 
             $data['assign_to_id']=$assign_to->id;
             $data['assign_to']=$assign_to->name;
+            
+            $data['ticket_lead']=$ticket_lead->id;
+            $data['ticket_lead_name']=$ticket_lead->name;
         }
         if ($request->ajax()) {
             return Datatables::of($myTickets)->addIndexColumn()
-                ->addColumn('ticket_id', function ($myTickets) {
-                    return '<a href="ticketdetail/'.$myTickets->ticket_id.'">'.$myTickets->ticket_id.'</a>';
-                    
+                ->addColumn('ticket_lead', function ($myTickets) {
+                    $badge='<span class="badge badge-info m-1">'.$myTickets->ticket_lead_name.'</span>';
+                    return $badge;
                 })
                 ->addColumn('update', function(){
                     return  '<button id="update" class="update btn btn-outline-success btn-sm">UPDATE</button>';
@@ -69,7 +75,7 @@ class MyTicketsController extends Controller
                     $badge='<span class="badge badge-info m-1">'.$myTickets->assign_to.'</span>';
                     return $badge;
                 })
-                ->rawColumns(['ticket_id','update','assign_to'])                   
+                ->rawColumns(['ticket_lead','update','assign_to'])                   
                 ->editColumn('created_at',function($myTickets){
                     return date('d-M-y', strtotime($myTickets->created_at));
                 })

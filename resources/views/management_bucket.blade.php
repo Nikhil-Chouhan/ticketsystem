@@ -113,9 +113,9 @@
             {data: 'exec_number', name: 'exec_number',class:"exec_number"},
             
             {data: 'created_at', name: 'created_at',class:"ticket_raised"},
-          
-            {data: 'assign_to', name: 'assign_to',class:"assign_to"},
             {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
+            {data: 'assign_to', name: 'assign_to',class:"assign_to"},
+            
             {       
                 defaultContent: "",
                 data: "status",
@@ -177,8 +177,8 @@
             exec_number: $(this).closest("tr").find(".exec_number").text(),
             // issue_type: $(this).closest("tr").find(".issue_type").text(),
             ticket_raised: $(this).closest("tr").find(".ticket_raised").text(),
-            ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").text(),
-            assign_to: $(this).closest("tr").find(".assign_to").find(":selected").text(),
+            ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").val(),
+            assign_to: $(this).closest("tr").find(".assign_to").find(":selected").val(),
             status: $(this).closest("tr").find(".status").find(":selected").text(),
             priority: $(this).closest("tr").find(".priority").find(":selected").text(),
         };
