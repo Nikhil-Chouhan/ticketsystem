@@ -32,23 +32,13 @@ class BranchController extends Controller
         return view('branch_register',compact('companydetails','productdetails','servicedetails'));
     }
 
-    //Get Company Details
-    public function getCompanyDetails(Request $request){
-        $companydetails = Companymaster::where('id', $request->companyid)->firstorFail();
-        return($companydetails); 
-    }
-
-    //generating form link
-    public function getFormLink ($branch_code){
-        $branchCode=Branchmaster::where('branch_code',$branch_code)->firstorFail();
-        return view('ticketForm',compact('branch_code'));
-    }
-
     //Save Branch
     public function saveBranch(Request $request){
-        
+       
+        // $product=json_encode($request->product);
+        // $service=json_encode($request->service);
         $branchdetails=new Branchmaster;
-        $branchdetails->company_id=$request->companyid;
+        $branchdetails->company_id=$request->company_id;
         $branchdetails->branch_name=$request->branch_name;
         $branchdetails->branch_address=$request->branch_address;
         $branchdetails->branch_contactperson_name=$request->branch_contactperson_name;
@@ -59,14 +49,14 @@ class BranchController extends Controller
         $branchdetails->service=$request->service;
         
         $branchdetails->branch_code=$request->branch_code;
-
+        
         $branchdetails->save();
         return($branchdetails);
     }
 
     //Branch Master
     public function masterBranch(Request $request){
-        $branchdetails = Branchmaster::get();
+        $branchdetails = Branchmaster::orderBy("id","DESC")->get();
         foreach($branchdetails as $data){
             $productDetails=$data['product'];
             $serviceDetails=$data['service'];

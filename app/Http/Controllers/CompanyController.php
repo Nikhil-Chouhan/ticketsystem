@@ -26,7 +26,7 @@ class CompanyController extends Controller
 {
     //Save Company
     public function registerCompany(Request $request){
-        //dd($request);
+        dd($request);
         $data=$request->validate([
             'company_name'=>'required',
             'company_address'=>'required',
@@ -49,12 +49,18 @@ class CompanyController extends Controller
         $company_details->save();
         return redirect('companyregister')->with('msg','Saved Succesfully');
     }
+    
+    //Get Company Details
+    public function getCompanyDetails(Request $request){
+        $companydetails = Companymaster::where('id', $request->companyid)->firstorFail();
+        return($companydetails); 
+    }
 
     //Company Master Table
     public function companyMaster(Request $request){
         
         if ($request->ajax()) {
-            $data = Companymaster::get();
+            $data = Companymaster::latest()->get();
             
             return Datatables::of($data)->addIndexColumn()
                 // ->addColumn('action', function(){

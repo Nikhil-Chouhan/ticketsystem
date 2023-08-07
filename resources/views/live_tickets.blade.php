@@ -10,7 +10,7 @@
     }
 </style>
 @section('content')
-    <div class="container-fluid">
+    {{-- <div class="container-fluid">
         <div class="row">
             <main class="col-md-12 px-md-4">
             <div class="card-main">
@@ -58,19 +58,20 @@
                         <thead>
                             <tr>
                                 <th scope="col">TICKET ID</th>
-                                <th scope="col">COMPANY ID</th>
-                                <th scope="col">BRANCH ID</th>
-                                <th scope="col">BRANCH CODE</th>
+                                <th class="hiddenField" scope="col">COMPANY ID</th>
+                                <th class="hiddenField" scope="col">BRANCH ID</th>
+                                <th class="hiddenField" scope="col">BRANCH CODE</th>
                                 <th scope="col">COMPANY NAME</th>
                                 <th scope="col">BRANCH NAME</th>
                                 <th scope="col">SUPPORT TYPE</th>
                                 <th scope="col">PRODUCT</th>
                                 <th scope="col">SERVICE</th>
-                                <th scope="col">EXEC NAME</th>
-                                <th scope="col">EXEC EMAIL</th>
-                                <th scope="col">EXEC NUMBER</th>
+                                <th scope="col">CUSTOMER NAME</th>
+                                <th scope="col">CUSTOMER EMAIL</th>
+                                <th scope="col">CUSTOMER NUMBER</th>
                                 <th scope="col">RAISED AT</th>
                                 <th scope="col">TICKET LEAD</th>
+                                <th scope="col">DEPARTMENT</th>
                                 <th scope="col">ASSIGN TO</th>
                                 <th scope="col">STATUS</th>
                                 <th scope="col">PRIORITY</th>
@@ -87,9 +88,116 @@
             </div>
            </main>
         </div>
-    </div>
+    </div> --}}
 
-   
+    <div class="container-fluid">
+        <div class="page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Active Tickets</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Live Tickets</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Live Tickets</h4>
+                        <div class="btn-group">
+                            <div class="container-fluid mb-3">
+                                <div class="drop dropdown">
+                                    <select id="status" class="status btn btn-warning dropdown-toggle" >
+                                        <option value="">Status</option>
+                                        @foreach($status as $s)
+                                        
+                                        <option value="{{$s->id}}">{{$s->status_name}}</option>
+                                    
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="drop dropdown">
+                                    <select id="ticketlead" class="ticket_lead btn btn-secondary dropdown-toggle" >
+                                        <option value="">Ticket Lead</option>
+                                        @foreach($ticketlead as $lead)
+                                        
+                                            <option value="{{$lead->id}}">{{$lead->name}}</option>
+                                        
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="drop dropdown">
+                                    <select id="assignee" class="ticket_lead btn btn-info dropdown-toggle" >
+                                        <option value="">Assignee</option>
+                                        @foreach($users as $user)
+                                        
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" id="btnsubmit" class="btnsubmit drop btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="" class="customdatatable display min-w850">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">TICKET ID</th>
+                                        {{-- <th class="hiddenField" scope="col">COMPANY ID</th>
+                                        <th class="hiddenField" scope="col">BRANCH ID</th>
+                                        <th class="hiddenField" scope="col">BRANCH CODE</th> --}}
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">BRANCH NAME</th>
+                                        <th scope="col">SUPPORT TYPE</th>
+                                        <th scope="col">PRODUCT</th>
+                                        <th scope="col">SERVICE</th>
+                                        <th scope="col">CUSTOMER NAME</th>
+                                        <th scope="col">CUSTOMER EMAIL</th>
+                                        <th scope="col">CUSTOMER NUMBER</th>
+                                        <th scope="col">RAISED AT</th>
+                                        <th scope="col">TICKET LEAD</th>
+                                        <th scope="col">DEPARTMENT</th>
+                                        <th scope="col">ASSIGN TO</th>
+                                        <th scope="col">STATUS</th>
+                                        <th scope="col">PRIORITY</th>
+                                        <th scope="col">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">TICKET ID</th>
+                                        {{-- <th class="hiddenField" scope="col">COMPANY ID</th>
+                                        <th class="hiddenField" scope="col">BRANCH ID</th>
+                                        <th class="hiddenField" scope="col">BRANCH CODE</th> --}}
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">BRANCH NAME</th>
+                                        <th scope="col">SUPPORT TYPE</th>
+                                        <th scope="col">PRODUCT</th>
+                                        <th scope="col">SERVICE</th>
+                                        <th scope="col">CUSTOMER NAME</th>
+                                        <th scope="col">CUSTOMER EMAIL</th>
+                                        <th scope="col">CUSTOMER NUMBER</th>
+                                        <th scope="col">RAISED AT</th>
+                                        <th scope="col">TICKET LEAD</th>
+                                        <th scope="col">DEPARTMENT</th>
+                                        <th scope="col">ASSIGN TO</th>
+                                        <th scope="col">STATUS</th>
+                                        <th scope="col">PRIORITY</th>
+                                        <th scope="col">ACTION</th>
+                                        
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script>
     $.ajaxSetup({
@@ -100,20 +208,23 @@
     var table;
     $(document).ready(function () {
 
-        
-
-        $('.table2').hide();
-        $('.data-table2').hide();
-        table = $('.data-table').DataTable({
+        table = $('.customdatatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('liveticketstable') }}",
+            success:function(data){
+                if(data!=null){
+                    console.log(data);
+                }else{
+                    alert(data.error);
+                }
+            },
             columns: [
                 {data: 'ticket_id', name: 'ticket_id',class:"ticket_id"},
                 
-                {data: 'company_id', name: 'company_id', class:"company_id"},
-                {data: 'branch_id', name: 'branch_id', class:"branch_id"},
-                {data: 'branch_code', name: 'branch_code', class:"branch_code"},
+                // {data: 'company_id', name: 'company_id', class:"company_id hiddenField"},
+                // {data: 'branch_id', name: 'branch_id', class:"branch_id hiddenField"},
+                // {data: 'branch_code', name: 'branch_code', class:"branch_code hiddenField"},
                 {data: 'company_name', name: 'company_name',class:"company_name"},
                 {data: 'branch_name', name: 'branch_name',class:"branch_name"},
                 {data: 'support_type', name: 'support_type',class:"support_type"},
@@ -124,27 +235,11 @@
                 {data: 'exec_number', name: 'exec_number',class:"exec_number"},
                 {data: 'created_at', name: 'created_at',class:"ticket_raised"},
                 {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
+                {data: 'department', name: 'department',class:"department"},
                 
                 {data: 'assign_to', name: 'assign_to',class:"assign_to"},
-                {       
-                    defaultContent: "",
-                    data: "status",
-                    class:"status",
-                    render: function (data, type, row, meta) {
-                        var dropdown = '';
-                        if (row != null) {
-                            dropdown += '<select class="btn btn-warning dropdown-toggle">';
-                            dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Open">Open</option>';
-                            dropdown += '<option value="WorkinProgress">Work in Progress</option>';
-                            dropdown += '</select>';
-                        }
-                        else {
-                            dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="0">Status</option></select>';
-                        }
-                        return dropdown;
-                    }
-                },
+                {data: 'status', name: 'status',class:"status"},
+                
                 {       
                     defaultContent: "",
                     data: "priority",
@@ -177,7 +272,7 @@ $('#btnsubmit').click(function () {
     var assign_to= $("#assignee").val()==""?null:$("#assignee").val();
     var ticket_lead= $("#ticketlead").val()==""?null:$("#ticketlead").val();
     var status= $("#status").val()==""?null:$("#status").val();
-    table = $('.data-table').DataTable({
+    table = $('.customdatatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
@@ -187,9 +282,9 @@ $('#btnsubmit').click(function () {
             columns: [
                 {data: 'ticket_id', name: 'ticket_id',class:"ticket_id"},
                 
-                {data: 'company_id', name: 'company_id', class:"company_id"},
-                {data: 'branch_id', name: 'branch_id', class:"branch_id"},
-                {data: 'branch_code', name: 'branch_code', class:"branch_code"},
+                // {data: 'company_id', name: 'company_id', class:"company_id"},
+                // {data: 'branch_id', name: 'branch_id', class:"branch_id"},
+                // {data: 'branch_code', name: 'branch_code', class:"branch_code"},
                 {data: 'company_name', name: 'company_name',class:"company_name"},
                 {data: 'branch_name', name: 'branch_name',class:"branch_name"},
                 {data: 'support_type', name: 'support_type',class:"support_type"},
@@ -200,28 +295,10 @@ $('#btnsubmit').click(function () {
                 {data: 'exec_number', name: 'exec_number',class:"exec_number"},
                 {data: 'created_at', name: 'created_at',class:"ticket_raised"},
                 {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
-                
+                {data: 'department', name: 'department',class:"department"},
                 {data: 'assign_to', name: 'assign_to',class:"assign_to"},
-                {       
-                    defaultContent: "",
-                    data: "status",
-                    class:"status",
-                    render: function (data, type, row, meta) {
-                        var dropdown = '';
-                        if (row != null) {
-                            dropdown += '<select class="btn btn-warning dropdown-toggle">';
-                            dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Open">Open</option>';
-                            dropdown += '<option value="Close">Close</option>';
-                            dropdown += '<option value="WorkinProgress">Work in Progress</option>';
-                            dropdown += '</select>';
-                        }
-                        else {
-                            dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="0">Status</option></select>';
-                        }
-                        return dropdown;
-                    }
-                },
+                {data: 'status', name: 'status',class:"status"},
+                
                 {       
                     defaultContent: "",
                     data: "priority",
@@ -231,8 +308,8 @@ $('#btnsubmit').click(function () {
                         if (row != null) {
                             dropdown += '<select class="btn btn-primary dropdown-toggle">';
                             dropdown += '<option value="'+data+'">'+data+'</option>';
-                            dropdown += '<option value="Open">High</option>';
-                            dropdown += '<option value="Close">Low</option>';
+                            dropdown += '<option value="High">High</option>';
+                            dropdown += '<option value="Low">Low</option>';
                             dropdown += '<option value="Medium">Medium</option>';
                             dropdown += '</select>';
                         }
@@ -254,7 +331,7 @@ $('body').on('click', '.update', function (e) {
             ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").val(),
             assign_to: $(this).closest("tr").find(".assign_to").find(":selected").val(),
             assigned_tester: $(this).closest("tr").find(".assigned_tester").find(":selected").val(),
-            status: $(this).closest("tr").find(".status").find(":selected").text(),
+            status: $(this).closest("tr").find(".status").find(":selected").val(),
             priority: $(this).closest("tr").find(".priority").find(":selected").text(),
         };
 

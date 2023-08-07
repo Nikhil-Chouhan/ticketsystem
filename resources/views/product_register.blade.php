@@ -1,13 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
- .imp.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: rgb(238, 166, 144);
-            opacity: 1; /* Firefox */
-}
-</style>
-<section class="vh-100">
+
     @if (\Session::has('msg'))
     <div class="alert alert-success">
         <ul>
@@ -15,54 +9,67 @@
         </ul>
     </div>
     @endif
-    <div class="container mt-2">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-12 col-xl-11">
-          <div class="card text-black" style="border-radius: 25px;">
-            <div class="card-body p-md-5">
-              <div class="row justify-content-center">
-                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-  
-                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Add Product</p>
-  
-                <form action="{{isset($productDetails) ? @url('updateproduct/'.$productDetails->id) : @route('productregister') }}" method="Post" name="register_product" class="mx-1 mx-md-4">
-                    @csrf
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <input id="product_name" name="product_name" class="form-control imp" placeholder="Product Name" value="{{isset($productDetails->product_name) ? $productDetails->product_name : ''}}">
-                      </div>
-                    </div>
-                    @error('product_name')
-                      <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror 
-  
-                    <div class="d-flex flex-row align-items-center mb-4">
-                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                      <div class="form-outline flex-fill mb-0">
-                        <textarea id="product_description" name="product_description" class="form-control" placeholder="Product Description" >{{isset($productDetails->product_description) ? $productDetails->product_description : ''}}</textarea>
-                      </div>
-                    </div>
 
-                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="submit" class="btn btn-success btn-lg">Save Product</button>
+    <div class="container-fluid">
+      <div class="page-titles">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="javascript:void(0)">Masters</a></li>
+          <li class="breadcrumb-item active"><a href="{{route('productmaster')}}">Product Master</a></li>
+          <li class="breadcrumb-item active"><a href="{{route('productregister')}}">Product Register</a></li>
+        </ol>     
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Product Register</h4>
+            </div>
+            <div class="card-body">
+          
+            <div class="basic-form">
+              <form action="{{isset($productDetails) ? @url('updateproduct/'.$productDetails->id) : @route('productregister') }}" class="form-valide-with-icon" method="post">
+                @csrf
+                <div class="row">
+                  <div class="col-xl-6">
+                   
+                    <div class="form-group">
+                        <label class="text-label">Product Name
+                          <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <input type="text" class="form-control" name="product_name" value="{{isset($productDetails->product_name) ? $productDetails->product_name : ''}}" placeholder="Enter Product Name">
+                        </div>
                     </div>
-  
-                </form>
-  
+                  </div>
+                  <div class="col-xl-6">
+                    <div class="form-group">
+                      <label class="text-label">Product Description
+                        <span class="text-danger">*</span>
+                      </label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                          </div>
+                          <textarea type="text" class="form-control" name="product_description" placeholder="Enter Product Description">{{isset($productDetails->product_description) ? $productDetails->product_description : ''}}</textarea>
+                      </div>
+                    </div>
+                  </div>  
+                    <div class="form-group">
+                      <button type="submit" class=" btn mr-2 btn-success">Submit</button>
+                    </div>
+                    
+                  </div>
                 </div>
-                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-  
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                    class="img-fluid" alt="Sample image">
-  
-                </div>
-              </div>
+              </form>
             </div>
           </div>
+
+          
         </div>
       </div>
     </div>
-  </section>
-
 @endsection

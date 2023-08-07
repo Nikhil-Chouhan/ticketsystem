@@ -21,6 +21,8 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\TicketMailTemplate;
+use App\Models\ExcelFile;
 
 class AdminController extends Controller
 {
@@ -39,9 +41,11 @@ class AdminController extends Controller
 
     //Ticket Details Page
     public function ticketDetail($ticketid){
+
         //$getTicketDetails=Tickets::with('image')->where('id',$ticketid)->firstOrfail();
-        $getTicketDetails=Tickets::join('image','image.tickets_id','=','tickets.id')->where('tickets.id',$ticketid)->first();
-     
+        // $getTicketDetails=Tickets::join('image','image.tickets_id','=','tickets.id')->where('tickets.id',$ticketid)->first();
+        $getTicketDetails=Tickets::where('id',$ticketid)->first();
+        
         $productDetails=$getTicketDetails->product;
         $serviceDetails=$getTicketDetails->service;
         $companyId=$getTicketDetails->company_id;
@@ -60,51 +64,26 @@ class AdminController extends Controller
         
         $getTicketDetails->product=$product_name;
         $getTicketDetails->service=$service_name;
-        $getTicketDetails->company_id=$company_details->company_name;
-        $getTicketDetails->branch_id=$branch_details->branch_name;
-        // dd($getTicketDetails);
-        $images=$getTicketDetails->file;
+        $getTicketDetails->company_name=$company_details->company_name;
+        $getTicketDetails->branch_name=$branch_details->branch_name;
+        $getTicketDetails->branch_hero=$branch_details->branch_contactperson_name;
         
-        $imageFile=AdminController::getImageAttribute($images);
-
-        return view('ticket-details',compact('getTicketDetails','imageFile'));
-    }
-
-    //Email Trigger 
-    public function send_email() {
-        $data = array('name'=>"Virat Gandhi");
-     
-        Mail::send(['text'=>'mail'], $data, function($message) {
-           $message->to('thomasshelby077@gmail.com', 'Hello there')->subject
-              ('Laravel Basic Testing Mail');
-           $message->from('prathamdharawat123@gmail.com','Hi hi');
-        });
-        echo "Basic Email Sent. Check your inbox.";
-    }
-
-    //Get Open Tickets
-    public function openTicket(Request $request){
-        if ($request->ajax()) {
-            $data = Tickets_Admin::where('status','Open')->get();
+        //$images=$getTicketDetails->file;
         
-            return Datatables::of($data)->addIndexColumn()
-                ->addColumn('ticket_id', function ($data) {
-                    return '<a href="ticketdetail/'.$data->ticket_id.'">'.$data->ticket_id.'</a>';
-                    
-                })
-                ->addColumn('update', function(){
-                    return  '<button id="update" class="update btn btn-outline-warning btn-sm">Update</button>';
-                    //return $btn;
-                })
-                ->rawColumns(['ticket_id','update'])                   
-                ->editColumn('created_at',function($data){
-                    return date('d-M-y', strtotime($data->created_at));
-                })
-                ->make(true);
+        $getimages=Image::where('tickets_id',$ticketid)->first();
+        if($getimages!=null)
+        {
+            $images=$getimages->file;
+            $imageFile=AdminController::getImageAttribute($images);
+            return view('ticket-details',compact('getTicketDetails','imageFile'));
         }
-        return view('open_ticket');
+    
+        else{
+            return view('ticket-details',compact('getTicketDetails'));
+        }
+        
     }
-
+ 
     // Update Tickets
    public function updateTicket(Request $request) 
    {
@@ -125,94 +104,11 @@ class AdminController extends Controller
         return ($openticket);
     }
 
-    public function workinprogress(Request $request){
-        if ($request->ajax()) {
-            $data = Tickets_Admin::where('status','Work in Progress')->get();
-        
-            return Datatables::of($data)->addIndexColumn()
-                ->addColumn('ticket_id', function ($data) {
-                    return '<a href="ticketdetail/'.$data->ticket_id.'">'.$data->ticket_id.'</a>';
-                    
-                })
-                ->addColumn('action', function(){
-                    return  '<button id="update" class="update btn btn-outline-warning btn-sm">Update</button>
-                     <button id="progress" class="ticketprogress btn btn-outline-success btn-sm">Progress</button>';
-                
-                })
-                // ->addColumn('progress', function(){
-                //     return '<button id="progress" class="ticketprogress btn btn-outline-success btn-sm">Progress</button>';
-                
-                //})
-                ->rawColumns(['ticket_id','action'])                   
-                ->editColumn('created_at',function($data){
-                    return date('d-M-y', strtotime($data->created_at));
-                })
-                ->make(true);
-        }
-        
-        return view('work_in_progress');
-    }
-   
-
     public function getProgress($ticket_id){
        // dd($ticket_id);
         //return($request);
         $progressdata = Progress::where('ticket_id',$ticket_id)->get();
         return view('progress',compact('progressdata'));
-    }
-
-    //Submit Ticket
-    public function ticketSubmit(Request $request){
-        $branch_details=Branchmaster::where('branch_code',$request->branch_code)->firstorFail();
-        $company_details=Companymaster::where('id',$branch_details->company_id)->firstorFail();   
-        
-        $imagePaths=[];
-        $images = $request->ticket_image;
-        if($images != null)
-        {
-            foreach($images as $image) {
-                $file = $image->getClientOriginalName();
-                $image->move('images/', $file);
-            
-                // $newfile = env('APP_URL').'public/images/' . $file;
-                $newfile = config('app.url').'/images/' . $file;
-                $imagePaths[] = $newfile;
-            }
-        }
-
-        $ticket_details=new Tickets;
-        $image=new Image;
-
-        $ticket_details->isLive=0;
-        $ticket_details->escalate=0;
-
-        $ticket_details->company_id=$branch_details->company_id;
-        $ticket_details->branch_id=$branch_details->id;
-        // $ticket_details->branch_name=$branch_details->branch_name;
-        // $ticket_details->company_name=$company_details->company_name;
-        
-        $ticket_details->product=$branch_details->product;
-        $ticket_details->service=$branch_details->service;
-        $ticket_details->support_type=$branch_details->support_type;
-
-        $ticket_details->exec_name=$branch_details->branch_contactperson_name;
-        $ticket_details->exec_number=$branch_details->branch_contactperson_number;
-        $ticket_details->exec_email=$branch_details->branch_contactperson_email;
-       
-        $ticket_details->branch_code=$request->branch_code;
-        $ticket_details->ticket_title=$request->ticket_title;
-        $ticket_details->ticket_description=$request->ticket_description;
-        // dd($ticket_details); 
-
-        $ticket_details->save();
-
-        //Store Image in Image table
-        $image->file = implode(',', $imagePaths);
-        // dd($image->file);
-        $ticket_details = $ticket_details->image()->save($image);
-        $branch_code=$request->branch_code;
-        //return view('ticketForm',compact('branch_code'))->with('msg','Ticket Raised Succesfully');
-        return redirect('GetFormLink/'.$branch_code)->with('msg','Ticket Raised Succesfully');
     }
 
     public function getRolePermission(Request $request){
@@ -250,4 +146,21 @@ class AdminController extends Controller
         return view('dashboard',compact('companydata','branchdata','productdata','servicedata','userdata','ticketdata'));
     }
 
+    public function downloadExcel($id){
+        $excelFiles = ExcelFile::where('tickets_id', $id)->get();
+        //dd($excelFiles);
+        //$excelData = $excelFile->excel_file;
+        foreach($excelFiles as $excelFile) {
+            $excelData = gzuncompress($excelFile->excel_file);
+            $fileName = $excelFile->excel_name;
+            
+            $headers = [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="'. $fileName .'"',
+            ];
+           // dd($headers);
+            return response()->make($excelData, 200, $headers);
+        
+        }
+    }
 }

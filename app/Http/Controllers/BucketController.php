@@ -11,6 +11,7 @@ use App\Models\Productmaster;
 use App\Models\Servicemaster;
 use App\Models\Branchmaster;
 use App\Models\User;
+use App\Models\Department;
 use Spatie\Permission\Models\Role;
 use DataTables;
 class BucketController extends Controller
@@ -19,34 +20,42 @@ class BucketController extends Controller
     public function supportBucket(Request $request)
     {
         $ticket_data = Tickets::where('isLive',0)->where('escalate',0)->get();
-            foreach($ticket_data as $data){
-                $data['product_id']=$data['product'];
-                $data['service_id']=$data['service'];
-
-                $productDetails=$data['product'];
-                $serviceDetails=$data['service'];
-                $companyId=$data['company_id'];
-                $branchId=$data['branch_id'];
-    
-                $productId=explode(',',$productDetails);
-                $serviceId=explode(',',$serviceDetails);
-                
-                $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
-                $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
-                $company_details=Companymaster::where('id',$companyId)->firstorFail();
-                $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
-            
-                $product_name=$product_name->implode('product_name',',');
-                $service_name=$service_name->implode('service_name',',');
-                
-                $data['product']=$product_name;
-                $data['service']=$service_name;
-                $data['company_name']=$company_details->company_name;
-                $data['branch_name']=$branch_details->branch_name;
-                
-            }
         $users=Role::where('name', 'Developer')->first()->users;
         $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+        $departments=Department::get();
+        foreach($ticket_data as $data){
+            $data['product_id']=$data['product'];
+            $data['service_id']=$data['service'];
+
+            $productDetails=$data['product'];
+            $serviceDetails=$data['service'];
+            $companyId=$data['company_id'];
+            $branchId=$data['branch_id'];
+
+            // $productId = str_contains($productDetails, ',') ? explode(',',$productDetails) : $productDetails;
+            // $serviceId = str_contains($serviceDetails, ',') ? explode(',',$serviceDetails) : $serviceDetails;
+            // if (str_contains($productDetails, ',')) { 
+            // }
+            // if (str_contains($serviceDetails, ',')) { 
+            // }
+            $productId=explode(',',$productDetails);
+            $serviceId=explode(',',$serviceDetails);
+            
+            $product_name=Productmaster::select('product_name')->whereIn('id',$productId)->get();
+            $service_name=Servicemaster::select('service_name')->whereIn('id',$serviceId)->get();
+            $company_details=Companymaster::where('id',$companyId)->firstorFail();
+            $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
+        
+            $product_name=$product_name->implode('product_name',',');
+            $service_name=$service_name->implode('service_name',',');
+            
+            $data['product']=$product_name;
+            $data['service']=$service_name;
+            $data['company_name']=$company_details->company_name;
+            $data['branch_name']=$branch_details->branch_name;
+            
+        }
+
         if ($request->ajax()) {
             
             return Datatables::of($ticket_data)
@@ -56,30 +65,42 @@ class BucketController extends Controller
                     
                 })
                 ->addColumn('ticket_lead', function($ticket_data) use($ticketlead ) {
-                    $dropdown='<select class="ticket_lead btn btn-secondary dropdown-toggle">';
+                    $dropdown='<div class="basic-dropdown">';
+                    $dropdown.='<select class="ticket_lead btn btn-secondary dropdown-toggle">';
                     $dropdown .='<option value="">Ticket Lead</option>';
                     
                         foreach($ticketlead as $lead){
                             $dropdown .= '<option value="'.$lead->id.'">'.$lead->name.'</option>';
                         }
                         $dropdown .='</select>';
+                        $dropdown .='</div>';
                     return $dropdown;
                 })
-                ->addColumn('assign_to', function($ticket_data) use($users) {
-                    $dropdown='<select class="btn btn-info dropdown-toggle assign_to">';
-                    $dropdown .='<option value="">Select Assignne</option>';
+                ->addColumn('assign_to', function($ticket_data) {
+                    $dropdown='<select id="assign_to" class="assign_to btn btn-info dropdown-toggle ">';
+                    $dropdown .='<option value="">Assignee</option>';
+                        // foreach($users as $user){
+                        //     $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                        // }
+                        
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
+                ->addColumn('department', function($ticket_data) use($departments) {
+                    $dropdown='<select class="btn btn-info dropdown-toggle department">';
+                    $dropdown .='<option value="">Department</option>';
                     
-                        foreach($users as $user){
-                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                        foreach($departments as $department){
+                            $dropdown .= '<option value="'.$department->id.'">'.$department->department.'</option>';
                         }
-                        $dropdown .='</select>';
+                    $dropdown .='</select>';
                     return $dropdown;
                 })
                 ->addColumn('action', function(){
-                    return  '<button id="btngo" class="btngo btn btn-outline-success">Submit</button>';
+                    return  '<button id="btnsave" class="btnsave btn btn-outline-success">Open Ticket</button>';
                     //return $btn;
                 })
-                ->rawColumns(['id','action','ticket_lead','assign_to'])                   
+                ->rawColumns(['id','action','ticket_lead','assign_to','department'])                   
                 ->editColumn('created_at',function($ticket_data){
                     return date('d-M-y', strtotime($ticket_data->created_at));
                 })
@@ -92,6 +113,10 @@ class BucketController extends Controller
     //Project Management Bucket
     public function pmBucket(Request $request){
         $ticket_data = Tickets::where('escalate',1)->where('isLive',0)->get();
+        $users=Role::where('name', 'Developer')->first()->users;
+        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+        $departments=Department::get();
+
         foreach($ticket_data as $data){
             $data['product_id']=$data['product'];
             $data['service_id']=$data['service'];
@@ -101,7 +126,6 @@ class BucketController extends Controller
             $companyId=$data['company_id'];
             $branchId=$data['branch_id'];
         
-
             $productId=explode(',',$productDetails);
             $serviceId=explode(',',$serviceDetails);
             
@@ -119,8 +143,6 @@ class BucketController extends Controller
             $data['branch_name']=$branch_details->branch_name;
             
         }
-        $users=Role::where('name', 'Developer')->first()->users;
-        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
         if ($request->ajax()) {
             
             return Datatables::of($ticket_data)->addIndexColumn()
@@ -129,12 +151,12 @@ class BucketController extends Controller
                     
                 })
                 ->addColumn('assign_to', function($ticket_data) use($users) {
-                    $dropdown='<select class="btn btn-info dropdown-toggle assign_to">';
-                    $dropdown .='<option value="">Select Assignne</option>';
+                    $dropdown='<select id="assign_to" class="btn btn-info dropdown-toggle assign_to">';
+                    $dropdown .='<option value="">Assignne</option>';
                     
-                        foreach($users as $user){
-                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
-                        }
+                        // foreach($users as $user){
+                        //     $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                        // }
                         $dropdown .='</select>';
                     return $dropdown;
                 })
@@ -148,11 +170,21 @@ class BucketController extends Controller
                         $dropdown .='</select>';
                     return $dropdown;
                 })
+                ->addColumn('department', function($ticket_data) use($departments) {
+                    $dropdown='<select class="btn btn-info dropdown-toggle department">';
+                    $dropdown .='<option value="">Department</option>';
+                    
+                        foreach($departments as $department){
+                            $dropdown .= '<option value="'.$department->id.'">'.$department->department.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
                 ->addColumn('action', function(){
-                    return  '<button id="btngo" class="btngo btn btn-outline-success">Submit</button>';
+                    return  '<button id="btnsave" class="btnsave btn btn-outline-success">Open Ticket</button>';
                     //return $btn;
                 })
-                ->rawColumns(['id','assign_to','ticket_lead','action'])                   
+                ->rawColumns(['id','assign_to','ticket_lead','action','department'])                   
                 ->editColumn('created_at',function($ticket_data){
                     return date('d-M-y', strtotime($ticket_data->created_at));
                 })
@@ -165,6 +197,9 @@ class BucketController extends Controller
     //Management Bucket
     public function managementBucket(Request $request){
         $ticket_data = Tickets::where('escalate',2)->where('isLive',0)->get();
+        $users=Role::where('name', 'Developer')->first()->users;
+        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+        $departments=Department::get();
         foreach($ticket_data as $data){
             $data['product_id']=$data['product'];
             $data['service_id']=$data['service'];
@@ -191,8 +226,7 @@ class BucketController extends Controller
             $data['branch_name']=$branch_details->branch_name;
             
         }
-        $users=Role::where('name', 'Developer')->first()->users;
-        $ticketlead=Role::where('name', 'Project Manager')->first()->users;
+
         if ($request->ajax()) {
             
             return Datatables::of($ticket_data)->addIndexColumn()
@@ -201,12 +235,12 @@ class BucketController extends Controller
                     
                 })
                 ->addColumn('assign_to', function($ticket_data) use($users) {
-                    $dropdown='<select class="btn btn-info dropdown-toggle assign_to">';
-                    $dropdown .='<option value="">Select Assignne</option>';
+                    $dropdown='<select id="assign_to" class="btn btn-info dropdown-toggle assign_to">';
+                    $dropdown .='<option value="">Assignne</option>';
                     
-                        foreach($users as $user){
-                            $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
-                        }
+                        // foreach($users as $user){
+                        //     $dropdown .= '<option value="'.$user->id.'">'.$user->name.'</option>';
+                        // }
                         $dropdown .='</select>';
                     return $dropdown;
                 })
@@ -220,11 +254,21 @@ class BucketController extends Controller
                         $dropdown .='</select>';
                     return $dropdown;
                 })
+                ->addColumn('department', function($ticket_data) use($departments) {
+                    $dropdown='<select class="btn btn-info dropdown-toggle department">';
+                    $dropdown .='<option value="">Department</option>';
+                    
+                        foreach($departments as $department){
+                            $dropdown .= '<option value="'.$department->id.'">'.$department->department.'</option>';
+                        }
+                    $dropdown .='</select>';
+                    return $dropdown;
+                })
                 ->addColumn('action', function(){
-                    return  '<button id="btngo" class="btngo btn btn-outline-success">Submit</button>';
+                    return  '<button id="btnsave" class="btnsave btn btn-outline-success">Open Ticket</button>';
                     //return $btn;
                 })
-                ->rawColumns(['id','action','ticket_lead','assign_to'])                   
+                ->rawColumns(['id','action','ticket_lead','assign_to','department'])                   
                 ->editColumn('created_at',function($ticket_data){
                     return date('d-M-y', strtotime($ticket_data->created_at));
                 })
@@ -257,6 +301,7 @@ class BucketController extends Controller
         $details->assign_to=$request->assign_to;
         $details->status=$request->status;
         $details->priority=$request->priority;
+        $details->department=$request->department;
         $details->save(); 
 
         $progress=new Progress;
@@ -274,4 +319,11 @@ class BucketController extends Controller
         //DB::commit();
         
     }
+
+    public function getDepartmentUsers(Request $request){
+       
+        $users=User::where('department',$request->department_id)->get();
+        return($users);
+    }
+    
 }

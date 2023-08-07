@@ -10,71 +10,81 @@
 @section('content')
 
     <div class="container-fluid">
+        <div class="page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">My QnA</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Quality & Assurance Tickets</a></li>
+            </ol>
+        </div>
         <div class="row">
-            <main class="col-md-12 px-md-4">
-
-                <div class="card-main main-content">
-                <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-5">
-                    <section class="main-header grid ">
-                        <h1>My QnA Tickets</h1>
-                        <!-- <button-main class="button-main">
-                          <i class="fa-solid fa-plus"></i>
-                          <span>Add new user</span>
-                        </button-main> -->
-                    </section>
-
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Filter By
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Date</a></li>
-                                <li><a class="dropdown-item" href="#">Client Name</a></li>
-                                <li><a class="dropdown-item" href="#">Open</a></li>
-                                <li><a class="dropdown-item" href="#">Close</a></li>
-                            </ul>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Quality & Assurance Tickets</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="" class="customdatatable display min-w850">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">TICKET ID</th>
+                                        <th scope="col">COMPANY ID</th>
+                                        <th scope="col">BRANCH ID</th>
+                                        <th scope="col">BRANCH CODE</th>
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">BRANCH NAME</th>
+                                        <th scope="col">SUPPORT TYPE</th>
+                                        <th scope="col">PRODUCT</th>
+                                        <th scope="col">SERVICE</th>
+                                        <th scope="col">EXEC NAME</th>
+                                        <th scope="col">EXEC EMAIL</th>
+                                        <th scope="col">EXEC NUMBER</th>
+                                        <th scope="col">RAISED AT</th>
+                                        <th scope="col">TICKET LEAD</th>
+                                        <th scope="col">DEPARTMENT</th>
+                                        <th scope="col">ASSIGNED TO</th>
+                                        <th class="hiddenField" scope="col">ASSIGNEE ID</th>
+                                        <th scope="col">TESTER ASSIGNED</th>
+                                        <th class="hiddenField" scope="col">TESTER ASSIGNED ID</th>
+                                        <th scope="col">PRIORITY</th>
+                                        <th scope="col">STATUS</th>
+                                        <th scope="col">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">TICKET ID</th>
+                                        <th scope="col">COMPANY ID</th>
+                                        <th scope="col">BRANCH ID</th>
+                                        <th scope="col">BRANCH CODE</th>
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">BRANCH NAME</th>
+                                        <th scope="col">SUPPORT TYPE</th>
+                                        <th scope="col">PRODUCT</th>
+                                        <th scope="col">SERVICE</th>
+                                        <th scope="col">EXEC NAME</th>
+                                        <th scope="col">EXEC EMAIL</th>
+                                        <th scope="col">EXEC NUMBER</th>
+                                        <th scope="col">RAISED AT</th>
+                                        <th scope="col">TICKET LEAD</th>
+                                        <th scope="col">DEPARTMENT</th>
+                                        <th scope="col">ASSIGNED TO</th>
+                                        <th class="hiddenField" scope="col">ASSIGNEE ID</th>
+                                        <th scope="col">TESTER ASSIGNED</th>
+                                        <th class="hiddenField" scope="col">TESTER ASSIGNED ID</th>
+                                        <th scope="col">PRIORITY</th>
+                                        <th scope="col">STATUS</th>
+                                        <th scope="col">ACTION</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
-
-             
-                <div class="table-responsive">
-                    <table class="table data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">TICKET ID</th>
-                                <th scope="col">COMPANY ID</th>
-                                <th scope="col">BRANCH ID</th>
-                                <th scope="col">BRANCH CODE</th>
-                                <th scope="col">COMPANY NAME</th>
-                                <th scope="col">BRANCH NAME</th>
-                                <th scope="col">SUPPORT TYPE</th>
-                                <th scope="col">PRODUCT</th>
-                                <th scope="col">SERVICE</th>
-                                <th scope="col">EXEC NAME</th>
-                                <th scope="col">EXEC EMAIL</th>
-                                <th scope="col">EXEC NUMBER</th>
-                                <th scope="col">RAISED AT</th>
-                                <th scope="col">TICKET LEAD</th>
-                                <th scope="col">ASSIGNED TO</th>
-                                <th class="hiddenField" scope="col">ASSIGNEE ID</th>
-                                <th scope="col">TESTER ASSIGNED</th>
-                                <th class="hiddenField" scope="col">TESTER ASSIGNED ID</th>
-                                <th scope="col">PRIORITY</th>
-                                <th scope="col">STATUS</th>
-                                <th scope="col">ACTION</th>
-                            </tr>
-                        </thead>
-              
-                        <tbody>
-                        
-                        </tbody>
-                    </table>
-                </div>
-            </main>
+            </div>
         </div>
     </div>
 
@@ -88,14 +98,14 @@
 
     $(document).ready(function () {
     
-        var table = $('.data-table').DataTable({
+        var table = $('.customdatatable').DataTable({
         processing: true,
-        oLanguage: {
-        oPaginate: {
-            sNext: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-right" ></i></span>',
-            sPrevious: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-left" ></i></span>'
-          }
-        },
+        // oLanguage: {
+        // oPaginate: {
+        //     sNext: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-right" ></i></span>',
+        //     sPrevious: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-left" ></i></span>'
+        //   }
+        // },
         serverSide: true,
         ajax: "{{ url('QnATickets') }}",
         columns: [
@@ -113,28 +123,8 @@
             {data: 'exec_number', name: 'exec_number',class:"exec_number"},
             
             {data: 'created_at', name: 'created_at',class:"ticket_raised"},
-          
-            {   
-                defaultContent: "",
-                data: "ticket_lead",
-                class:"ticket_lead ",
-                id:"ticket_lead",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="ticket_lead btn btn-secondary dropdown-toggle" >';
-                        dropdown += '<option value="0">Ticket Lead</option>';
-                        dropdown += '<option value="Prachi">Prachi</option>';
-                        dropdown += '<option value="Asmita">Asmita</option>';
-                        dropdown += '<option value="Akhila">Akhila</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-secondary dropdown-toggle"><option value="0">Ticket Lead</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
+            {data: 'ticket_lead', name: 'ticket_lead',class:"ticket_lead"},
+            {data: 'department', name: 'department',class:"department"},
             {data: 'assign_to', name: 'assign_to',class:"assign_to"},
             {data: 'assign_to_id', name: 'assign_to_id',class:"hiddenField assign_to_id"},
             
@@ -155,25 +145,7 @@
                     return badge;
                 }
             },
-            {       
-                defaultContent: "",
-                data: "status",
-                class:"status",
-                render: function (data, type, row, meta) {
-                    var dropdown = '';
-                    if (row != null) {
-                        dropdown += '<select class="btn btn-warning dropdown-toggle">';
-                        dropdown += '<option value="'+data+'">'+data+'</option>';
-                        dropdown += '<option value="QnA Pass">QnA Pass</option>';
-                        dropdown += '<option value="QnA Fail">QnA Fail</option>';
-                        dropdown += '</select>';
-                    }
-                    else {
-                        dropdown = '<select class="btn btn-warning dropdown-toggle"><option value="0">Status</option></select>';
-                    }
-                    return dropdown;
-                }
-            },
+            {data: 'status', name: 'status',class:"status"},
             
             {data: 'update', name: 'update'},
         ]
@@ -185,21 +157,7 @@
         e.preventDefault();
         var formData = {
             ticket_id: $(this).closest("tr").find(".ticket_id").text(),
-            // company_id: $(this).closest("tr").find(".company_id").text(),
-            // branch_id: $(this).closest("tr").find(".branch_id").text(),
-            // branch_code: $(this).closest("tr").find(".branch_code").text(),
-            // product: $(this).closest("tr").find(".product_id").text(),
-            // service: $(this).closest("tr").find(".service_id").text(),
-            // support_type: $(this).closest("tr").find(".support_type").text(),
-            // exec_name: $(this).closest("tr").find(".exec_name").text(),
-            // exec_email: $(this).closest("tr").find(".exec_email").text(),
-            // exec_number: $(this).closest("tr").find(".exec_number").text(),
-            //  issue_type: $(this).closest("tr").find(".issue_type").text(),
-            // ticket_raised: $(this).closest("tr").find(".ticket_raised").text(),
-            // ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").text(),
-            // assign_to: $(this).closest("tr").find(".assign_to_id").find(":selected").text(),
-            status: $(this).closest("tr").find(".status").find(":selected").text(),
-            // priority: $(this).closest("tr").find(".priority").find(":selected").text(),
+            status: $(this).closest("tr").find(".status").find(":selected").val(),
         };
 
         $.ajax({

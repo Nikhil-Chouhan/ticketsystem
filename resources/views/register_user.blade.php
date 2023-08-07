@@ -42,7 +42,19 @@
                         <input type="password" id="password" name="password" placeholder="Password" class="form-control" />
                       </div>
                     </div>
-                    
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fa-solid fa-laptop-file fa-lg me-3 fa-fw"></i>
+                      <div class="drop dropdown " style="width: 100%;">
+                          <select id="selectDepartment" name="department_id" class="flex-fill mb-0 btn border dropdown-toggle"  style="width: 100%; text-align:left;">
+                              <option style="color: rgb(238, 166, 144);"selected disabled>Select Department</option>
+                              <option value="1" >Web Development</option>
+                              <option value="2" >App Development</option>
+                              {{-- @foreach($branchdetails['service'] as $serviceId => $service_name)
+                                <option value="{{ $serviceId }}">{{ $service_name }}</option>
+                              @endforeach --}}
+                          </select>
+                      </div>
+                    </div>
                     <div class="multiselectmain col d-flex flex-row align-items-center mb-4">
                       <div class="drop dropdown " style="width: 100%;">
                         <select id="roles" name="roles[]"  multiple="multiple" style="width: 100%;">

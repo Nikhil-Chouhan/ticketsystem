@@ -16,6 +16,7 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BucketController;
 use App\Http\Controllers\MyTicketsController;
 use App\Http\Controllers\TesterController;
+use App\Http\Controllers\DepartmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,17 +32,8 @@ Route::get('/', function () {
     return view('login');
 })->name('/');
 
-// Route::get('/', function () {
-//     return view('home');
-// })->name('/');
-
-
-// Route::get('login', function () {
-//     return view('login');
-// })->name('login');
-
-    //TicketForm URL Generation
-Route::get('GetFormLink/{id}',[BranchController::class,'getFormLink']);
+//TicketForm URL Generation
+Route::get('GetFormLink/{branchcode}',[TicketController::class,'getFormLink']);
 
 Route::group(['middleware' => ['guest']], function() {
 
@@ -72,7 +64,7 @@ Route::group(['middleware' => 'can:manage_registers'], function(){
     Route::post('branchregister', [BranchController::class,'saveBranch'])->name('branchregister');
 
     //Get Company Details
-    Route::get('getCompanyDetails', [BranchController::class,'getCompanyDetails']);
+    Route::get('getCompanyDetails', [CompanyController::class,'getCompanyDetails']);
 
     //Product Register
     Route::get('productregister', function () {
@@ -85,6 +77,12 @@ Route::group(['middleware' => 'can:manage_registers'], function(){
         return view('service_register');
     });
     Route::post('serviceregister', [ServiceController::class,'saveService'])->name('serviceregister');
+
+    Route::get('departmentregister', function () {
+        return view('department_form');
+    });
+
+    Route::post('department/create', [DepartmentController::class,'saveDepartment'])->name('department/create');
 
 });
 
@@ -104,6 +102,12 @@ Route::group(['middleware' => 'can:manage_masters'], function(){
 
     //Service Master
     Route::get('servicemaster', [ServiceController::class,'serviceMaster'])->name('servicemaster');
+
+    //Department Master
+    Route::get('departmentmaster', [DepartmentController::class,'departmentMaster'])->name('departmentmaster');
+    Route::get('editdepartment/{id}', [DepartmentController::class,'departmentEdit'])->name('editdepartment/{id}');
+    Route::post('updatedepartment/{id}', [DepartmentController::class,'departmentUpdate'])->name('updatedepartment/{id}');
+    Route::get('department/delete/{id}', [DepartmentController::class,'departmentDelete'])->name('department/delete/{id}');
 
 });
 
@@ -149,10 +153,34 @@ Route::group(['middleware' => 'can:manage_activetickets'], function(){
 
 });
 
-Route::group(['middleware' => 'can:support_bucket','pm_bucket','management_bucket'], function(){
-    //Store Ticket in Admin database.
+Route::group(['middleware' => 'can:manage_testing'], function(){
     
+    Route::get('QnATickets', [TesterController::class,'getAssignedQnATickets'])->name('QnATickets');
+    Route::get('QnAPassTickets', [TesterController::class,'getPassQnATickets'])->name('QnAPassTickets');
+    Route::get('QnAfailTickets', [TesterController::class,'getTesterFailQnA'])->name('QnAfailTickets');
+
 });
+
+Route::group(['middleware' => 'can:manage_mytickets'], function(){
+    //My Open Tickets
+    Route::get('mydepartmenttickets', [MyTicketsController::class,'myDepartmentTickets'])->name('mydepartmenttickets');
+
+    //My Open Tickets
+    Route::get('myopentickets', [MyTicketsController::class,'getUserOpenTickets'])->name('myopentickets');
+
+    //My Work in Progress Tickets
+    Route::get('myinprogresstickets', [MyTicketsController::class,'getUserInProgressTickets'])->name('myinprogresstickets');
+
+    //My Pushto QnA Tickets
+    Route::post('myticket/PushQnA', [AdminController::class,'pushQnA'])->name('myticket/PushQnA');
+
+    //My in QnA Tickets
+    Route::get('myQnAtickets', [MyTicketsController::class,'getUserQnATickets'])->name('myQnAtickets');
+
+    //My Failed QnA Tickets
+    Route::get('myFailedQnAtickets', [MyTicketsController::class,'getFailedQna'])->name('myFailedQnAtickets');
+});
+
 
 //User Management Access
 Route::group(['middleware' => 'can:manage_users'], function(){
@@ -185,17 +213,18 @@ Route::group(['middleware' => 'can:manage_users'], function(){
     //Users Table
     Route::get('users', [UserController::class,'userTable'])->name('users');
 
-
 });
+//raise ticket from panel
+Route::get('generateticket', [TicketController::class,'generateTicketForm']);
+
+//Update Tickets
+Route::post('generateticket', [TicketController::class,'generateTicket'])->name('generateticket');
 
 //TicketDetail Page
 Route::get('ticketdetail/{id}', [AdminController::class,'ticketDetail'])->name('ticketdetail');
 
 //Update Tickets
 Route::post('UpdateTicket', [AdminController::class,'updateTicket'])->name('UpdateTicket');
-
-//Email Trigger
-Route::get('mail', [AdminController::class,'send_email']);
 
 //Ticket Progress 
 Route::get('showprogress/{ticket_id}',[AdminController::class,'getProgress'])->name('showprogress');
@@ -205,27 +234,29 @@ Route::get('ticketform', function () {
     return view('ticketForm');
 })->name('ticketform');
 
+//Get Branch Details
+Route::get('getbranchdetails', [TicketController::class,'getBranchDetails']);
+
+//Get Branch Details
+Route::get('getproductservice', [TicketController::class,'get_ProductService']);
+
 //Ticket Submit
-Route::post('TicketSubmit', [AdminController::class,'ticketSubmit'])->name('TicketSubmit');
+Route::post('TicketSubmit', [TicketController::class,'ticketSubmit'])->name('TicketSubmit');
 
-//My QnA Tickets
-Route::get('myopentickets', [MyTicketsController::class,'getUserOpenTickets'])->name('myopentickets');
-
+//Update MyTickets
 Route::post('myticket/update', [AdminController::class,'updateMyTicket'])->name('myticket/update');
 
-Route::get('myinprogresstickets', [MyTicketsController::class,'getUserInProgressTickets'])->name('myinprogresstickets');
-
-Route::post('myticket/PushQnA', [AdminController::class,'pushQnA'])->name('myticket/PushQnA');
-
-Route::get('myQnAtickets', [MyTicketsController::class,'getUserQnATickets'])->name('myQnAtickets');
-
-Route::get('myFailedQnAtickets', [MyTicketsController::class,'getFailedQna'])->name('myFailedQnAtickets');
+//Update My Department
+Route::post('mydepartment/ticketupdate', [MyTicketsController::class,'updateMydepartment'])->name('mydepartment/ticketupdate');
 
 //Get User Details
 Route::get('get-userdetails', [UserController::class,'getUser'])->name('get-userdetails');
 
-Route::get('QnATickets', [TesterController::class,'getAssignedQnATickets'])->name('QnATickets');
+//Get Users Department wise 
+Route::get('getdepartmentusers', [BucketController::class,'getDepartmentUsers'])->name('getdepartmentusers');
 
-Route::get('QnAPassTickets', [TesterController::class,'getPassQnATickets'])->name('QnAPassTickets');
+//Set Users Department wise 
+Route::get('setUsers', [BucketController::class,'setUsers'])->name('setUsers');
+//download Excel
+Route::get('downloadexcel/{id}', [AdminController::class,'downloadExcel'])->name('downloadexcel/{id}');
 
-Route::get('QnAfailTickets', [TesterController::class,'getTesterFailQnA'])->name('QnAfailTickets');

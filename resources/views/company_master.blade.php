@@ -1,10 +1,64 @@
 @extends('layouts.app')
 
 @section('content')
-
-@section('content')
+    
     <div class="container-fluid">
+        <div class="page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Masters</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Company Master</a></li>
+            </ol>
+        </div>
         <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Company Master</h4>
+                        <div class="btn-toolbar mb-2 mb-md-0 mx-5">
+                            <div class="btn-group">
+                                <a href="{{url('companyregister')}}"><button type="button" class="btn btn-outline-success .btn-rounded ">+ Add Company</button></a>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="" class="customdatatable display min-w850">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">COMPANY ID</th>
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">COMPANY ADDRESS</th>
+                                        <th scope="col">COMPANY CITY</th>
+                                        <th scope="col">COMPANY GST</th>
+                                        <th scope="col">CONTACT PERSON NAME</th>
+                                        <th scope="col">CONTACT PERSON NUMBER</th>
+                                        <th scope="col">CONTACT PERSON EMAIL</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">COMPANY ID</th>
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">COMPANY ADDRESS</th>
+                                        <th scope="col">COMPANY CITY</th>
+                                        <th scope="col">COMPANY GST</th>
+                                        <th scope="col">CONTACT PERSON NAME</th>
+                                        <th scope="col">CONTACT PERSON NUMBER</th>
+                                        <th scope="col">CONTACT PERSON EMAIL</th>
+                                        
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="row">
             <main class="col-md-12 px-md-4">
 
                 <div class="card-main main-content">
@@ -19,22 +73,10 @@
 
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Filter By
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Date</a></li>
-                                <li><a class="dropdown-item" href="#">Client Name</a></li>
-                                <li><a class="dropdown-item" href="#">Open</a></li>
-                                <li><a class="dropdown-item" href="#">Close</a></li>
-                            </ul>
-                        </div>
+                        
                     </div>
                 </div>
 
-             
                 <div class="table-responsive">
                     <table class="table data-table">
                         <thead>
@@ -47,7 +89,7 @@
                                 <th scope="col">CONTACT PERSON NAME</th>
                                 <th scope="col">CONTACT PERSON NUMBER</th>
                                 <th scope="col">CONTACT PERSON EMAIL</th>
-                                {{-- <th scope="col">ACTION</th> --}}
+                                
                             </tr>
                         </thead>
               
@@ -57,7 +99,7 @@
                     </table>
                 </div>
             </main>
-        </div>
+        </div> --}}
     </div>
 
 <script>
@@ -70,14 +112,14 @@
 
     $(document).ready(function () {
     
-        var table = $('.data-table').DataTable({
+        var table = $('.customdatatable').DataTable({
         processing: true,
-        oLanguage: {
-        oPaginate: {
-            sNext: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-right" ></i></span>',
-            sPrevious: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-left" ></i></span>'
-          }
-        },
+        // oLanguage: {
+        // oPaginate: {
+        //     sNext: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-right" ></i></span>',
+        //     sPrevious: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-left" ></i></span>'
+        //   }
+        // },
         serverSide: true,
         ajax: "{{ url('companymaster') }}",
         columns: [

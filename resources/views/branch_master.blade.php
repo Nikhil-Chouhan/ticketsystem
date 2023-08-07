@@ -2,68 +2,71 @@
 
 @section('content')
 
-@section('content')
     <div class="container-fluid">
+        <div class="page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Masters</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Branch Master</a></li>
+            </ol>
+        </div>
         <div class="row">
-            <main class="col-md-12 px-md-4">
-
-                <div class="card-main main-content">
-                <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-5">
-                    <section class="main-header grid ">
-                        <h1>Branch Master</h1>
-                        <!-- <button-main class="button-main">
-                          <i class="fa-solid fa-plus"></i>
-                          <span>Add new user</span>
-                        </button-main> -->
-                    </section>
-
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Filter By
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Date</a></li>
-                                <li><a class="dropdown-item" href="#">Client Name</a></li>
-                                <li><a class="dropdown-item" href="#">Open</a></li>
-                                <li><a class="dropdown-item" href="#">Close</a></li>
-                            </ul>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Branch Master</h4>
+                        <div class="btn-toolbar mb-2 mb-md-0 mx-5">
+                            <div class="btn-group">
+                                <a href="{{url('branchregister')}}"><button type="button" class="btn btn-outline-success .btn-rounded ">+ Add Branch</button></a>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="" class="customdatatable display min-w850">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">BRANCH ID</th>
+                                        <th scope="col">BRANCH CODE</th>
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">BRANCH NAME</th>
+                                        <th scope="col">BRANCH ADDRESS</th>
+                                        <th scope="col">CONTACT PERSON NAME</th>
+                                        <th scope="col">CONTACT PERSON NUMBER</th>
+                                        <th scope="col">CONTACT PERSON EMAIL</th>
+                                        <th scope="col">SUPPORT TYPE</th>
+                                        <th scope="col">PRODUCT</th>
+                                        <th scope="col">SERVICE</th>
+                                        
+                                        <th scope="col">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">BRANCH ID</th>
+                                        <th scope="col">BRANCH CODE</th>
+                                        <th scope="col">COMPANY NAME</th>
+                                        <th scope="col">BRANCH NAME</th>
+                                        <th scope="col">BRANCH ADDRESS</th>
+                                        <th scope="col">CONTACT PERSON NAME</th>
+                                        <th scope="col">CONTACT PERSON NUMBER</th>
+                                        <th scope="col">CONTACT PERSON EMAIL</th>
+                                        <th scope="col">SUPPORT TYPE</th>
+                                        <th scope="col">PRODUCT</th>
+                                        <th scope="col">SERVICE</th>
+                                        
+                                        <th scope="col">ACTION</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
-
-             
-                <div class="table-responsive">
-                    <table class="table data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">BRANCH ID</th>
-                                <th scope="col">BRANCH CODE</th>
-                                <th scope="col">COMPANY NAME</th>
-                                <th scope="col">BRANCH NAME</th>
-                                <th scope="col">BRANCH ADDRESS</th>
-                                <th scope="col">CONTACT PERSON NAME</th>
-                                <th scope="col">CONTACT PERSON NUMBER</th>
-                                <th scope="col">CONTACT PERSON EMAIL</th>
-                                <th scope="col">SUPPORT TYPE</th>
-                                <th scope="col">PRODUCT</th>
-                                <th scope="col">SERVICE</th>
-                                
-                                <th scope="col">ACTION</th>
-                            </tr>
-                        </thead>
-              
-                        <tbody>
-                        
-                        </tbody>
-                    </table>
-                </div>
-            </main>
+            </div>
         </div>
     </div>
-
 <script>
     $.ajaxSetup({
         headers: {
@@ -74,23 +77,16 @@
 
     $(document).ready(function () {
     
-        var table = $('.data-table').DataTable({
+        var table = $('.customdatatable').DataTable({
         processing: true,
-        oLanguage: {
-        oPaginate: {
-            sNext: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-right" ></i></span>',
-            sPrevious: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-left" ></i></span>'
-          }
-        },
+        // oLanguage: {
+        // oPaginate: {
+        //     sNext: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-right" ></i></span>',
+        //     sPrevious: '<span class="pagination-default"></span><span class="pagination-fa"><i class="fa fa-chevron-left" ></i></span>'
+        //   }
+        // },
         serverSide: true,
         ajax: "{{ url('branchmaster') }}",
-        // success:function(data){
-        //         if(data!=null){
-        //             console.log(data);
-        //         }else{
-        //             console.log(data.error);
-        //         }
-        //     },
         columns: [
             {data: 'id', name: 'id',class:"id"},
             {data: 'branch_code', name: 'branch_code',class:"branch_code"},

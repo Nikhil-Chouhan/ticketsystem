@@ -19,6 +19,7 @@ use DataTables;
 use DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Models\Department;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 class TesterController extends Controller
@@ -27,7 +28,7 @@ class TesterController extends Controller
     public function getAssignedQnATickets(Request $request)
     {
         $user = Auth::user();
-        $myTickets=Tickets_Admin::where('assigned_tester',$user->id)->where('status','QnA')->get();
+        $myTickets=Tickets_Admin::where('assigned_tester',$user->id)->where('status','3')->get();
         
         foreach($myTickets as $data){
             $productDetails=$data['product'];
@@ -36,6 +37,9 @@ class TesterController extends Controller
             $branchId=$data['branch_id'];
             $assign_id=$data['assign_to'];
             $assigned_tester_id=$data['assigned_tester'];
+            $department_id=$data['department'];
+            $status_id=$data['status'];
+            $ticket_lead_id=$data['ticket_lead'];
 
             $productId=explode(',',$productDetails);
             $serviceId=explode(',',$serviceDetails);
@@ -46,7 +50,9 @@ class TesterController extends Controller
             $branch_details=Branchmaster::where('id',$branchId)->firstorFail();
             $assign_to=User::where('id',$assign_id)->firstorFail();
             $assigned_tester=User::where('id',$assigned_tester_id)->firstorFail();
-            
+            $department=Department::where('id',$department_id)->firstorFail();
+            $status=Status::where('id',$status_id)->firstorFail();
+            $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
 
             $product_name=$product_name->implode('product_name',',');
             $service_name=$service_name->implode('service_name',',');
@@ -60,6 +66,10 @@ class TesterController extends Controller
             $data['assign_to']=$assign_to->name;
             $data['assigned_tester_id']=$assigned_tester->id;
             $data['assigned_tester']=$assigned_tester->name;
+            $data['department']=$department->department;               
+            $data['status']=$status->id;
+            $data['status_name']=$status->status_name;
+            $data['ticket_lead']=$ticket_lead->name;
         }
         if ($request->ajax()) {
             return Datatables::of($myTickets)->addIndexColumn()
@@ -70,6 +80,10 @@ class TesterController extends Controller
                 ->addColumn('update', function(){
                     return  '<button id="update" class="update btn btn-outline-success btn-sm">UPDATE</button>';
                 })
+                ->addColumn('ticket_lead', function($myTickets){
+                    $badge='<span class="badge badge-info m-1">'.$myTickets->ticket_lead.'</span>';
+                    return $badge;
+                })
                 ->addColumn('assign_to', function($myTickets){
                     $badge='<span class="badge badge-info m-1">'.$myTickets->assign_to.'</span>';
                     return $badge;
@@ -78,7 +92,23 @@ class TesterController extends Controller
                     $badge='<span class="badge badge-danger m-1">'.$myTickets->assigned_tester.'</span>';
                     return $badge;
                 })
-                ->rawColumns(['ticket_id','update','assign_to','assigned_tester'])                   
+                ->addColumn('department', function ($myTickets) {
+                    $badge='<span class="badge badge-info m-1">'.$myTickets->department.'</span>';
+                    return $badge;
+                })
+                ->addColumn('status', function($ticket_data) {
+                    $dropdown='<select class="status btn btn-warning dropdown-toggle">';
+                    $dropdown .='<option value="'.$ticket_data->status.'">'.$ticket_data->status_name.'</option>';
+                    $allstatus=Status::whereIn('id', ['4','5'])->get();
+        
+                        foreach($allstatus as $status){
+                            $dropdown .= '<option value="'.$status->id.'">'.$status->status_name.'</option>';
+                        }
+                        $dropdown .='</select>';
+                    return $dropdown;
+                })
+
+                ->rawColumns(['ticket_id','update','assign_to','assigned_tester','department','status','ticket_lead'])                   
                 ->editColumn('created_at',function($myTickets){
                     return date('d-M-y', strtotime($myTickets->created_at));
                 })
@@ -91,7 +121,7 @@ class TesterController extends Controller
     public function getPassQnATickets(Request $request)
     {
         $user = Auth::user();
-        $myTickets=Tickets_Admin::where('assigned_tester',$user->id)->where('status','QnA Pass')->get();
+        $myTickets=Tickets_Admin::where('assigned_tester',$user->id)->where('status','4')->get();
         foreach($myTickets as $data){
             $productDetails=$data['product'];
             $serviceDetails=$data['service'];
@@ -100,7 +130,9 @@ class TesterController extends Controller
             $assign_id=$data['assign_to'];
             $assigned_tester_id=$data['assigned_tester'];
             $ticket_lead_id=$data['ticket_lead'];
-
+            $department_id=$data['department'];
+            $status_id=$data['status'];
+           
             $productId=explode(',',$productDetails);
             $serviceId=explode(',',$serviceDetails);
             
@@ -111,7 +143,9 @@ class TesterController extends Controller
             $assign_to=User::where('id',$assign_id)->firstorFail();
             $assigned_tester=User::where('id',$assigned_tester_id)->firstorFail();
             $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
-
+            $department=Department::where('id',$department_id)->firstorFail();
+            $status=Status::where('id',$status_id)->firstorFail();
+            
             $product_name=$product_name->implode('product_name',',');
             $service_name=$service_name->implode('service_name',',');
             
@@ -127,6 +161,10 @@ class TesterController extends Controller
             $data['assigned_tester']=$assigned_tester->name;
             
             $data['ticket_lead']=$ticket_lead->name;
+            $data['department']=$department->department;               
+            $data['status']=$status->id;
+            $data['status_name']=$status->status_name;
+  
         }
         if ($request->ajax()) {
             return Datatables::of($myTickets)->addIndexColumn()
@@ -145,7 +183,16 @@ class TesterController extends Controller
                     $badge='<span class="badge badge-danger m-1">'.$myTickets->assigned_tester.'</span>';
                     return $badge;
                 })
-                ->rawColumns(['ticket_id','update','assign_to','assigned_tester'])                   
+                ->addColumn('status', function($myTickets){
+                    $badge='<span class="badge badge-warning m-1">'.$myTickets->status_name.'</span>';
+                    return $badge;
+                })
+
+                ->addColumn('department', function ($myTickets) {
+                    $badge='<span class="badge badge-info m-1">'.$myTickets->department.'</span>';
+                    return $badge;
+                })          
+                ->rawColumns(['ticket_id','update','assign_to','assigned_tester','status','department'])                   
                 ->editColumn('created_at',function($myTickets){
                     return date('d-M-y', strtotime($myTickets->created_at));
                 })
@@ -158,7 +205,7 @@ class TesterController extends Controller
     public function getTesterFailQnA(Request $request)
     {
         $user = Auth::user();
-        $myTickets=Tickets_Admin::where('assigned_tester',$user->id)->where('status','QnA Fail')->get();
+        $myTickets=Tickets_Admin::where('assigned_tester',$user->id)->where('status','5')->get();
         foreach($myTickets as $data){
             $productDetails=$data['product'];
             $serviceDetails=$data['service'];
@@ -167,7 +214,9 @@ class TesterController extends Controller
             $assign_id=$data['assign_to'];
             $assigned_tester_id=$data['assigned_tester'];
             $ticket_lead_id=$data['ticket_lead'];
-
+            $department_id=$data['department'];
+            $status_id=$data['status'];
+            
             $productId=explode(',',$productDetails);
             $serviceId=explode(',',$serviceDetails);
             
@@ -178,6 +227,8 @@ class TesterController extends Controller
             $assign_to=User::where('id',$assign_id)->firstorFail();
             $assigned_tester=User::where('id',$assigned_tester_id)->firstorFail();
             $ticket_lead=User::where('id',$ticket_lead_id)->firstorFail();
+            $department=Department::where('id',$department_id)->firstorFail();
+            $status=Status::where('id',$status_id)->firstorFail();
 
             $product_name=$product_name->implode('product_name',',');
             $service_name=$service_name->implode('service_name',',');
@@ -194,6 +245,10 @@ class TesterController extends Controller
             $data['assigned_tester']=$assigned_tester->name;
             
             $data['ticket_lead']=$ticket_lead->name;
+
+            $data['department']=$department->department;               
+            $data['status']=$status->id;
+            $data['status_name']=$status->status_name;
         }
         if ($request->ajax()) {
             return Datatables::of($myTickets)->addIndexColumn()
@@ -212,7 +267,17 @@ class TesterController extends Controller
                     $badge='<span class="badge badge-danger m-1">'.$myTickets->assigned_tester.'</span>';
                     return $badge;
                 })
-                ->rawColumns(['ticket_id','update','assign_to','assigned_tester'])                   
+                ->addColumn('status', function($myTickets){
+                    $badge='<span class="badge badge-warning m-1">'.$myTickets->status_name.'</span>';
+                    return $badge;
+                })
+
+                ->addColumn('department', function ($myTickets) {
+                    $badge='<span class="badge badge-info m-1">'.$myTickets->department.'</span>';
+                    return $badge;
+                })
+	
+                ->rawColumns(['ticket_id','update','assign_to','assigned_tester','department','status'])                   
                 ->editColumn('created_at',function($myTickets){
                     return date('d-M-y', strtotime($myTickets->created_at));
                 })

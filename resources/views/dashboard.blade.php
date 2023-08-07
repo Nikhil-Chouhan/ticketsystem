@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="uk-grid-match uk-grid-collapse uk-grid" uk-height-viewport="expand: true" uk-grid="" style="min-height: 430px;">
+{{-- <div class="uk-grid-match uk-grid-collapse uk-grid" uk-height-viewport="expand: true" uk-grid="" style="min-height: 430px;">
       
       <div class="uk-width-expand@m">
           <div class="uk-container uk-container-expand uk-margin-large-top uk-margin-bottom">
@@ -395,6 +395,7 @@
   UIkit.util.ready(function () {
     startAnimation(), window.addEventListener("load", startAnimation, !1), window.addEventListener("scroll", startAnimation, !1), window.addEventListener("resize", startAnimation, !1);
   });
-      </script>
+</script> --}}
+
 
 @endsection

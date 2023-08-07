@@ -22,6 +22,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use App\Models\Department;
 
 class UserController extends Controller
 {
@@ -93,4 +94,5 @@ class UserController extends Controller
         return view('userdetails', compact('user','mytickets','allroles'));
 
     }
+ 
 }
