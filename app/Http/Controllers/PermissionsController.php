@@ -28,10 +28,10 @@ class PermissionsController extends Controller
         $permission=new Permission;
         $permission->name=$request->permission_name;
         $permission->save();
-        return redirect('registerpermission')->with('msg','Permission Created! ');
+        return redirect('permissionmaster')->with('msg','Permission Created! ');
     }
     
-    public function permissionTable(Request $request){
+    public function masterPermission(Request $request){
         if ($request->ajax()) {
             $permission = Permission::all();
             return Datatables::of($permission)->addIndexColumn()
@@ -43,18 +43,18 @@ class PermissionsController extends Controller
                 ->rawColumns(['action'])                   
                 ->make(true);
         }
-        return view('permission_form');
+        return view('permissionmaster');
 
     }
     //Edit Permission
     public function editPermission($id){
        
-        $permission = Permission::where('id',$id)->firstorFail();
-        return view('edit-permission',compact('permission'));    
+        $permissionDetails = Permission::where('id',$id)->firstorFail();
+        return view('permission_form',compact('permissionDetails'));    
     }
 
     public function updatePermission($id,Request $request){
         $permission=Permission::where('id',$id)->update(['name'=>$request->permission_name]);
-        return redirect('registerpermission')->with('msg','Updated!');
+        return redirect('permissionmaster')->with('msg','Permission Updated!');
     }
 }

@@ -130,7 +130,7 @@ class TicketController extends Controller
             }
         }
 
-        $image=new Image;
+        $image1=new Image;
         $imagePaths=[];
         $images = $request->ticket_image;
         if($images != null)
@@ -144,9 +144,10 @@ class TicketController extends Controller
                 $imagePaths[] = $newfile;
             }
             //Store Image in Image table
-            $image->file = implode(',', $imagePaths);
+            $image1->file = implode(',', $imagePaths);
+
             // Save image
-            $ticket_details->image()->save($image);
+            $ticket_details->image()->save($image1);
         }
 
         $branch_code=$request->branch_code;

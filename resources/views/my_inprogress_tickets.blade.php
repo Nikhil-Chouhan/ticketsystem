@@ -163,6 +163,7 @@
             type:'post',
             url:"{{ url('myticket/PushQnA') }}",
             data:formData,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             dataType: 'json',
             success:function(data){
                 if(data!=null){

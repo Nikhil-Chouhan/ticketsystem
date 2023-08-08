@@ -22263,7 +22263,7 @@ svg text {
   border-radius: 1.25rem;
   background: #fff;
   border: 1px solid #f0f1f5;
-  color: #B1B1B1;
+  color: #000000;
   height: 56px; }
   @media only screen and (max-width: 1400px) {
     .form-control {
@@ -22271,7 +22271,7 @@ svg text {
   .form-control:hover, .form-control:focus, .form-control.active {
     box-shadow: none;
     background: #fff;
-    color: #B1B1B1; }
+    color: #000000; }
 
 .input-rounded {
   border-radius: 100px; }
@@ -31010,3 +31010,6 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       color: #fff; }
 
 /*# sourceMappingURL=style.css.map */
+.dropdown-toggle {
+  color: #fff !important;
+}

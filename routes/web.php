@@ -189,22 +189,27 @@ Route::group(['middleware' => 'can:manage_users'], function(){
     Route::get('registerpermission', function () {
         return view('permission_form');
     })->name('registerpermission');
+    
+    //Permission Table
+    Route::get('permissionmaster', [PermissionsController::class,'masterPermission'])->name('permissionmaster');
+    
     // Permisson Create
     Route::post('permission/create', [PermissionsController::class,'createPermission'])->name('permission/create');
-    //Permission Table
-    Route::get('permission_table', [PermissionsController::class,'permissionTable'])->name('permission_table');
     //Edit Permission
     Route::get('permission/edit/{id}', [PermissionsController::class,'editPermission'])->name('permission/edit/{id}');
     Route::post('permission/update/{id}', [PermissionsController::class,'updatePermission'])->name('permission/update/{id}');
 
 
+    //Role Master
+    Route::get('rolemaster', [RolesController::class,'masterRole'])->name('rolemaster');
     //Role Register Form
     Route::get('registerrole', [RolesController::class,'indexRole'])->name('registerrole');
     // Role Create
     Route::post('role/create', [RolesController::class,'createRole'])->name('role/create');
-    //Role Table
-    Route::get('role_table', [RolesController::class,'roleTable'])->name('role_table');
-
+    //Role Edit
+    Route::get('role/edit/{id}', [RolesController::class,'editRole'])->name('role/edit/{id}');
+    // Role Update
+    Route::post('role/update/{id}', [RolesController::class,'updateRole'])->name('role/update/{id}');
 
     //User Registration Form
     Route::get('registeruser', [UserController::class,'indexUser'])->name('registeruser');
@@ -212,7 +217,10 @@ Route::group(['middleware' => 'can:manage_users'], function(){
     Route::post('storeuser', [UserController::class,'createUser'])->name('storeuser');
     //Users Table
     Route::get('users', [UserController::class,'userTable'])->name('users');
-
+    //User Edit
+    Route::get('user/edit/{id}', [UserController::class,'editUser'])->name('user/edit/{id}');
+    // User Update
+    Route::post('user/update/{id}', [UserController::class,'updateUser'])->name('user/update/{id}');
 });
 //raise ticket from panel
 Route::get('generateticket', [TicketController::class,'generateTicketForm']);

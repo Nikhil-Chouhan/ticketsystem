@@ -36,10 +36,10 @@ class RolesController extends Controller
             $role->name=$request->role_name;
             $role->syncPermissions($request->permissions);
             $role->save();
-            return redirect('registerrole')->with('msg','Role Created!');
+            return redirect('rolemaster')->with('msg','Role Created!');
         }  
         
-        public function roleTable(Request $request){
+        public function masterRole(Request $request){
         if ($request->ajax()) {
             $roles = Role::all();
             return Datatables::of($roles)->addIndexColumn()
@@ -60,13 +60,18 @@ class RolesController extends Controller
                 ->rawColumns(['action','permission'])                   
                 ->make(true);
         }
-        return view('role_form');
+        return view('rolemaster');
     }
 
     public function editRole($id){
-        $role=Role::where('id',$id)->firstorFail();
+        $roleDetails=Role::where('id',$id)->firstorFail();
         $permissions=Permission::all();
 
-        return view('edit-role',compact('role','permissions'));
+        return view('role_form',compact('roleDetails','permissions'));
+    }
+
+    public function updateRole(Request $request,$id){
+        $role=Role::where('id',$id)->update(['name'=>$request->role_name]);
+        return redirect('rolemaster')->with('msg','Role Updated!');
     }
 }

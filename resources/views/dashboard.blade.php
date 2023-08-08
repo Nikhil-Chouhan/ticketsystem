@@ -2,6 +2,12 @@
 
 @section('content')
 
+<style>
+    path#SvgjsPath1343 {
+    stroke-width: 5px !important;
+    }
+    </style>
+
 {{-- <div class="uk-grid-match uk-grid-collapse uk-grid" uk-height-viewport="expand: true" uk-grid="" style="min-height: 430px;">
       
       <div class="uk-width-expand@m">
@@ -397,5 +403,298 @@
   });
 </script> --}}
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header border-0 pb-0">
+                    <h4 class="fs-20">In Buckets</h4>
+                    {{-- <select class="form-control style-1 default-select ">
+                        <option>This Week</option>
+                        <option>Next Week</option>
+                        <option>This Month</option>
+                        <option>Next Month</option>
+                    </select> --}}
+                </div>
+                <div class="card-body">
+                    <div id="donutChart"></div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <div class="pr-2">
+                            <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="20" height="8" rx="4" fill="#214BB8"/>
+                            </svg>
+                            <h4 class="fs-18 text-black mb-1 font-w600">{{ $supportbucket->count() }}</h4>
+                            <span class="fs-14">Support Bucket</span>
+                        </div>
+                        <div class="pr-2">
+                            <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="20" height="8" rx="4" fill="#FE634E"/>
+                            </svg>
+                            <h4 class="fs-18 text-black mb-1 font-w600">{{ $managementbucket->count() }}</h4>
+                            <span class="fs-14">Management Bucket</span>
+                        </div>
+                        <div class="">
+                            <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="20" height="8" rx="4" fill="#45ADDA"/>
+                            </svg>
+                            <h4 class="fs-18 text-black mb-1 font-w600">{{ $pmbucket->count() }}</h4>
+                            <span class="fs-14">PM Bucket</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href={{route('livetickets')}} ><div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <span class="mr-4">
+                                    <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                        <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                                    </svg>
+                                </span>
+                                <div class="media-body ml-1">
+                                    <p class="mb-2">Open</p>
+                                    <h3 class="mb-0 text-black font-w600">{{ $tickets->where('status', '1')->count() }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
 
+                <div class="col-md-6">
+                    <a href={{route('livetickets')}} ><div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <span class="mr-4">
+                                    <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                        <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                                    </svg>
+                                </span>
+                                <div class="media-body ml-1">
+                                    <p class="mb-2">Work In Progress </p>
+                                    <h3 class="mb-0 text-black font-w600">{{ $tickets->where('status', '2')->count() }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href={{route('inQnA')}} ><div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <span class="mr-4">
+                                    <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                        <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                                    </svg>
+                                </span>
+                                <div class="media-body ml-1">
+                                    <p class="mb-2">In QnA</p>
+                                    <h3 class="mb-0 text-black font-w600">{{ $tickets->where('status', '3')->count() }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
+
+                <div class="col-md-6">
+                    <a href={{route('approveQnA')}} ><div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <span class="mr-4">
+                                    <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                        <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                                    </svg>
+                                </span>
+                                <div class="media-body ml-1">
+                                    <p class="mb-2">QnA Pass</p>
+                                    <h3 class="mb-0 text-black font-w600">{{ $tickets->where('status', '4')->count() }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <a href={{route('failedQnA')}} ><div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <span class="mr-4">
+                                    <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                        <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                                    </svg>
+                                </span>
+                                <div class="media-body ml-1">
+                                    <p class="mb-2">QnA Failed</p>
+                                    <h3 class="mb-0 text-black font-w600">{{ $tickets->where('status', '5')->count() }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
+
+                <div class="col-md-6">
+                    <a href={{route('CloseTicket')}} > <div class="card">
+                        <div class="card-body">
+                            <div class="media align-items-center">
+                                <span class="mr-4">
+                                    <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                        <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                        <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                                    </svg>
+                                </span>
+                                <div class="media-body ml-1">
+                                    <p class="mb-2">Closed</p>
+                                    <h3 class="mb-0 text-black font-w600">{{ $tickets->where('status', '6')->count() }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div></a>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="col-lg-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        <span class="mr-4">
+                            <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                            </svg>
+                        </span>
+                        <div class="media-body ml-1">
+                            <p class="mb-2">Support Bucket</p>
+                            <h3 class="mb-0 text-black font-w600">{{ $supportbucket->count() }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        <span class="mr-4">
+                            <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                            </svg>
+                        </span>
+                        <div class="media-body ml-1">
+                            <p class="mb-2">Pm Bucket</p>
+                            <h3 class="mb-0 text-black font-w600">{{ $pmbucket->count() }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        <span class="mr-4">
+                            <svg width="50" height="53" viewBox="0 0 50 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="7.11688" height="52.1905" rx="3.55844" transform="matrix(-1 0 0 1 49.8184 0)" fill="#FE634E"/>
+                                <rect width="7.11688" height="37.9567" rx="3.55844" transform="matrix(-1 0 0 1 35.585 14.2338)" fill="#FE634E"/>
+                                <rect width="7.11688" height="16.6061" rx="3.55844" transform="matrix(-1 0 0 1 21.3516 35.5844)" fill="#FE634E"/>
+                                <rect width="8.0293" height="32.1172" rx="4.01465" transform="matrix(-1 0 0 1 8.0293 20.0732)" fill="#FE634E"/>
+                            </svg>
+                        </span>
+                        <div class="media-body ml-1">
+                            <p class="mb-2">Management Bucket</p>
+                            <h3 class="mb-0 text-black font-w600">{{ $managementbucket->count() }}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+    </div>
+</div>
+
+<script>
+
+var support_bucket = {!! json_encode( $supportbucket->count() ) !!};
+var pm_bucket = {!! json_encode( $pmbucket->count() ) !!};
+var management_bucket = {!! json_encode( $managementbucket->count() ) !!};
+console.log(support_bucket);
+var donutChart = function(){
+		var options = {
+          bucket: [support_bucket,pm_bucket,management_bucket],
+          chart: {
+          type: 'donut',
+        },
+		  legend:{
+			show:false  
+		  },
+		  plotOptions: {
+			 pie: {
+				startAngle: -86,
+				donut: {
+					 size: '40%',
+				}
+			 },
+		  },
+		  stroke:{
+			width:'10'  
+		  },
+		  dataLabels: {
+			  formatter(val, opts) {
+				const name = opts.w.globals.labels[opts.bucketIndex]
+				return [ val.toFixed() + '%']
+			  },
+			  dropShadow: {
+                enabled: false
+              },
+			  style: {
+                fontSize: '15px',
+                colors: ["#fff"],
+              }
+			},
+		  colors:['#214BB8','#45ADDA','#FE634E']
+        /* responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+				show:false,
+              position: 'bottom'
+            }
+          }
+        }] */
+        };
+
+        var chart = new ApexCharts(document.querySelector("#donutChart"), options);
+        chart.render();
+	}
+</script>
 @endsection

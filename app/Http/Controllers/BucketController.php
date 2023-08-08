@@ -151,7 +151,7 @@ class BucketController extends Controller
                     
                 })
                 ->addColumn('assign_to', function($ticket_data) use($users) {
-                    $dropdown='<select id="assign_to" class="btn btn-info dropdown-toggle assign_to">';
+                    $dropdown='<select id="assign_to" class="assign_to btn btn-info dropdown-toggle">';
                     $dropdown .='<option value="">Assignne</option>';
                     
                         // foreach($users as $user){

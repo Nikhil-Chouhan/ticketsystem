@@ -31,7 +31,7 @@
                     </label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa-solid fa-laptop-code"></i> </span>
+                            <span class="input-group-text"> <i class="fas fa-building"></i> </span>
                         </div>
                         <select id="selectCompany" name="company_id" class="form-control mr-sm-2 default-select" >
                           <option selected>Select Company</option>
@@ -48,9 +48,9 @@
                     </label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa-solid fa-laptop-code"></i> </span>
+                            <span class="input-group-text"> <i class="fa-solid fa-location-dot"></i> </span>
                         </div>
-                        <select id="selectBranch" name="branch_id" class="form-control mr-sm-2 default-select" >
+                        <select id="selectBranch" name="branch_id" class="form-control mr-sm-2 " >
                           <option selected>Select Branch</option>
                         </select>
                     </div>
@@ -64,7 +64,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa-solid fa-laptop-code"></i> </span>
                         </div>
-                        <select id="selectProduct" name="product_id" class="form-control mr-sm-2 default-select" >
+                        <select id="selectProduct" name="product_id" class="form-control mr-sm-2" >
                           <option selected>Select Product</option>
                         </select>
                     </div>
@@ -78,7 +78,7 @@
                       <div class="input-group-prepend">
                           <span class="input-group-text"> <i class="fa-solid fa-laptop-file"></i> </span>
                       </div>
-                      <select id="selectService" name="service_id" class="form-control mr-sm-2 default-select" >
+                      <select id="selectService" name="service_id" class="form-control mr-sm-2" >
                         <option selected>Select Service</option>
                       </select>
                     </div>
@@ -201,9 +201,14 @@
       options= "<option value=''>Select Branch</option>"; 
       for(var i=0;i<response.length; i++)
       {
-        options += "<option value='"+response[i].id+"'>"+ response[i].branch_name +"</option>";   
+        options += "<option value='"+response[i].id+"'>"+ response[i].branch_name +"</option>";  
       }
       select.append(options);
+
+      $('#selectBranch').append($(options).attr("value", key).text(value)); 
+
+      console.log("branch_data: " + select); 
+
     }
 
     function productservice_dropdown(data)

@@ -135,15 +135,14 @@ class AdminController extends Controller
     }
     
     public function getdashboard(){
-    
-        $companydata = Companymaster::get();
-        $branchdata = Branchmaster::get();
-        $productdata = Productmaster::get();
-        $servicedata = Servicemaster::get();
-        $userdata = User::with('roles.permissions')->get();
-        $ticketdata = Tickets_Admin::get();
+        
+        $supportbucket= Tickets::where('isLive',0)->where('escalate',0)->get();
+        $pmbucket= Tickets::where('escalate',1)->where('isLive',0)->get();
+        $managementbucket = Tickets::where('escalate',2)->where('isLive',0)->get();
+        $liveticket = Tickets_Admin::get();
+        $tickets=Tickets_Admin::get();
 
-        return view('dashboard',compact('companydata','branchdata','productdata','servicedata','userdata','ticketdata'));
+        return view('dashboard',compact('supportbucket','pmbucket','managementbucket','liveticket','tickets'));
     }
 
     public function downloadExcel($id){

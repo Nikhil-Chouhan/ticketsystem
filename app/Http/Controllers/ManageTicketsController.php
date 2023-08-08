@@ -182,7 +182,6 @@ class ManageTicketsController extends Controller
                 $department_id=$data['department'];
                 $status_id=$data['status'];
 
-
                 $productId=explode(',',$productDetails);
                 $serviceId=explode(',',$serviceDetails);
                 
@@ -269,7 +268,7 @@ class ManageTicketsController extends Controller
                     return $dropdown;
                 })
                 ->addColumn('update', function(){
-                    return  '<button id="update" class="update1 btn btn-outline-warning btn-sm">Update</button>';
+                    return  '<button id="update" class="update1 btn btn-outline-success btn-sm">Update</button>';
                     //return $btn;
                 })
                 ->rawColumns(['ticket_id','update','ticket_lead','assign_to','department','status'])                   

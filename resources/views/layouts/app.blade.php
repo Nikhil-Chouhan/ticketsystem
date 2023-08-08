@@ -11,7 +11,7 @@ dir="ltr">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   <!-- Favicon icon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('websiteimages/sit.png') }}">
 
   <!-- Datatable -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -25,6 +25,7 @@ dir="ltr">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
   
   <script src="{{URL::asset ('js/kit.fontawesome.com_me.js')}}" ></script> 
+  <link rel="stylesheet" href="{{ asset('plugins/icon-kit/dist/css/iconkit.min.css') }}">
   {{-- <!--Old Links-->
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -57,7 +58,7 @@ dir="ltr">
 
     <link href="{{URL::asset ('css/font-awesome.css')}}" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/icon-kit/dist/css/iconkit.min.css') }}">
+    
     
     <link href="{{URL::asset ('css/sidebar.css')}}" rel="stylesheet" crossorigin="anonymous">
     
@@ -98,7 +99,7 @@ dir="ltr">
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.11.1/dist/js/uikit-icons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
   <link href="{{URL::asset ('css/app.css')}}" rel="stylesheet" crossorigin="anonymous">
-
+</head>
 {{-- <body>
     <header class="navbar sticky-top bg-light flex-md-nowrap p-0 shadow">
         <div class="navbar-brand col-md-3 col-lg-2 me-0 px-3">
@@ -369,7 +370,7 @@ dir="ltr">
                 </div>
             </div>
             
-            <a href={{route('generateticket')}}><button type="submit" class="btn btn-success btn-lg">Generate Ticket</button></a>
+            <a href={{route('generateticket')}}><button type="submit" class="btn btn-outline-success .btn-rounded ">Generate Ticket</button></a>
             
             
             <ul class="navbar-nav header-right">
@@ -379,15 +380,11 @@ dir="ltr">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                   <a href="./app-profile.html" class="dropdown-item ai-icon">
-                      <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <i class="flaticon-381-user-4"> </i>
                       <span class="ml-2">Profile </span>
                   </a>
-                  <a href="./email-inbox.html" class="dropdown-item ai-icon">
-                      <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                      <span class="ml-2">Inbox </span>
-                  </a>
-                  <a href="./page-login.html" class="dropdown-item ai-icon">
-                      <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                  <a href="{{url('logout')}}" class="dropdown-item ai-icon">
+                      <i class="flaticon-381-exit-1"> </i>
                       <span class="ml-2">Logout </span>
                   </a>
                 </div>
@@ -409,43 +406,42 @@ dir="ltr">
             </a>
           </li>
 
-          <li><a class="has-arrow ai-icon" aria-expanded="false">
-            <i class="flaticon-381-television"></i>
-            <span class="nav-text">Masters</span>
-            </a>
-            <ul aria-expanded="false">
-              <li><a  href="{{route('companymaster')}}">Company</a></li>
-              <li><a href="{{route('branchmaster')}}">Branch</a></li>
-              <li><a href="{{route('productmaster')}}">Product</a></li>
-              <li><a href="{{route('servicemaster')}}">Service</a></li>
-              <li><a href="{{route('departmentmaster')}}">Department</a></li>
-            </ul>
-          </li>
-
-          {{-- <li><a class="has-arrow ai-icon" aria-expanded="false">
-            <i class="flaticon-381-controls-3"></i>
-            <span class="nav-text">Register</span>
-            </a>
-            <ul aria-expanded="false">
-                <li><a href="{{route('companyregister')}}">Company</a></li>
-                <li><a href="{{route('branchregister')}}">Branch</a></li>
-                <li><a href="{{url('productregister')}}">Product</a></li>
-                <li><a href="{{url('serviceregister')}}">Service</a></li>
-            </ul>
-          </li> --}}
-
-          <li>
-            <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-              <i class="flaticon-381-internet"></i>
-              <span class="nav-text">Tickets</span>
-            </a>
+          @can('manage_masters')
+            <li><a class="has-arrow ai-icon" aria-expanded="false">
+              <i class="flaticon-381-television"></i>
+              <span class="nav-text">Masters</span>
+              </a>
               <ul aria-expanded="false">
-                  <li><a href="{{url('supportbucket')}}">Support Bucket</a></li>
-                  <li><a href="{{url('pmbucket')}}">PM Bucket</a></li>
-                  <li><a href="{{url('managementbucket')}}">Management</a></li>
+                <li><a  href="{{route('companymaster')}}">Company</a></li>
+                <li><a href="{{route('branchmaster')}}">Branch</a></li>
+                <li><a href="{{route('productmaster')}}">Product</a></li>
+                <li><a href="{{route('servicemaster')}}">Service</a></li>
+                <li><a href="{{route('departmentmaster')}}">Department</a></li>
               </ul>
-          </li>
+            </li>
+          @endcan
 
+          @canany(['support_bucket','pmbucket','management_bucket'])
+            <li>
+              <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                <i class="flaticon-381-internet"></i>
+                <span class="nav-text">Tickets</span>
+              </a>
+              <ul aria-expanded="false">
+                @can('support_bucket')
+                  <li><a href="{{url('supportbucket')}}">Support Bucket</a></li>
+                @endcan
+                @can('pm_bucket')
+                  <li><a href="{{url('pmbucket')}}">PM Bucket</a></li>
+                @endcan  
+                @can('management_bucket')
+                  <li><a href="{{url('managementbucket')}}">Management</a></li>
+                @endcan
+              </ul>
+            </li>
+          @endcanany
+
+          @can('manage_activetickets')
             <li>
               <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                 <i class="flaticon-381-heart"></i>
@@ -459,7 +455,9 @@ dir="ltr">
                   <li><a href="{{url('CloseTicket')}}">Closed Tickets</a></li>
               </ul>
             </li>
-          
+          @endcan
+
+          @can('manage_mytickets')
             <li>
               <a class="has-arrow ai-icon" aria-expanded="false">
                 <i class="flaticon-381-notepad"></i>
@@ -473,7 +471,9 @@ dir="ltr">
                   <li><a href="{{route('myFailedQnAtickets')}}">Failed QnA</a></li>
               </ul>
             </li>
+          @endcan
 
+          @can('manage_testing')
             <li>
               <a class="has-arrow ai-icon" aria-expanded="false">
                 <i class="flaticon-381-network"></i>
@@ -485,7 +485,9 @@ dir="ltr">
                   <li><a href="{{route('QnAfailTickets')}}">QnA Fail</a></li>
                 </ul>
             </li>
-            
+          @endcan
+
+          @can('manage_users')
             <li>
               <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                 <i class="flaticon-381-layer-1"></i>
@@ -493,17 +495,17 @@ dir="ltr">
               </a>
               <ul aria-expanded="false">
                   <li><a href="{{route('users')}}">Users</a></li>
-                  <li><a href="{{route('registeruser')}}">Add User</a></li>
-                  <li><a href="{{url('registerrole')}}">Add Role</a></li>
-                  <li><a href="{{url('registerpermission')}}">Add Permission</a></li>
+                  <li><a href="{{url('rolemaster')}}">Roles</a></li>
+                  <li><a href="{{url('permissionmaster')}}">Permissions</a></li>
               </ul>
             </li>
+          @endcan
 
-            <li><a href="{{url('logout')}}" aria-expanded="false">
+            {{-- <li><a href="{{url('logout')}}" aria-expanded="false">
               <i class="flaticon-381-networking"></i>
               <span class="nav-text">Log out</span>
               </a>
-            </li>
+            </li> --}}
         </ul>
 
         <div class="copyright">

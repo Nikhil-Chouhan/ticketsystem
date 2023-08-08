@@ -194,6 +194,7 @@
                 type:'post',
                 url:"{{ url('ticketstore') }}",
                 data:formData,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 dataType: 'json',
                 success:function(data){
                     if(data!=null){
@@ -219,7 +220,7 @@
             url:"{{ url('getdepartmentusers') }}",
             data:formData,
             dataType: 'json',
-            success:function(data,parentRow){
+            success:function(data){
                 if(data!=null){
                     // console.log(data);
                     setUsers(data,parentRow);

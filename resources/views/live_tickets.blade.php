@@ -339,6 +339,7 @@ $('body').on('click', '.update', function (e) {
             type:'post',
             url:"{{ url('ticket/update') }}",
             data:formData,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             dataType: 'json',
             success:function(data){
                 if(data!=null){

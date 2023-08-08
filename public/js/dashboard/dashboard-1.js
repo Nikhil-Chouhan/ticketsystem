@@ -3,59 +3,60 @@
 
 
  var dzChartlist = function(){
+	
 	let draw = Chart.controllers.line.__super__.draw; //draw shadow
 	var screenWidth = $(window).width();
-	var donutChart = function(){
-		var options = {
-          series: [45, 30, 25],
-          chart: {
-          type: 'donut',
-        },
-		  legend:{
-			show:false  
-		  },
-		  plotOptions: {
-			 pie: {
-				startAngle: -86,
-				donut: {
-					 size: '40%',
-				}
-			 },
-		  },
-		  stroke:{
-			width:'10'  
-		  },
-		  dataLabels: {
-			  formatter(val, opts) {
-				const name = opts.w.globals.labels[opts.seriesIndex]
-				return [ val.toFixed() + '%']
-			  },
-			  dropShadow: {
-                enabled: false
-              },
-			  style: {
-                fontSize: '15px',
-                colors: ["#fff"],
-              }
-			},
-		  colors:['#214BB8','#45ADDA','#FE634E']
-        /* responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-				show:false,
-              position: 'bottom'
-            }
-          }
-        }] */
-        };
+	// var donutChart = function(){
+	// 	var options = {
+    //       series: [25, 50, 25],
+    //       chart: {
+    //       type: 'donut',
+    //     },
+	// 	  legend:{
+	// 		show:false  
+	// 	  },
+	// 	  plotOptions: {
+	// 		 pie: {
+	// 			startAngle: -86,
+	// 			donut: {
+	// 				 size: '40%',
+	// 			}
+	// 		 },
+	// 	  },
+	// 	  stroke:{
+	// 		width:'10'  
+	// 	  },
+	// 	  dataLabels: {
+	// 		  formatter(val, opts) {
+	// 			const name = opts.w.globals.labels[opts.seriesIndex]
+	// 			return [ val.toFixed() + '%']
+	// 		  },
+	// 		  dropShadow: {
+    //             enabled: false
+    //           },
+	// 		  style: {
+    //             fontSize: '15px',
+    //             colors: ["#fff"],
+    //           }
+	// 		},
+	// 	  colors:['#214BB8','#45ADDA','#FE634E']
+    //     /* responsive: [{
+    //       breakpoint: 480,
+    //       options: {
+    //         chart: {
+    //           width: 200
+    //         },
+    //         legend: {
+	// 			show:false,
+    //           position: 'bottom'
+    //         }
+    //       }
+    //     }] */
+    //     };
 
-        var chart = new ApexCharts(document.querySelector("#donutChart"), options);
-        chart.render();
-	}
+    //     var chart = new ApexCharts(document.querySelector("#donutChart"), options);
+    //     chart.render();
+	// }
 	
 	
 	

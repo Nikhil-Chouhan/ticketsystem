@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-@section('content')
     @if (\Session::has('msg'))
         <div class="alert alert-success">
             <ul>

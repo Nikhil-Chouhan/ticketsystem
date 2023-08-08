@@ -29,20 +29,22 @@ class UserController extends Controller
      //Register User Form
     public function indexUser(){
         $roles=Role::all();
-        return view('register_user',compact('roles'));
+        $departments=Department::all();
+        return view('register_user',compact('roles','departments'));
     } 
 
     //Create User
     public function createUser(Request $request){
-        //dd($request);
+        // dd($request);
         $data = new User;
         $data->name=$request->name;
         $data->email=$request->email;
         $data->password=$request->password;
+        $data->department=$request->department_id;
         $data->syncRoles($request->roles);
         $data->save();
         
-        return redirect('registeruser')->with('msg','User Created Succesfully');
+        return redirect('registeruser')->with('msg','User Created Succesfully!');
     }
 
     //User Table
@@ -52,7 +54,7 @@ class UserController extends Controller
             
             return Datatables::of($users)->addIndexColumn()
                 ->addColumn('action', function($users){
-                    return  '<a href="role/edit/'.$users->id.'"><i style="color:green; margin-right:10px"class="ik ik-edit-2 f-16"></i></a>
+                    return  '<a href="user/edit/'.$users->id.'"><i style="color:green; margin-right:10px"class="ik ik-edit-2 f-16"></i></a>
                             <a><i style="color:red;"class="ik ik-trash-2 f-16"></i></a>';
                             
                 })
@@ -71,6 +73,22 @@ class UserController extends Controller
         return view('user_master');
     }
 
+    public function editUser($id){
+        $roles=Role::all();
+        $departments=Department::all();
+        $userDetails=User::where('id',$id)->firstorFail();
+        return view('register_user',compact('userDetails','departments','roles'));
+    }
+
+    public function updateUser(Request $request, $id){
+        
+        $user=User::where('id',$id)->update(['name'=>$request->name,
+        'email'=>$request->email,'password'=>$request->password,
+        'department'=>$request->department_id
+        ]);
+        
+        return redirect('users')->with('msg','User Updated!');
+    }
     public function getUser()
     {
         // $user = auth()->user();

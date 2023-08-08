@@ -145,5 +145,11 @@ dir="ltr">
       </div>
     </div>
   </div>
+
+
+  <script src="{{URL::asset ('vendor/global/global.min.js')}}" ></script> 
+  <script src="{{URL::asset ('js/custom.min.js')}}" ></script> 
+  <script src="{{URL::asset ('vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}" ></script> 
+
 </body>
 </html>
