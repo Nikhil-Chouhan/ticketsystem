@@ -13,10 +13,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Branch Master</h4>
+                        <h4 class="card-title"><i class="fa-regular fa-rectangle-list mr-3"></i>Branch Master</h4>
                         <div class="btn-toolbar mb-2 mb-md-0 mx-5">
                             <div class="btn-group">
-                                <a href="{{url('branchregister')}}"><button type="button" class="btn btn-outline-success .btn-rounded ">+ Add Branch</button></a>  
+                                <a href="{{url('branchregister')}}"><button type="button" class="btn light btn-success .btn-rounded ">+ Add Branch</button></a>  
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                                         <th scope="col">PRODUCT</th>
                                         <th scope="col">SERVICE</th>
                                         
-                                        <th scope="col">ACTION</th>
+                                        <th scope="col">LINK</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,7 +57,7 @@
                                         <th scope="col">PRODUCT</th>
                                         <th scope="col">SERVICE</th>
                                         
-                                        <th scope="col">ACTION</th>
+                                        <th scope="col">LINK</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -127,54 +127,6 @@
         alert('URL copied to clipboard: ' + generateURL);
 
     });
-
-//     $('body').on('click', '.btngo', function (e) {
-//         e.preventDefault();
-//         var formData = {
-//             ticket_id: $(this).closest("tr").find(".ticket_id").text(),
-//             client_id: $(this).closest("tr").find(".client_id").text(),
-//             client_name: $(this).closest("tr").find(".client_name").text(),
-//             project_name: $(this).closest("tr").find(".project_name").text(),
-//             exec_name: $(this).closest("tr").find(".exec_name").text(),
-//             exec_email: $(this).closest("tr").find(".exec_email").text(),
-//             exec_number: $(this).closest("tr").find(".exec_number").text(),
-//             issue_type: $(this).closest("tr").find(".issue_type").text(),
-//             ticket_raised: $(this).closest("tr").find(".ticket_raised").text(),
-//             ticket_lead: $(this).closest("tr").find(".ticket_lead").find(":selected").text(),
-//             assign_to: $(this).closest("tr").find(".assign_to").find(":selected").text(),
-//             status: $(this).closest("tr").find(".status").find(":selected").text(),
-//             priority: $(this).closest("tr").find(".priority").find(":selected").text(),
-//         };
-        
-//         if(formData.ticket_lead == "Ticket Lead" || formData.assign_to == "Assign to" || formData.status == "Status" ||formData.priority == "Priority" ) {
-//             alert("Please Select the Options");
-//         }
-        
-//         else
-//         {
-//             // var url1 = "{{ url('ticketstore') }}";
-//             // $.post(url1,formData,function(fb){
-//             // var resp = $.parseJSON(fb);
-//             // consol.log(resp);
-//             // })
-//            // $(this).closest("tr").find(".ticket_lead").prop("disabled", true);
-//             $.ajax({
-//                 type:'post',
-//                 url:"{{ url('ticketstore') }}",
-//                 data:formData,
-//                 dataType: 'json',
-//                 success:function(data){
-//                     if(data!=null){
-//                         console.log(data);
-//                         alert("SUCCESS");
-//                         location.reload();
-//                     }else{
-//                         alert(data.error);
-//                     }
-//                 }
-//             });
-//         }
-//    });
 
 </script>
 

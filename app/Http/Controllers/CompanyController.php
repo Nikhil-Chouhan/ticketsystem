@@ -63,15 +63,36 @@ class CompanyController extends Controller
             $data = Companymaster::latest()->get();
             
             return Datatables::of($data)->addIndexColumn()
-                // ->addColumn('action', function(){
-                //     return  '<button id="btngo" class="btngo btn btn-outline-success">Submit</button>';
-                //     //return $btn;
-                // })
-                // ->rawColumns(['action'])                   
+                ->addColumn('action', function($data){
+                    return  '<a href="editcompany/'.$data->id.'"<i class="ik ik-edit-2 f-16" style="color:green; margin-right:10px"></i></a>
+                        <a href="deletecompany/'.$data->id.'"<i class="btndelete ik ik-trash-2 f-16" style="color:red;"></i></a>';
+                })
+                ->rawColumns(['action'])                   
                 ->make(true);
         }
     
         return view('company_master');
     }
+
+    public function editCompany($id){
+        $companyDetails=Companymaster::where('id',$id)->first();
+        return view('company_register',compact('companyDetails'));
+    }
  
+    
+    public function updateCompany($id,Request $request){
+       
+        $updateCompany=Companymaster::where('id',$id)->update(['company_name' => $request->company_name,
+        'company_address' => $request->company_address,'city' => $request->company_city,
+        'gst_number' => $request->gst_number,'contactperson_name' => $request->contactperson_name,
+        'contactperson_number' => $request->contactperson_number,'contactperson_email' => $request->contactperson_email
+        ]);
+        return redirect('companymaster')->with('msg','Company Updated Successfully');
+    }
+
+    public function deleteCompany($id){
+        // dd($id);
+        $delete=Companymaster::where('id',$id)->delete();
+        return redirect()->back()->with('redalert','Company Deleted Successfully');
+    }
 }

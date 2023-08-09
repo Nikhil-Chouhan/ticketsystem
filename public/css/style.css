@@ -9617,7 +9617,7 @@ a {
   transition: all .2s ease;
   z-index: 5; }
   .nav-header .logo-abbr {
-    max-width: 52px; }
+    max-width: 80%; }
     @media only screen and (max-width: 575px) {
       .nav-header .logo-abbr {
         max-width: 40px; } }
@@ -21526,7 +21526,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   max-width: 100px;
   position: relative;
   z-index: 1;
-  margin-top: -40px;
+  margin-top: -20px;
   margin-right: 10px; }
   @media only screen and (max-width: 575px) {
     .profile .profile-photo {

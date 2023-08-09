@@ -48,6 +48,6 @@ class DepartmentController extends Controller
     public function departmentDelete($id){
         // dd($id);
         $delete=Department::where('id',$id)->delete();
-        return redirect('departmentmaster')->with('msg','Department Deleted Succesfully');
+        return redirect('departmentmaster')->with('redalert','Department Deleted Succesfully');
     }
 }

@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-    @if (\Session::has('msg'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{!! \Session::get('msg') !!}</li>
-        </ul>
-    </div>
-    @endif
-
     <div class="container-fluid">
         <div class="page-titles">
           <ol class="breadcrumb">
@@ -18,7 +9,17 @@
             <li class="breadcrumb-item active"><a href="{{route('branchregister')}}">Branch Register</a></li>
           </ol>     
         </div>
-  
+        
+        @if (\Session::has('msg'))
+            <div class="alert alert-success alert-dismissible fade show">
+                <ul>
+                    <li>{!! \Session::get('msg') !!}</li>
+                </ul>
+                <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                </button>
+            </div>
+        @endif
+
         <div class="row">
           <div class="col-lg-12">
                 <div class="card">

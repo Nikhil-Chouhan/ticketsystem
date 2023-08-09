@@ -2,13 +2,6 @@
 
 @section('content')
 
-    @if (\Session::has('msg'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{!! \Session::get('msg') !!}</li>
-        </ul>
-    </div>
-    @endif
  
     <div class="container-fluid">
       <div class="page-titles">
@@ -19,6 +12,16 @@
         </ol>     
       </div>
 
+      @if (\Session::has('msg'))
+        <div class="alert alert-success alert-dismissible fade show">
+            <ul>
+                <li>{!! \Session::get('msg') !!}</li>
+            </ul>
+            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+            </button>
+        </div>
+      @endif
+
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
@@ -28,7 +31,7 @@
             <div class="card-body">
           
             <div class="basic-form">
-              <form action="{{route('serviceregister')}}" class="form-valide-with-icon" method="post">
+              <form action="{{isset($serviceDetails) ? @url('updateservice/'.$serviceDetails->id) : @route('serviceregister') }}" class="form-valide-with-icon" method="post">
                 @csrf
                 <div class="row">
                   <div class="col-xl-6">
@@ -41,7 +44,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
-                            <input type="text" class="form-control" name="service_name" placeholder="Enter Service Name">
+                            <input type="text" class="form-control" name="service_name" value="{{isset($serviceDetails->service_name) ? $serviceDetails->service_name : ''}}" placeholder="Enter Service Name">
                         </div>
                     </div>
                   </div>
@@ -54,7 +57,7 @@
                           <div class="input-group-prepend">
                               <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                           </div>
-                          <textarea type="text" class="form-control" name="service_description" placeholder="Enter Service Description"></textarea>
+                          <input type="text" class="form-control" name="service_description" value="{{isset($serviceDetails->service_description) ? $serviceDetails->service_description : ''}}" placeholder="Enter Service Description">
                       </div>
                     </div>
                   </div>  

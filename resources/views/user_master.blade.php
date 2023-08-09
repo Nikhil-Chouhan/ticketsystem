@@ -26,7 +26,7 @@
                         <h4 class="card-title"><i class="fa-solid fa-users-rectangle mr-3"></i>Users List</h4>
                         <div class="btn-toolbar mb-2 mb-md-0 mx-5">
                             <div class="btn-group">
-                                <a href="{{route('registeruser')}}"><button type="button" class="btn btn-outline-success .btn-rounded ">+ Add User</button></a>  
+                                <a href="{{route('registeruser')}}"><button type="button" class="btn light btn-success .btn-rounded ">+ Add User</button></a>  
                             </div>
                         </div>
                     </div>

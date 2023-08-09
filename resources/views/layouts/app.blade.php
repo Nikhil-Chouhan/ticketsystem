@@ -345,8 +345,8 @@ dir="ltr">
 
     <!--Nav header start-->
     <div class="nav-header">
-      <a href="index.html" class="brand-logo">
-          <img class="logo-abbr" src="https://new.ksoftpl.com/newksoftplweb/wp-content/uploads/2023/03/kspl-logo.png" alt="">
+      <a class="brand-logo">
+          <img class="logo-abbr" src="{{ asset('websiteimages/kspl-logo-new.png') }}" alt="">
           {{-- <img class="logo-compact" src="./images/logo-text.png" alt="">
           <img class="brand-title" src="./images/logo-text.png" alt=""> --}}
       </a>
@@ -370,16 +370,16 @@ dir="ltr">
                 </div>
             </div>
             
-            <a href={{route('generateticket')}}><button type="submit" class="btn btn-outline-success .btn-rounded ">Generate Ticket</button></a>
+            <a href={{route('generateticket')}}><button type="submit" class="btn light btn-success .btn-rounded ">Generate Ticket</button></a>
             
             
             <ul class="navbar-nav header-right">
               <li class="nav-item dropdown header-profile">
                 <a class="nav-link" href="javascript:void(0)" role="button" data-toggle="dropdown">
-                    <img src="images/profile/17.jpg" width="20" alt=""/>
+                    <img src="{{ asset('websiteimages/person-avatar.jpg') }}" width="20" alt=""/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <a href="./app-profile.html" class="dropdown-item ai-icon">
+                  <a href="{{url('get-userdetails')}}" class="dropdown-item ai-icon">
                     <i class="flaticon-381-user-4"> </i>
                       <span class="ml-2">Profile </span>
                   </a>
@@ -401,14 +401,15 @@ dir="ltr">
       <div class="deznav-scroll">
         <ul class="metismenu" id="menu">
           <li><a href="{{url('dashboard')}}" aria-expanded="false">
-            <i class="flaticon-381-networking"></i>
+            {{-- <i class="flaticon-381-networking"></i> --}}
+            <i class="fa-solid fa-chart-line"></i>
             <span class="nav-text">Dashboard</span>
             </a>
           </li>
 
           @can('manage_masters')
             <li><a class="has-arrow ai-icon" aria-expanded="false">
-              <i class="flaticon-381-television"></i>
+              <i class="fa-regular fa-rectangle-list"></i>
               <span class="nav-text">Masters</span>
               </a>
               <ul aria-expanded="false">

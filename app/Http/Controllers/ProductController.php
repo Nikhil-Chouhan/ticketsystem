@@ -45,9 +45,8 @@ class ProductController extends Controller
             
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function($data){
-                    //  return  '<a href="editproduct/'.$data->id.'" class="btn btn-outline-success">Edit</button>';
-                        return  '<a href="editproduct/'.$data->id.'"<i class="btnedit fas fa-edit"></i></a>';
-                    
+                        return  '<a href="editproduct/'.$data->id.'"<i class="ik ik-edit-2 f-16" style="color:green; margin-right:10px"></i></a>
+                        <a href="deleteproduct/'.$data->id.'"<i class="btndelete ik ik-trash-2 f-16" style="color:red;"></i></a>';
                 })
                 ->rawColumns(['action'])                   
                 ->make(true);
@@ -64,12 +63,16 @@ class ProductController extends Controller
     }
 
     public function updateProduct($id,Request $request){
-        $updateproduct=ProductMaster::where('id',$id)->first();
-        $updateproduct->product_name=$request->product_name;
-        $updateproduct->product_description=$request->product_description;
-        $updateproduct->save();
-        return redirect('productmaster')->with('msg','Updated Succesfully');
-        dd($request);
+       
+        $updateProduct=Productmaster::where('id',$id)->update(['product_name' => $request->product_name,
+        'product_description' => $request->product_description,
+        ]);
+        return redirect('productmaster')->with('msg','Product Updated Succesfully');
     }
 
+    public function deleteProduct($id){
+        // dd($id);
+        $delete=Productmaster::where('id',$id)->delete();
+        return redirect()->back()->with('redalert','Product Deleted Succesfully');
+    }
 }

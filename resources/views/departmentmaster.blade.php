@@ -1,14 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (\Session::has('msg'))
-        <div class="alert alert-success">
-            <ul>
-                <li>{!! \Session::get('msg') !!}</li>
-            </ul>
-        </div>
-    @endif    
-
+ 
 <div class="container-fluid">
     <div class="page-titles">
         <ol class="breadcrumb">
@@ -16,14 +9,35 @@
             <li class="breadcrumb-item active"><a href="javascript:void(0)">Department Master</a></li>
         </ol>
     </div>
+
+    @if (\Session::has('msg'))
+    <div class="alert alert-success alert-dismissible fade show">
+        <ul>
+            <li>{!! \Session::get('msg') !!}</li>
+        </ul>
+        <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+        </button>
+    </div>
+    @endif
+
+    @if (\Session::has('redalert'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            <ul>
+                <li>{!! \Session::get('redalert') !!}</li>
+            </ul>
+            <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+            </button>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Department Master</h4>
+                    <h4 class="card-title"><i class="fa-regular fa-rectangle-list mr-3"></i>Department Master</h4>
                     <div class="btn-toolbar mb-2 mb-md-0 mx-5">
                         <div class="btn-group">
-                            <a href="{{url('departmentregister')}}"><button type="button" class="btn btn-outline-success .btn-rounded ">+ Add Department</button></a>  
+                            <a href="{{url('departmentregister')}}"><button type="button" class="btn light btn-success .btn-rounded ">+ Add Department</button></a>  
                         </div>
                     </div>
                 </div>

@@ -166,7 +166,7 @@ class TicketController extends Controller
     }
 
     public function generateTicket(Request $request){
-        //dd($request);
+        
         $branch_details=Branchmaster::where('id',$request->branch_id)->firstorFail();
         // dd($branch_details);
         $imagePaths=[];
@@ -175,10 +175,10 @@ class TicketController extends Controller
         {
             foreach($images as $image) {
                 $file = $image->getClientOriginalName();
-                $image->move('images/', $file);
+                $image->move('uploadedimages/', $file);
             
                 // $newfile = env('APP_URL').'public/images/' . $file;
-                $newfile = config('app.url').'/images/' . $file;
+                $newfile = config('app.url').'/uploadedimages/' . $file;
                 $imagePaths[] = $newfile;
             }
         }
@@ -193,8 +193,8 @@ class TicketController extends Controller
         $ticket_details->branch_id=$branch_details->id;
         $ticket_details->branch_code=$branch_details->branch_code;
         
-        $ticket_details->product=$request->product;
-        $ticket_details->service=$request->service;
+        $ticket_details->product=$request->product_id;
+        $ticket_details->service=$request->service_id;
         $ticket_details->ticket_title=$request->ticket_title;
         $ticket_details->ticket_description=$request->ticket_description;
    
@@ -204,15 +204,15 @@ class TicketController extends Controller
         $ticket_details->exec_email=$branch_details->branch_contactperson_email;
         
         $ticket_details->save();
-
+       
+       // dd($ticket_details);
         //Store Image in Image table
         $image->file = implode(',', $imagePaths);
         // dd($image->file);
-        $ticket_details = $ticket_details->image()->save($image);
+        $ticket_details->image()->save($image);
         $branch_code=$request->branch_code;
         //return view('ticketForm',compact('branch_code'))->with('msg','Ticket Raised Succesfully');
         // $this->send_email($branch_details->branch_contactperson_name,$ticket_details->id);
-
         return redirect('generateticket')->with('msg','Worry no more! Your ticket has been successfully raised and will be addressed promptly :)<hr> Your Ticket ID is '.$ticket_details->id.'');
     }
 

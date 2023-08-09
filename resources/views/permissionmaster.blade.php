@@ -27,7 +27,7 @@
                     <h4 class="card-title">Permissions List</h4>
                     <div class="btn-toolbar mb-2 mb-md-0 mx-5">
                         <div class="btn-group">
-                            <a href="{{route('registerpermission')}}"><button type="button" class="btn btn-outline-success .btn-rounded ">+ Add Permission</button></a>  
+                            <a href="{{route('registerpermission')}}"><button type="button" class="btn light btn-success .btn-rounded ">+ Add Permission</button></a>  
                         </div>
                     </div>
                 </div>

@@ -58,6 +58,9 @@ Route::group(['middleware' => 'can:manage_registers'], function(){
         return view('company_register');
     });
     Route::post('companyregister', [CompanyController::class,'registerCompany'])->name('companyregister');
+    Route::get('editcompany/{id}', [CompanyController::class,'editCompany'])->name('editcompany/{id}');
+    Route::post('updatecompany/{id}', [CompanyController::class,'updateCompany'])->name('updatecompany/{id}');
+    Route::get('deletecompany/{id}', [CompanyController::class,'deleteCompany'])->name('deletecompany/{id}');
     
     //Brach Registration
     Route::get('branchregister', [BranchController::class,'registerBranch']);
@@ -65,18 +68,22 @@ Route::group(['middleware' => 'can:manage_registers'], function(){
 
     //Get Company Details
     Route::get('getCompanyDetails', [CompanyController::class,'getCompanyDetails']);
-
+    
     //Product Register
     Route::get('productregister', function () {
         return view('product_register');
     });
     Route::post('productregister', [ProductController::class,'saveProduct'])->name('productregister');
+    Route::get('deleteproduct/{id}', [ProductController::class,'deleteProduct'])->name('deleteproduct/{id}');
 
     //Service Register
     Route::get('serviceregister', function () {
         return view('service_register');
     });
     Route::post('serviceregister', [ServiceController::class,'saveService'])->name('serviceregister');
+    Route::get('editservice/{id}', [ServiceController::class,'editService'])->name('editservice/{id}');
+    Route::post('updateservice/{id}', [ServiceController::class,'updateService'])->name('updateservice/{id}');
+    Route::get('servicedelete/{id}', [ServiceController::class,'deleteService'])->name('servicedelete/{id}');
 
     Route::get('departmentregister', function () {
         return view('department_form');
